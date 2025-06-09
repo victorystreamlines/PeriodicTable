@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Periodic</title>
+    <link rel="icon" type="image/png" href="ChemistryLogo.png">
+    <link rel="shortcut icon" type="image/png" href="ChemistryLogo.png">
+    <link rel="apple-touch-icon" href="ChemistryLogo.png">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        /* Authentication Overlay Styles */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .auth-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .auth-subtitle {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+        
+        .auth-form {
+            text-align: left;
+        }
+        
+        .auth-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .auth-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .auth-checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .auth-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #495057;
+        }
+        
+        .auth-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+        
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .auth-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .auth-error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .auth-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Blur effect for main content when auth is active */
+        .content-blurred {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .container-fluid {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        header h1 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+        }
+
+        /* Quiz Controls */
+        .quiz-controls {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .score-display {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2196f3;
+            margin-bottom: 15px;
+        }
+
+        .show-answers-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .show-answers-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        .show-answers-btn.active {
+            background: #4caf50;
+        }
+
+        /* Periodic Table Container */
+        .periodic-table-container {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            overflow-x: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        .table-with-controls {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .column-reset-buttons {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 2px;
+            min-width: 1200px;
+            margin: 0 auto;
+            margin-bottom: 5px;
+        }
+
+        .column-reset-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 5px 2px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+        }
+
+        .column-reset-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .column-reset-btn:active {
+            transform: scale(0.95);
+        }
+
+        .row-reset-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            padding-top: 40px; /* Adjust for column buttons */
+        }
+
+        .row-reset-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .row-reset-btn:hover {
+            background: #ff5252;
+            transform: scale(1.05);
+        }
+
+        .row-reset-btn:active {
+            transform: scale(0.95);
+        }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 2px;
+            min-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Element Styles */
+        .element {
+            aspect-ratio: 1;
+            min-height: 60px;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #f5f5f5, #e0e0e0);
+        }
+
+        .element input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: inherit;
+            font-weight: inherit;
+            color: inherit;
+            outline: none;
+            padding: 1px;
+            margin: 1px 0;
+        }
+
+        .element input::placeholder {
+            color: rgba(0,0,0,0.4);
+            font-size: 0.7rem;
+        }
+
+        .element input.correct {
+            background-color: rgba(76, 175, 80, 0.2);
+            color: #2e7d32;
+        }
+
+        .element input.incorrect {
+            background-color: rgba(244, 67, 54, 0.2);
+            color: #d32f2f;
+        }
+
+        .element .atomic-number {
+            font-size: 0.7rem;
+            font-weight: 400;
+            opacity: 0.8;
+            line-height: 1;
+        }
+
+        .element .symbol {
+            font-size: 1.1rem;
+            font-weight: bold;
+            line-height: 1;
+            margin: 2px 0;
+        }
+
+        .element .name {
+            font-size: 0.6rem;
+            font-weight: 400;
+            opacity: 0.9;
+            line-height: 1;
+        }
+
+        .element .atomic-mass {
+            font-size: 0.6rem;
+            font-weight: 400;
+            opacity: 0.8;
+            line-height: 1;
+        }
+
+        /* Empty cells */
+        .empty {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        /* Element Classification Colors */
+        .alkali-metals {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: white;
+        }
+
+        .alkaline-earth-metals {
+            background: linear-gradient(135deg, #ffa726, #ff9800);
+            color: white;
+        }
+
+        .transition-metals {
+            background: linear-gradient(135deg, #42a5f5, #2196f3);
+            color: white;
+        }
+
+        .post-transition-metals {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            color: white;
+        }
+
+        .metalloids {
+            background: linear-gradient(135deg, #ab47bc, #9c27b0);
+            color: white;
+        }
+
+        .nonmetals {
+            background: linear-gradient(135deg, #26c6da, #00bcd4);
+            color: white;
+        }
+
+        .halogens {
+            background: linear-gradient(135deg, #ffca28, #ffc107);
+            color: #333;
+        }
+
+        .noble-gases {
+            background: linear-gradient(135deg, #8d6e63, #795548);
+            color: white;
+        }
+
+        .lanthanides {
+            background: linear-gradient(135deg, #ec407a, #e91e63);
+            color: white;
+        }
+
+        .actinides {
+            background: linear-gradient(135deg, #5c6bc0, #3f51b5);
+            color: white;
+        }
+
+        /* Lanthanides and Actinides Section */
+        .lanthanides-actinides {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .special-rows-reset-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .special-row-reset-btn {
+            background: linear-gradient(135deg, #ec407a, #e91e63);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .special-row-reset-btn.actinides {
+            background: linear-gradient(135deg, #5c6bc0, #3f51b5);
+        }
+
+        .special-row-reset-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .special-row-reset-btn:active {
+            transform: scale(0.95);
+        }
+
+        .lanthanides-actinides-content {
+            flex: 1;
+        }
+
+        .lanthanides-row, .actinides-row {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 10px;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .lanthanides-row .element, .actinides-row .element {
+            aspect-ratio: 1;
+            min-height: 60px;
+            min-width: 60px;
+            max-width: 80px;
+            flex-shrink: 0;
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .lanthanides-row .element input, .actinides-row .element input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-size: inherit;
+            font-weight: inherit;
+            color: inherit;
+            outline: none;
+            padding: 1px;
+            margin: 1px 0;
+        }
+
+        .lanthanides-row .element input::placeholder, .actinides-row .element input::placeholder {
+            color: rgba(0,0,0,0.4);
+            font-size: 0.7rem;
+        }
+
+        .lanthanides-row .element .atomic-number, .actinides-row .element .atomic-number {
+            font-size: 0.7rem;
+            font-weight: 400;
+            opacity: 0.8;
+            line-height: 1;
+        }
+
+        .lanthanides-row .element .symbol, .actinides-row .element .symbol {
+            font-size: 1.1rem;
+            font-weight: bold;
+            line-height: 1;
+            margin: 2px 0;
+        }
+
+        .lanthanides-row .element .name, .actinides-row .element .name {
+            font-size: 0.6rem;
+            font-weight: 400;
+            opacity: 0.9;
+            line-height: 1;
+        }
+
+        .lanthanides-row .element .atomic-mass, .actinides-row .element .atomic-mass {
+            font-size: 0.6rem;
+            font-weight: 400;
+            opacity: 0.8;
+            line-height: 1;
+        }
+
+        .series-label {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .lanthanides-label {
+            color: #e91e63;
+        }
+
+        .actinides-label {
+            color: #3f51b5;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .periodic-table {
+                min-width: 900px;
+            }
+            .element {
+                min-height: 50px;
+                font-size: 0.7rem;
+            }
+            .element .symbol {
+                font-size: 1rem;
+            }
+            .lanthanides-row .element, .actinides-row .element {
+                min-height: 50px;
+                min-width: 50px;
+                max-width: 70px;
+                font-size: 0.7rem;
+            }
+            .lanthanides-row .element .symbol, .actinides-row .element .symbol {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .periodic-table {
+                min-width: 700px;
+            }
+            .element {
+                min-height: 40px;
+                font-size: 0.6rem;
+            }
+            .element .symbol {
+                font-size: 0.9rem;
+            }
+            .lanthanides-row .element, .actinides-row .element {
+                min-height: 40px;
+                min-width: 40px;
+                max-width: 60px;
+                font-size: 0.6rem;
+            }
+            .lanthanides-row .element .symbol, .actinides-row .element .symbol {
+                font-size: 0.9rem;
+            }
+            
+            .auth-container {
+                padding: 30px;
+                margin: 20px;
+            }
+            
+            .auth-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Overlay -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-container">
+            <div class="auth-icon">🔐</div>
+            <h2 class="auth-title">Secure Access</h2>
+            <p class="auth-subtitle">Enter password to access Basic Quiz</p>
+            
+            <form class="auth-form" id="authForm">
+                <div class="mb-3">
+                    <input 
+                        type="password" 
+                        id="passwordInput" 
+                        class="auth-input" 
+                        placeholder="Enter password" 
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <div class="auth-checkbox-group">
+                    <label class="auth-checkbox">
+                        <input type="checkbox" id="showPassword" checked>
+                        <span>Show password</span>
+                    </label>
+                    
+                    <label class="auth-checkbox">
+                        <input type="checkbox" id="rememberMe" checked>
+                        <span>Remember me</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="auth-btn" id="authBtn">
+                    Access Quiz
+                </button>
+                
+                <div class="auth-error" id="authError">
+                    Incorrect password. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content (will be blurred until authentication) -->
+    <div id="mainContent" class="content-blurred">
+    <div class="container-fluid">
+        <!-- Back to Home Button -->
+        <div class="d-flex justify-content-between align-items-center py-3">
+            <a href="index.html" class="btn btn-outline-light">
+                <i class="fas fa-arrow-left me-2"></i>← Back to Home
+            </a>
+            <a href="quizwithdetails.html" class="btn btn-outline-light">
+                Advanced Quiz →
+            </a>
+        </div>
+        
+        <header class="text-center py-4">
+            <h1 class="display-4 fw-bold text-primary">Periodic Table Quiz</h1>
+            <p class="lead">Fill in the blanks with the correct element information!</p>
+        </header>
+
+        <!-- Quiz Controls -->
+        <div class="quiz-controls">
+            <div class="score-display" id="scoreDisplay">Score: 0 / 354 (0%)</div>
+            <button class="show-answers-btn" id="showAnswersBtn" onclick="toggleAnswers()">Show Answers</button>
+            <button class="btn btn-warning ms-3" onclick="resetQuiz()">Reset Quiz</button>
+        </div>
+
+        <!-- Periodic Table -->
+        <div class="periodic-table-container">
+            <div class="row-reset-buttons">
+                <button class="row-reset-btn" onclick="resetRow(1)">Reset Row 1</button>
+                <button class="row-reset-btn" onclick="resetRow(2)">Reset Row 2</button>
+                <button class="row-reset-btn" onclick="resetRow(3)">Reset Row 3</button>
+                <button class="row-reset-btn" onclick="resetRow(4)">Reset Row 4</button>
+                <button class="row-reset-btn" onclick="resetRow(5)">Reset Row 5</button>
+                <button class="row-reset-btn" onclick="resetRow(6)">Reset Row 6</button>
+                <button class="row-reset-btn" onclick="resetRow(7)">Reset Row 7</button>
+            </div>
+            <div class="table-with-controls">
+                <div class="column-reset-buttons">
+                    <button class="column-reset-btn" onclick="resetColumn(1)">Reset Col 1</button>
+                    <button class="column-reset-btn" onclick="resetColumn(2)">Reset Col 2</button>
+                    <button class="column-reset-btn" onclick="resetColumn(3)">Reset Col 3</button>
+                    <button class="column-reset-btn" onclick="resetColumn(4)">Reset Col 4</button>
+                    <button class="column-reset-btn" onclick="resetColumn(5)">Reset Col 5</button>
+                    <button class="column-reset-btn" onclick="resetColumn(6)">Reset Col 6</button>
+                    <button class="column-reset-btn" onclick="resetColumn(7)">Reset Col 7</button>
+                    <button class="column-reset-btn" onclick="resetColumn(8)">Reset Col 8</button>
+                    <button class="column-reset-btn" onclick="resetColumn(9)">Reset Col 9</button>
+                    <button class="column-reset-btn" onclick="resetColumn(10)">Reset Col 10</button>
+                    <button class="column-reset-btn" onclick="resetColumn(11)">Reset Col 11</button>
+                    <button class="column-reset-btn" onclick="resetColumn(12)">Reset Col 12</button>
+                    <button class="column-reset-btn" onclick="resetColumn(13)">Reset Col 13</button>
+                    <button class="column-reset-btn" onclick="resetColumn(14)">Reset Col 14</button>
+                    <button class="column-reset-btn" onclick="resetColumn(15)">Reset Col 15</button>
+                    <button class="column-reset-btn" onclick="resetColumn(16)">Reset Col 16</button>
+                    <button class="column-reset-btn" onclick="resetColumn(17)">Reset Col 17</button>
+                    <button class="column-reset-btn" onclick="resetColumn(18)">Reset Col 18</button>
+                </div>
+                <div id="periodic-table" class="periodic-table"></div>
+            </div>
+        </div>
+
+        <!-- Lanthanides and Actinides -->
+        <div class="lanthanides-actinides">
+            <div class="special-rows-reset-buttons">
+                <button class="special-row-reset-btn" onclick="resetSpecialRow('lanthanides')">Reset Lanthanides</button>
+                <button class="special-row-reset-btn actinides" onclick="resetSpecialRow('actinides')">Reset Actinides</button>
+            </div>
+            <div class="lanthanides-actinides-content">
+                <div id="lanthanides-actinides"></div>
+            </div>
+        </div>
+    </div>
+    </div> <!-- Close mainContent div -->
+
+    <script src="bootstrap.bundle.min.js"></script>
+    
+    <!-- Authentication Script -->
+    <script>
+        // Authentication System
+        class AuthenticationManager {
+            constructor() {
+                this.correctPassword = 'GL_Admin';
+                this.storageKey = 'periodicTableAuth';
+                this.init();
+            }
+
+            init() {
+                // Check if user is already authenticated
+                if (this.isAuthenticated()) {
+                    this.allowAccess();
+                } else {
+                    this.requireAuthentication();
+                }
+
+                // Setup event listeners
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                const authForm = document.getElementById('authForm');
+                const passwordInput = document.getElementById('passwordInput');
+                const showPasswordCheckbox = document.getElementById('showPassword');
+                const authError = document.getElementById('authError');
+
+                // Form submission
+                authForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleAuthentication();
+                });
+
+                // Show/hide password toggle
+                showPasswordCheckbox.addEventListener('change', (e) => {
+                    passwordInput.type = e.target.checked ? 'text' : 'password';
+                });
+
+                // Clear error on input
+                passwordInput.addEventListener('input', () => {
+                    authError.style.display = 'none';
+                    passwordInput.style.borderColor = '#e9ecef';
+                });
+
+                // Focus password input when overlay is shown
+                setTimeout(() => {
+                    passwordInput.focus();
+                }, 100);
+
+                // Handle Enter key on password input
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.handleAuthentication();
+                    }
+                });
+            }
+
+            handleAuthentication() {
+                const passwordInput = document.getElementById('passwordInput');
+                const rememberMeCheckbox = document.getElementById('rememberMe');
+                const authError = document.getElementById('authError');
+                const authBtn = document.getElementById('authBtn');
+                const enteredPassword = passwordInput.value;
+
+                // Disable button during processing
+                authBtn.disabled = true;
+                authBtn.textContent = 'Verifying...';
+
+                // Simulate processing time for better UX
+                setTimeout(() => {
+                    if (enteredPassword === this.correctPassword) {
+                        // Successful authentication
+                        if (rememberMeCheckbox.checked) {
+                            this.saveAuthenticationState();
+                        }
+                        this.allowAccess();
+                    } else {
+                        // Failed authentication
+                        this.showError();
+                        authBtn.disabled = false;
+                        authBtn.textContent = 'Access Quiz';
+                    }
+                }, 500);
+            }
+
+            showError() {
+                const passwordInput = document.getElementById('passwordInput');
+                const authError = document.getElementById('authError');
+                
+                authError.style.display = 'block';
+                passwordInput.style.borderColor = '#dc3545';
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Add shake animation
+                passwordInput.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    passwordInput.style.animation = '';
+                }, 500);
+            }
+
+            allowAccess() {
+                const authOverlay = document.getElementById('authOverlay');
+                const mainContent = document.getElementById('mainContent');
+                
+                // Fade out overlay
+                authOverlay.style.opacity = '0';
+                
+                setTimeout(() => {
+                    authOverlay.style.display = 'none';
+                    mainContent.classList.remove('content-blurred');
+                    
+                    // Focus first interactive element if any
+                    const firstFocusable = mainContent.querySelector('a, button, input, select, textarea');
+                    if (firstFocusable) {
+                        firstFocusable.focus();
+                    }
+                }, 500);
+            }
+
+            requireAuthentication() {
+                const authOverlay = document.getElementById('authOverlay');
+                const mainContent = document.getElementById('mainContent');
+                
+                authOverlay.style.display = 'flex';
+                authOverlay.style.opacity = '1';
+                mainContent.classList.add('content-blurred');
+                
+                // Focus password input
+                setTimeout(() => {
+                    document.getElementById('passwordInput').focus();
+                }, 100);
+            }
+
+            saveAuthenticationState() {
+                const rememberExpiry = new Date();
+                rememberExpiry.setDate(rememberExpiry.getDate() + 30); // Remember for 30 days
+                
+                localStorage.setItem(this.storageKey, JSON.stringify({
+                    authenticated: true,
+                    expiry: rememberExpiry.getTime()
+                }));
+            }
+
+            isAuthenticated() {
+                try {
+                    const authData = localStorage.getItem(this.storageKey);
+                    if (!authData) return false;
+                    
+                    const parsed = JSON.parse(authData);
+                    const now = new Date().getTime();
+                    
+                    if (parsed.authenticated && parsed.expiry > now) {
+                        return true;
+                    } else {
+                        // Remove expired authentication
+                        localStorage.removeItem(this.storageKey);
+                        return false;
+                    }
+                } catch (error) {
+                    localStorage.removeItem(this.storageKey);
+                    return false;
+                }
+            }
+
+            logout() {
+                localStorage.removeItem(this.storageKey);
+                location.reload();
+            }
+        }
+
+        // Add shake animation CSS
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // Initialize authentication when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            window.authManager = new AuthenticationManager();
+        });
+
+        // Add logout function to global scope for debugging (optional)
+        window.logout = () => {
+            if (window.authManager) {
+                window.authManager.logout();
+            }
+        };
+    </script>
+    
+    <script>
+        // Quiz elements data - All 118 elements of the periodic table
+        const quizElements = [
+            // Period 1
+            { atomicNumber: 1, symbol: "H", name: "Hydrogen", atomicMass: "1.008", classification: "nonmetals", position: {row: 1, col: 1} },
+            { atomicNumber: 2, symbol: "He", name: "Helium", atomicMass: "4.003", classification: "noble-gases", position: {row: 1, col: 18} },
+            
+            // Period 2
+            { atomicNumber: 3, symbol: "Li", name: "Lithium", atomicMass: "6.94", classification: "alkali-metals", position: {row: 2, col: 1} },
+            { atomicNumber: 4, symbol: "Be", name: "Beryllium", atomicMass: "9.012", classification: "alkaline-earth-metals", position: {row: 2, col: 2} },
+            { atomicNumber: 5, symbol: "B", name: "Boron", atomicMass: "10.81", classification: "metalloids", position: {row: 2, col: 13} },
+            { atomicNumber: 6, symbol: "C", name: "Carbon", atomicMass: "12.01", classification: "nonmetals", position: {row: 2, col: 14} },
+            { atomicNumber: 7, symbol: "N", name: "Nitrogen", atomicMass: "14.01", classification: "nonmetals", position: {row: 2, col: 15} },
+            { atomicNumber: 8, symbol: "O", name: "Oxygen", atomicMass: "16.00", classification: "nonmetals", position: {row: 2, col: 16} },
+            { atomicNumber: 9, symbol: "F", name: "Fluorine", atomicMass: "19.00", classification: "halogens", position: {row: 2, col: 17} },
+            { atomicNumber: 10, symbol: "Ne", name: "Neon", atomicMass: "20.18", classification: "noble-gases", position: {row: 2, col: 18} },
+            
+            // Period 3
+            { atomicNumber: 11, symbol: "Na", name: "Sodium", atomicMass: "22.99", classification: "alkali-metals", position: {row: 3, col: 1} },
+            { atomicNumber: 12, symbol: "Mg", name: "Magnesium", atomicMass: "24.31", classification: "alkaline-earth-metals", position: {row: 3, col: 2} },
+            { atomicNumber: 13, symbol: "Al", name: "Aluminum", atomicMass: "26.98", classification: "post-transition-metals", position: {row: 3, col: 13} },
+            { atomicNumber: 14, symbol: "Si", name: "Silicon", atomicMass: "28.09", classification: "metalloids", position: {row: 3, col: 14} },
+            { atomicNumber: 15, symbol: "P", name: "Phosphorus", atomicMass: "30.97", classification: "nonmetals", position: {row: 3, col: 15} },
+            { atomicNumber: 16, symbol: "S", name: "Sulfur", atomicMass: "32.07", classification: "nonmetals", position: {row: 3, col: 16} },
+            { atomicNumber: 17, symbol: "Cl", name: "Chlorine", atomicMass: "35.45", classification: "halogens", position: {row: 3, col: 17} },
+            { atomicNumber: 18, symbol: "Ar", name: "Argon", atomicMass: "39.95", classification: "noble-gases", position: {row: 3, col: 18} },
+            
+            // Period 4
+            { atomicNumber: 19, symbol: "K", name: "Potassium", atomicMass: "39.10", classification: "alkali-metals", position: {row: 4, col: 1} },
+            { atomicNumber: 20, symbol: "Ca", name: "Calcium", atomicMass: "40.08", classification: "alkaline-earth-metals", position: {row: 4, col: 2} },
+            { atomicNumber: 21, symbol: "Sc", name: "Scandium", atomicMass: "44.96", classification: "transition-metals", position: {row: 4, col: 3} },
+            { atomicNumber: 22, symbol: "Ti", name: "Titanium", atomicMass: "47.87", classification: "transition-metals", position: {row: 4, col: 4} },
+            { atomicNumber: 23, symbol: "V", name: "Vanadium", atomicMass: "50.94", classification: "transition-metals", position: {row: 4, col: 5} },
+            { atomicNumber: 24, symbol: "Cr", name: "Chromium", atomicMass: "52.00", classification: "transition-metals", position: {row: 4, col: 6} },
+            { atomicNumber: 25, symbol: "Mn", name: "Manganese", atomicMass: "54.94", classification: "transition-metals", position: {row: 4, col: 7} },
+            { atomicNumber: 26, symbol: "Fe", name: "Iron", atomicMass: "55.85", classification: "transition-metals", position: {row: 4, col: 8} },
+            { atomicNumber: 27, symbol: "Co", name: "Cobalt", atomicMass: "58.93", classification: "transition-metals", position: {row: 4, col: 9} },
+            { atomicNumber: 28, symbol: "Ni", name: "Nickel", atomicMass: "58.69", classification: "transition-metals", position: {row: 4, col: 10} },
+            { atomicNumber: 29, symbol: "Cu", name: "Copper", atomicMass: "63.55", classification: "transition-metals", position: {row: 4, col: 11} },
+            { atomicNumber: 30, symbol: "Zn", name: "Zinc", atomicMass: "65.38", classification: "transition-metals", position: {row: 4, col: 12} },
+            { atomicNumber: 31, symbol: "Ga", name: "Gallium", atomicMass: "69.72", classification: "post-transition-metals", position: {row: 4, col: 13} },
+            { atomicNumber: 32, symbol: "Ge", name: "Germanium", atomicMass: "72.63", classification: "metalloids", position: {row: 4, col: 14} },
+            { atomicNumber: 33, symbol: "As", name: "Arsenic", atomicMass: "74.92", classification: "metalloids", position: {row: 4, col: 15} },
+            { atomicNumber: 34, symbol: "Se", name: "Selenium", atomicMass: "78.97", classification: "nonmetals", position: {row: 4, col: 16} },
+            { atomicNumber: 35, symbol: "Br", name: "Bromine", atomicMass: "79.90", classification: "halogens", position: {row: 4, col: 17} },
+            { atomicNumber: 36, symbol: "Kr", name: "Krypton", atomicMass: "83.80", classification: "noble-gases", position: {row: 4, col: 18} },
+            
+            // Period 5
+            { atomicNumber: 37, symbol: "Rb", name: "Rubidium", atomicMass: "85.47", classification: "alkali-metals", position: {row: 5, col: 1} },
+            { atomicNumber: 38, symbol: "Sr", name: "Strontium", atomicMass: "87.62", classification: "alkaline-earth-metals", position: {row: 5, col: 2} },
+            { atomicNumber: 39, symbol: "Y", name: "Yttrium", atomicMass: "88.91", classification: "transition-metals", position: {row: 5, col: 3} },
+            { atomicNumber: 40, symbol: "Zr", name: "Zirconium", atomicMass: "91.22", classification: "transition-metals", position: {row: 5, col: 4} },
+            { atomicNumber: 41, symbol: "Nb", name: "Niobium", atomicMass: "92.91", classification: "transition-metals", position: {row: 5, col: 5} },
+            { atomicNumber: 42, symbol: "Mo", name: "Molybdenum", atomicMass: "95.95", classification: "transition-metals", position: {row: 5, col: 6} },
+            { atomicNumber: 43, symbol: "Tc", name: "Technetium", atomicMass: "98.00", classification: "transition-metals", position: {row: 5, col: 7} },
+            { atomicNumber: 44, symbol: "Ru", name: "Ruthenium", atomicMass: "101.07", classification: "transition-metals", position: {row: 5, col: 8} },
+            { atomicNumber: 45, symbol: "Rh", name: "Rhodium", atomicMass: "102.91", classification: "transition-metals", position: {row: 5, col: 9} },
+            { atomicNumber: 46, symbol: "Pd", name: "Palladium", atomicMass: "106.42", classification: "transition-metals", position: {row: 5, col: 10} },
+            { atomicNumber: 47, symbol: "Ag", name: "Silver", atomicMass: "107.87", classification: "transition-metals", position: {row: 5, col: 11} },
+            { atomicNumber: 48, symbol: "Cd", name: "Cadmium", atomicMass: "112.41", classification: "transition-metals", position: {row: 5, col: 12} },
+            { atomicNumber: 49, symbol: "In", name: "Indium", atomicMass: "114.82", classification: "post-transition-metals", position: {row: 5, col: 13} },
+            { atomicNumber: 50, symbol: "Sn", name: "Tin", atomicMass: "118.71", classification: "post-transition-metals", position: {row: 5, col: 14} },
+            { atomicNumber: 51, symbol: "Sb", name: "Antimony", atomicMass: "121.76", classification: "metalloids", position: {row: 5, col: 15} },
+            { atomicNumber: 52, symbol: "Te", name: "Tellurium", atomicMass: "127.60", classification: "metalloids", position: {row: 5, col: 16} },
+            { atomicNumber: 53, symbol: "I", name: "Iodine", atomicMass: "126.90", classification: "halogens", position: {row: 5, col: 17} },
+            { atomicNumber: 54, symbol: "Xe", name: "Xenon", atomicMass: "131.29", classification: "noble-gases", position: {row: 5, col: 18} },
+            
+            // Period 6
+            { atomicNumber: 55, symbol: "Cs", name: "Cesium", atomicMass: "132.91", classification: "alkali-metals", position: {row: 6, col: 1} },
+            { atomicNumber: 56, symbol: "Ba", name: "Barium", atomicMass: "137.33", classification: "alkaline-earth-metals", position: {row: 6, col: 2} },
+            // Lanthanides (57-71) - placed in special section
+            { atomicNumber: 57, symbol: "La", name: "Lanthanum", atomicMass: "138.91", classification: "lanthanides", position: {row: 8, col: 3} },
+            { atomicNumber: 58, symbol: "Ce", name: "Cerium", atomicMass: "140.12", classification: "lanthanides", position: {row: 8, col: 4} },
+            { atomicNumber: 59, symbol: "Pr", name: "Praseodymium", atomicMass: "140.91", classification: "lanthanides", position: {row: 8, col: 5} },
+            { atomicNumber: 60, symbol: "Nd", name: "Neodymium", atomicMass: "144.24", classification: "lanthanides", position: {row: 8, col: 6} },
+            { atomicNumber: 61, symbol: "Pm", name: "Promethium", atomicMass: "145.00", classification: "lanthanides", position: {row: 8, col: 7} },
+            { atomicNumber: 62, symbol: "Sm", name: "Samarium", atomicMass: "150.36", classification: "lanthanides", position: {row: 8, col: 8} },
+            { atomicNumber: 63, symbol: "Eu", name: "Europium", atomicMass: "151.96", classification: "lanthanides", position: {row: 8, col: 9} },
+            { atomicNumber: 64, symbol: "Gd", name: "Gadolinium", atomicMass: "157.25", classification: "lanthanides", position: {row: 8, col: 10} },
+            { atomicNumber: 65, symbol: "Tb", name: "Terbium", atomicMass: "158.93", classification: "lanthanides", position: {row: 8, col: 11} },
+            { atomicNumber: 66, symbol: "Dy", name: "Dysprosium", atomicMass: "162.50", classification: "lanthanides", position: {row: 8, col: 12} },
+            { atomicNumber: 67, symbol: "Ho", name: "Holmium", atomicMass: "164.93", classification: "lanthanides", position: {row: 8, col: 13} },
+            { atomicNumber: 68, symbol: "Er", name: "Erbium", atomicMass: "167.26", classification: "lanthanides", position: {row: 8, col: 14} },
+            { atomicNumber: 69, symbol: "Tm", name: "Thulium", atomicMass: "168.93", classification: "lanthanides", position: {row: 8, col: 15} },
+            { atomicNumber: 70, symbol: "Yb", name: "Ytterbium", atomicMass: "173.05", classification: "lanthanides", position: {row: 8, col: 16} },
+            { atomicNumber: 71, symbol: "Lu", name: "Lutetium", atomicMass: "174.97", classification: "lanthanides", position: {row: 8, col: 17} },
+            // Continue Period 6
+            { atomicNumber: 72, symbol: "Hf", name: "Hafnium", atomicMass: "178.49", classification: "transition-metals", position: {row: 6, col: 4} },
+            { atomicNumber: 73, symbol: "Ta", name: "Tantalum", atomicMass: "180.95", classification: "transition-metals", position: {row: 6, col: 5} },
+            { atomicNumber: 74, symbol: "W", name: "Tungsten", atomicMass: "183.84", classification: "transition-metals", position: {row: 6, col: 6} },
+            { atomicNumber: 75, symbol: "Re", name: "Rhenium", atomicMass: "186.21", classification: "transition-metals", position: {row: 6, col: 7} },
+            { atomicNumber: 76, symbol: "Os", name: "Osmium", atomicMass: "190.23", classification: "transition-metals", position: {row: 6, col: 8} },
+            { atomicNumber: 77, symbol: "Ir", name: "Iridium", atomicMass: "192.22", classification: "transition-metals", position: {row: 6, col: 9} },
+            { atomicNumber: 78, symbol: "Pt", name: "Platinum", atomicMass: "195.08", classification: "transition-metals", position: {row: 6, col: 10} },
+            { atomicNumber: 79, symbol: "Au", name: "Gold", atomicMass: "196.97", classification: "transition-metals", position: {row: 6, col: 11} },
+            { atomicNumber: 80, symbol: "Hg", name: "Mercury", atomicMass: "200.59", classification: "transition-metals", position: {row: 6, col: 12} },
+            { atomicNumber: 81, symbol: "Tl", name: "Thallium", atomicMass: "204.38", classification: "post-transition-metals", position: {row: 6, col: 13} },
+            { atomicNumber: 82, symbol: "Pb", name: "Lead", atomicMass: "207.2", classification: "post-transition-metals", position: {row: 6, col: 14} },
+            { atomicNumber: 83, symbol: "Bi", name: "Bismuth", atomicMass: "208.98", classification: "post-transition-metals", position: {row: 6, col: 15} },
+            { atomicNumber: 84, symbol: "Po", name: "Polonium", atomicMass: "209.00", classification: "post-transition-metals", position: {row: 6, col: 16} },
+            { atomicNumber: 85, symbol: "At", name: "Astatine", atomicMass: "210.00", classification: "halogens", position: {row: 6, col: 17} },
+            { atomicNumber: 86, symbol: "Rn", name: "Radon", atomicMass: "222.00", classification: "noble-gases", position: {row: 6, col: 18} },
+            
+            // Period 7
+            { atomicNumber: 87, symbol: "Fr", name: "Francium", atomicMass: "223.00", classification: "alkali-metals", position: {row: 7, col: 1} },
+            { atomicNumber: 88, symbol: "Ra", name: "Radium", atomicMass: "226.00", classification: "alkaline-earth-metals", position: {row: 7, col: 2} },
+            // Actinides (89-103) - placed in special section
+            { atomicNumber: 89, symbol: "Ac", name: "Actinium", atomicMass: "227.00", classification: "actinides", position: {row: 9, col: 3} },
+            { atomicNumber: 90, symbol: "Th", name: "Thorium", atomicMass: "232.04", classification: "actinides", position: {row: 9, col: 4} },
+            { atomicNumber: 91, symbol: "Pa", name: "Protactinium", atomicMass: "231.04", classification: "actinides", position: {row: 9, col: 5} },
+            { atomicNumber: 92, symbol: "U", name: "Uranium", atomicMass: "238.03", classification: "actinides", position: {row: 9, col: 6} },
+            { atomicNumber: 93, symbol: "Np", name: "Neptunium", atomicMass: "237.00", classification: "actinides", position: {row: 9, col: 7} },
+            { atomicNumber: 94, symbol: "Pu", name: "Plutonium", atomicMass: "244.00", classification: "actinides", position: {row: 9, col: 8} },
+            { atomicNumber: 95, symbol: "Am", name: "Americium", atomicMass: "243.00", classification: "actinides", position: {row: 9, col: 9} },
+            { atomicNumber: 96, symbol: "Cm", name: "Curium", atomicMass: "247.00", classification: "actinides", position: {row: 9, col: 10} },
+            { atomicNumber: 97, symbol: "Bk", name: "Berkelium", atomicMass: "247.00", classification: "actinides", position: {row: 9, col: 11} },
+            { atomicNumber: 98, symbol: "Cf", name: "Californium", atomicMass: "251.00", classification: "actinides", position: {row: 9, col: 12} },
+            { atomicNumber: 99, symbol: "Es", name: "Einsteinium", atomicMass: "252.00", classification: "actinides", position: {row: 9, col: 13} },
+            { atomicNumber: 100, symbol: "Fm", name: "Fermium", atomicMass: "257.00", classification: "actinides", position: {row: 9, col: 14} },
+            { atomicNumber: 101, symbol: "Md", name: "Mendelevium", atomicMass: "258.00", classification: "actinides", position: {row: 9, col: 15} },
+            { atomicNumber: 102, symbol: "No", name: "Nobelium", atomicMass: "259.00", classification: "actinides", position: {row: 9, col: 16} },
+            { atomicNumber: 103, symbol: "Lr", name: "Lawrencium", atomicMass: "262.00", classification: "actinides", position: {row: 9, col: 17} },
+            // Continue Period 7
+            { atomicNumber: 104, symbol: "Rf", name: "Rutherfordium", atomicMass: "267.00", classification: "transition-metals", position: {row: 7, col: 4} },
+            { atomicNumber: 105, symbol: "Db", name: "Dubnium", atomicMass: "270.00", classification: "transition-metals", position: {row: 7, col: 5} },
+            { atomicNumber: 106, symbol: "Sg", name: "Seaborgium", atomicMass: "271.00", classification: "transition-metals", position: {row: 7, col: 6} },
+            { atomicNumber: 107, symbol: "Bh", name: "Bohrium", atomicMass: "272.00", classification: "transition-metals", position: {row: 7, col: 7} },
+            { atomicNumber: 108, symbol: "Hs", name: "Hassium", atomicMass: "277.00", classification: "transition-metals", position: {row: 7, col: 8} },
+            { atomicNumber: 109, symbol: "Mt", name: "Meitnerium", atomicMass: "276.00", classification: "transition-metals", position: {row: 7, col: 9} },
+            { atomicNumber: 110, symbol: "Ds", name: "Darmstadtium", atomicMass: "281.00", classification: "transition-metals", position: {row: 7, col: 10} },
+            { atomicNumber: 111, symbol: "Rg", name: "Roentgenium", atomicMass: "280.00", classification: "transition-metals", position: {row: 7, col: 11} },
+            { atomicNumber: 112, symbol: "Cn", name: "Copernicium", atomicMass: "285.00", classification: "transition-metals", position: {row: 7, col: 12} },
+            { atomicNumber: 113, symbol: "Nh", name: "Nihonium", atomicMass: "284.00", classification: "post-transition-metals", position: {row: 7, col: 13} },
+            { atomicNumber: 114, symbol: "Fl", name: "Flerovium", atomicMass: "289.00", classification: "post-transition-metals", position: {row: 7, col: 14} },
+            { atomicNumber: 115, symbol: "Mc", name: "Moscovium", atomicMass: "288.00", classification: "post-transition-metals", position: {row: 7, col: 15} },
+            { atomicNumber: 116, symbol: "Lv", name: "Livermorium", atomicMass: "293.00", classification: "post-transition-metals", position: {row: 7, col: 16} },
+            { atomicNumber: 117, symbol: "Ts", name: "Tennessine", atomicMass: "292.00", classification: "halogens", position: {row: 7, col: 17} },
+            { atomicNumber: 118, symbol: "Og", name: "Oganesson", atomicMass: "294.00", classification: "noble-gases", position: {row: 7, col: 18} }
+        ];
+
+        // Quiz state
+        let quizState = {
+            score: 0,
+            totalQuestions: 0,
+            showingAnswers: false,
+            userAnswers: {}
+        };
+
+        // Initialize quiz
+        class PeriodicTableQuiz {
+            constructor() {
+                this.loadQuizState();
+                this.init();
+            }
+
+            init() {
+                this.createPeriodicTable();
+                this.createLanthanidesActinides();
+                this.updateScore();
+            }
+
+            createPeriodicTable() {
+                const periodicTableElement = document.getElementById('periodic-table');
+                const totalCells = 7 * 18;
+                
+                for (let i = 0; i < totalCells; i++) {
+                    const row = Math.floor(i / 18) + 1;
+                    const col = (i % 18) + 1;
+                    
+                    const element = this.findElementByPosition(row, col);
+                    const cellElement = this.createElement(element, row, col);
+                    periodicTableElement.appendChild(cellElement);
+                }
+            }
+
+            findElementByPosition(row, col) {
+                return quizElements.find(element => 
+                    element.position.row === row && element.position.col === col
+                );
+            }
+
+            createElement(elementData, row, col) {
+                const elementDiv = document.createElement('div');
+                
+                if (!elementData) {
+                    elementDiv.className = 'element empty';
+                    return elementDiv;
+                }
+
+                elementDiv.className = `element ${elementData.classification}`;
+                elementDiv.setAttribute('data-atomic-number', elementData.atomicNumber);
+                
+                const elementId = `element-${elementData.atomicNumber}`;
+                
+                elementDiv.innerHTML = `
+                    <div class="atomic-number">${elementData.atomicNumber}</div>
+                    <input type="text" class="symbol" id="${elementId}-symbol" placeholder="Symbol" 
+                           data-answer="${elementData.symbol}" data-field="symbol" data-element="${elementData.atomicNumber}">
+                    <input type="text" class="name" id="${elementId}-name" placeholder="Name" 
+                           data-answer="${elementData.name}" data-field="name" data-element="${elementData.atomicNumber}">
+                    <input type="text" class="atomic-mass" id="${elementId}-mass" placeholder="Mass" 
+                           data-answer="${elementData.atomicMass}" data-field="mass" data-element="${elementData.atomicNumber}">
+                `;
+
+                // Add event listeners for immediate checking
+                const inputs = elementDiv.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => this.checkAnswer(e.target));
+                    
+                    // Add Enter key navigation
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.moveToNextField(e.target);
+                        }
+                    });
+                    
+                    // Load saved answers
+                    const savedAnswer = quizState.userAnswers[`${elementData.atomicNumber}-${input.dataset.field}`];
+                    if (savedAnswer) {
+                        input.value = savedAnswer;
+                        this.checkAnswer(input, false);
+                    }
+                });
+
+                quizState.totalQuestions += 3; // symbol, name, mass
+
+                return elementDiv;
+            }
+
+            moveToNextField(currentInput) {
+                const currentElement = currentInput.dataset.element;
+                const currentField = currentInput.dataset.field;
+                
+                // Define field order: symbol -> name -> mass
+                const fieldOrder = ['symbol', 'name', 'mass'];
+                const currentFieldIndex = fieldOrder.indexOf(currentField);
+                
+                let nextInput = null;
+                
+                if (currentFieldIndex < fieldOrder.length - 1) {
+                    // Move to next field in same element
+                    const nextField = fieldOrder[currentFieldIndex + 1];
+                    nextInput = document.getElementById(`element-${currentElement}-${nextField}`);
+                } else {
+                    // Move to first field of next element
+                    const allElements = quizElements.sort((a, b) => a.atomicNumber - b.atomicNumber);
+                    const currentElementIndex = allElements.findIndex(el => el.atomicNumber == currentElement);
+                    
+                    if (currentElementIndex < allElements.length - 1) {
+                        // Next element exists
+                        const nextElement = allElements[currentElementIndex + 1];
+                        nextInput = document.getElementById(`element-${nextElement.atomicNumber}-symbol`);
+                    } else {
+                        // Last element, wrap to first element
+                        const firstElement = allElements[0];
+                        nextInput = document.getElementById(`element-${firstElement.atomicNumber}-symbol`);
+                    }
+                }
+                
+                // Focus on next input if found
+                if (nextInput) {
+                    nextInput.focus();
+                    nextInput.select(); // Select all text for easy replacement
+                }
+            }
+
+            createLanthanidesActinides() {
+                const container = document.getElementById('lanthanides-actinides');
+                
+                // Lanthanides
+                const lanthanideLabel = document.createElement('div');
+                lanthanideLabel.className = 'series-label lanthanides-label';
+                lanthanideLabel.textContent = 'Lanthanides (57-71)';
+                container.appendChild(lanthanideLabel);
+
+                const lanthanideRow = document.createElement('div');
+                lanthanideRow.className = 'lanthanides-row';
+                
+                // Add lanthanides (elements 57-71)
+                for (let atomicNumber = 57; atomicNumber <= 71; atomicNumber++) {
+                    const element = quizElements.find(el => el.atomicNumber === atomicNumber);
+                    if (element) {
+                        const elementDiv = this.createLanthanideActinideElement(element);
+                        lanthanideRow.appendChild(elementDiv);
+                    }
+                }
+                container.appendChild(lanthanideRow);
+
+                // Actinides
+                const actinideLabel = document.createElement('div');
+                actinideLabel.className = 'series-label actinides-label';
+                actinideLabel.textContent = 'Actinides (89-103)';
+                container.appendChild(actinideLabel);
+
+                const actinideRow = document.createElement('div');
+                actinideRow.className = 'actinides-row';
+                
+                // Add actinides (elements 89-103)
+                for (let atomicNumber = 89; atomicNumber <= 103; atomicNumber++) {
+                    const element = quizElements.find(el => el.atomicNumber === atomicNumber);
+                    if (element) {
+                        const elementDiv = this.createLanthanideActinideElement(element);
+                        actinideRow.appendChild(elementDiv);
+                    }
+                }
+                container.appendChild(actinideRow);
+            }
+
+            createLanthanideActinideElement(elementData) {
+                const elementDiv = document.createElement('div');
+                elementDiv.className = `element ${elementData.classification}`;
+                elementDiv.setAttribute('data-atomic-number', elementData.atomicNumber);
+                
+                const elementId = `element-${elementData.atomicNumber}`;
+                
+                elementDiv.innerHTML = `
+                    <div class="atomic-number">${elementData.atomicNumber}</div>
+                    <input type="text" class="symbol" id="${elementId}-symbol" placeholder="Symbol" 
+                           data-answer="${elementData.symbol}" data-field="symbol" data-element="${elementData.atomicNumber}">
+                    <input type="text" class="name" id="${elementId}-name" placeholder="Name" 
+                           data-answer="${elementData.name}" data-field="name" data-element="${elementData.atomicNumber}">
+                    <input type="text" class="atomic-mass" id="${elementId}-mass" placeholder="Mass" 
+                           data-answer="${elementData.atomicMass}" data-field="mass" data-element="${elementData.atomicNumber}">
+                `;
+
+                // Add event listeners for immediate checking
+                const inputs = elementDiv.querySelectorAll('input');
+                inputs.forEach(input => {
+                    input.addEventListener('input', (e) => this.checkAnswer(e.target));
+                    
+                    // Add Enter key navigation
+                    input.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            this.moveToNextField(e.target);
+                        }
+                    });
+                    
+                    // Load saved answers
+                    const savedAnswer = quizState.userAnswers[`${elementData.atomicNumber}-${input.dataset.field}`];
+                    if (savedAnswer) {
+                        input.value = savedAnswer;
+                        this.checkAnswer(input, false);
+                    }
+                });
+
+                quizState.totalQuestions += 3; // symbol, name, mass
+
+                return elementDiv;
+            }
+
+            checkAnswer(input, updateScore = true) {
+                const userAnswer = input.value.trim();
+                const correctAnswer = input.dataset.answer;
+                const elementId = input.dataset.element;
+                const field = input.dataset.field;
+                
+                // Save user answer
+                quizState.userAnswers[`${elementId}-${field}`] = userAnswer;
+                
+                if (!quizState.showingAnswers) {
+                    if (userAnswer === '') {
+                        input.className = input.className.replace(/\s*(correct|incorrect)/g, '');
+                    } else if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                        input.className = input.className.replace(/\s*(correct|incorrect)/g, '') + ' correct';
+                        if (updateScore) this.updateScore();
+                    } else {
+                        input.className = input.className.replace(/\s*(correct|incorrect)/g, '') + ' incorrect';
+                    }
+                }
+                
+                this.saveQuizState();
+            }
+
+            updateScore() {
+                let correctAnswers = 0;
+                const inputs = document.querySelectorAll('input[data-answer]');
+                
+                inputs.forEach(input => {
+                    if (input.classList.contains('correct')) {
+                        correctAnswers++;
+                    }
+                });
+                
+                quizState.score = correctAnswers;
+                const percentage = quizState.totalQuestions > 0 ? ((correctAnswers / quizState.totalQuestions) * 100).toFixed(1) : 0;
+                document.getElementById('scoreDisplay').textContent = `Score: ${correctAnswers} / ${quizState.totalQuestions} (${percentage}%)`;
+            }
+
+            saveQuizState() {
+                localStorage.setItem('periodicTableQuizState', JSON.stringify(quizState));
+            }
+
+            loadQuizState() {
+                const saved = localStorage.getItem('periodicTableQuizState');
+                if (saved) {
+                    quizState = { ...quizState, ...JSON.parse(saved) };
+                }
+            }
+        }
+
+        // Global functions
+        function toggleAnswers() {
+            const btn = document.getElementById('showAnswersBtn');
+            const inputs = document.querySelectorAll('input[data-answer]');
+            
+            if (!quizState.showingAnswers) {
+                // Show answers
+                quizState.showingAnswers = true;
+                btn.textContent = 'Hide Answers';
+                btn.classList.add('active');
+                
+                inputs.forEach(input => {
+                    input.value = input.dataset.answer;
+                    input.className = input.className.replace(/\s*(correct|incorrect)/g, '');
+                    input.style.backgroundColor = 'rgba(255, 255, 0, 0.3)';
+                });
+            } else {
+                // Hide answers and restore user state
+                quizState.showingAnswers = false;
+                btn.textContent = 'Show Answers';
+                btn.classList.remove('active');
+                
+                inputs.forEach(input => {
+                    const elementId = input.dataset.element;
+                    const field = input.dataset.field;
+                    const savedAnswer = quizState.userAnswers[`${elementId}-${field}`] || '';
+                    
+                    input.value = savedAnswer;
+                    input.style.backgroundColor = '';
+                    
+                    if (savedAnswer) {
+                        quiz.checkAnswer(input, false);
+                    } else {
+                        input.className = input.className.replace(/\s*(correct|incorrect)/g, '');
+                    }
+                });
+                
+                quiz.updateScore();
+            }
+        }
+
+        function resetQuiz() {
+            localStorage.removeItem('periodicTableQuizState');
+            // Preserve totalQuestions value and only reset score, showingAnswers, and userAnswers
+            const currentTotalQuestions = quizState.totalQuestions;
+            quizState = {
+                score: 0,
+                totalQuestions: currentTotalQuestions, // Keep the original total questions count
+                showingAnswers: false,
+                userAnswers: {}
+            };
+            
+            const inputs = document.querySelectorAll('input[data-answer]');
+            inputs.forEach(input => {
+                input.value = '';
+                input.className = input.className.replace(/\s*(correct|incorrect)/g, '');
+                input.style.backgroundColor = '';
+            });
+            
+            document.getElementById('showAnswersBtn').textContent = 'Show Answers';
+            document.getElementById('showAnswersBtn').classList.remove('active');
+            
+            quiz.updateScore();
+        }
+
+        function resetRow(rowNumber) {
+            // Find all elements in the specified row
+            const inputs = document.querySelectorAll(`.element[data-atomic-number] input`);
+            inputs.forEach(input => {
+                const element = input.closest('.element');
+                if (!element) return;
+                
+                const elementData = quizElements.find(el => el.atomicNumber === parseInt(element.dataset.atomicNumber));
+                if (!elementData || elementData.position.row !== rowNumber) return;
+                
+                // Reset the input
+                input.value = '';
+                input.className = input.className.replace(/\s*(correct|incorrect)/g, '');
+                input.style.backgroundColor = '';
+                
+                // Remove the answer from saved state
+                const elementId = input.dataset.element;
+                const field = input.dataset.field;
+                delete quizState.userAnswers[`${elementId}-${field}`];
+            });
+            
+            // Update score and save state
+            quiz.updateScore();
+            quiz.saveQuizState();
+        }
+
+        function resetColumn(colNumber) {
+            // Find all elements in the specified column
+            const inputs = document.querySelectorAll(`.element[data-atomic-number] input`);
+            inputs.forEach(input => {
+                const element = input.closest('.element');
+                if (!element) return;
+                
+                const elementData = quizElements.find(el => el.atomicNumber === parseInt(element.dataset.atomicNumber));
+                if (!elementData || elementData.position.col !== colNumber) return;
+                
+                // Reset the input
+                input.value = '';
+                input.className = input.className.replace(/\s*(correct|incorrect)/g, '');
+                input.style.backgroundColor = '';
+                
+                // Remove the answer from saved state
+                const elementId = input.dataset.element;
+                const field = input.dataset.field;
+                delete quizState.userAnswers[`${elementId}-${field}`];
+            });
+            
+            // Update score and save state
+            quiz.updateScore();
+            quiz.saveQuizState();
+        }
+
+        function resetSpecialRow(type) {
+            const startNumber = type === 'lanthanides' ? 57 : 89;
+            const endNumber = type === 'lanthanides' ? 71 : 103;
+            
+            // Find all elements in the specified range
+            const inputs = document.querySelectorAll(`.element[data-atomic-number] input`);
+            inputs.forEach(input => {
+                const element = input.closest('.element');
+                if (!element) return;
+                
+                const atomicNumber = parseInt(element.dataset.atomicNumber);
+                if (atomicNumber >= startNumber && atomicNumber <= endNumber) {
+                    // Reset the input
+                    input.value = '';
+                    input.className = input.className.replace(/\s*(correct|incorrect)/g, '');
+                    input.style.backgroundColor = '';
+                    
+                    // Remove the answer from saved state
+                    const elementId = input.dataset.element;
+                    const field = input.dataset.field;
+                    delete quizState.userAnswers[`${elementId}-${field}`];
+                }
+            });
+            
+            // Update score and save state
+            quiz.updateScore();
+            quiz.saveQuizState();
+        }
+
+        // Initialize quiz when page loads
+        let quiz;
+        document.addEventListener('DOMContentLoaded', function() {
+            quiz = new PeriodicTableQuiz();
+        });
+    </script>
+    
+    <!-- Dynamic Translation System -->
+    <script src="translator.js"></script>
+</body>
+</html> 

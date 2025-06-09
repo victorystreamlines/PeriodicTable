@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GL Periodic</title>
+    <link rel="icon" type="image/png" href="ChemistryLogo.png">
+    <link rel="shortcut icon" type="image/png" href="ChemistryLogo.png">
+    <link rel="apple-touch-icon" href="ChemistryLogo.png">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Authentication Overlay Styles */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+        
+        .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            animation: slideIn 0.5s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .auth-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .auth-subtitle {
+            color: #6c757d;
+            margin-bottom: 30px;
+        }
+        
+        .auth-form {
+            text-align: left;
+        }
+        
+        .auth-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .auth-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .auth-checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .auth-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #495057;
+        }
+        
+        .auth-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+        
+        .auth-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .auth-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .auth-error {
+            color: #dc3545;
+            font-size: 0.9rem;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .auth-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Blur effect for main content when auth is active */
+        .content-blurred {
+            filter: blur(5px);
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .quiz-stats {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 123, 255, 0.1);
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 200px;
+            z-index: 1050;
+        }
+        .quiz-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 5px 0;
+        }
+        .quiz-input.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+        }
+        .quiz-input.incorrect {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+        }
+        .quiz-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        .quiz-buttons {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .quiz-buttons .btn {
+            margin: 5px;
+        }
+        .quiz-progress {
+            margin-bottom: 10px;
+        }
+        .progress-text {
+            font-weight: bold;
+            color: #007bff;
+        }
+        
+        @media (max-width: 768px) {
+            .auth-container {
+                padding: 30px;
+                margin: 20px;
+            }
+            
+            .auth-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Overlay -->
+    <div id="authOverlay" class="auth-overlay">
+        <div class="auth-container">
+            <div class="auth-icon">🔐</div>
+            <h2 class="auth-title">Secure Access</h2>
+            <p class="auth-subtitle">Enter password to access Advanced Quiz</p>
+            
+            <form class="auth-form" id="authForm">
+                <div class="mb-3">
+                    <input 
+                        type="password" 
+                        id="passwordInput" 
+                        class="auth-input" 
+                        placeholder="Enter password" 
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+                
+                <div class="auth-checkbox-group">
+                    <label class="auth-checkbox">
+                        <input type="checkbox" id="showPassword" checked>
+                        <span>Show password</span>
+                    </label>
+                    
+                    <label class="auth-checkbox">
+                        <input type="checkbox" id="rememberMe" checked>
+                        <span>Remember me</span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="auth-btn" id="authBtn">
+                    Access Advanced Quiz
+                </button>
+                
+                <div class="auth-error" id="authError">
+                    Incorrect password. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content (will be blurred until authentication) -->
+    <div id="mainContent" class="content-blurred">
+    <!-- Quiz Statistics Panel -->
+    <div class="quiz-stats">
+        <h6 class="text-center mb-3">📊 Quiz Progress</h6>
+        <div class="quiz-progress">
+            <div class="progress-text">Overall Score: <span id="overallPercentage">0%</span></div>
+            <div class="progress mt-2">
+                <div class="progress-bar" role="progressbar" id="overallProgressBar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div class="small text-muted">
+            <div>Elements Attempted: <span id="elementsAttempted">0</span>/118</div>
+            <div>Questions Answered: <span id="totalAnswered">0</span></div>
+            <div>Correct Answers: <span id="correctAnswers">0</span></div>
+            <div>Total Possible: <span id="totalPossible">0</span> questions</div>
+        </div>
+        <button class="btn btn-sm btn-outline-danger mt-2 w-100" onclick="quizManager.resetAllProgress()">Reset All Progress</button>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg" style="background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); margin-bottom: 20px; border-radius: 15px;">
+            <div class="container-fluid">
+                <a href="index.html" class="btn btn-outline-primary me-3">
+                    ← Back to Home
+                </a>
+                <div class="mx-auto">
+                    <span class="navbar-text fw-bold text-primary">Advanced Periodic Table Quiz</span>
+                </div>
+                <a href="quiz.html" class="btn btn-outline-secondary">
+                    Basic Quiz →
+                </a>
+            </div>
+        </nav>
+        
+        <header class="text-center py-4">
+            <h1 class="display-4 fw-bold text-primary">Interactive Periodic Table Quiz</h1>
+            <p class="lead">Click on any element to test your knowledge - Fill in the blanks and check your answers!</p>
+        </header>
+
+        <!-- Legend -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="legend-container">
+                    <h5 class="text-center mb-3">Element Classification</h5>
+                    <div class="legend-grid">
+                        <div class="legend-item">
+                            <div class="legend-color alkali-metals"></div>
+                            <span>Alkali Metals</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color alkaline-earth-metals"></div>
+                            <span>Alkaline Earth Metals</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color transition-metals"></div>
+                            <span>Transition Metals</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color post-transition-metals"></div>
+                            <span>Post-transition Metals</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color metalloids"></div>
+                            <span>Metalloids</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color nonmetals"></div>
+                            <span>Nonmetals</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color halogens"></div>
+                            <span>Halogens</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color noble-gases"></div>
+                            <span>Noble Gases</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color lanthanides"></div>
+                            <span>Lanthanides</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color actinides"></div>
+                            <span>Actinides</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Periodic Table -->
+        <div class="periodic-table-container">
+            <div id="periodic-table" class="periodic-table"></div>
+        </div>
+
+        <!-- Lanthanides and Actinides -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div id="lanthanides-actinides" class="lanthanides-actinides"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Element Quiz Modal -->
+    <div class="modal fade" id="elementModal" tabindex="-1" aria-labelledby="elementModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="elementModalLabel">Element Quiz</h5>
+                    <div class="ms-auto me-3">
+                        <span class="badge bg-info" id="elementScore">Score: 0%</span>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="elementDetails" style="max-height: 80vh; overflow-y: auto;">
+                    <!-- Quiz content will be populated here -->
+                </div>
+                <div class="modal-footer">
+                    <div class="quiz-buttons">
+                        <button type="button" class="btn btn-success" id="showAnswersBtn" onclick="quizManager.toggleAnswers()">Show Answers</button>
+                        <button type="button" class="btn btn-warning" onclick="quizManager.resetCurrentElement()">Reset This Element</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="complete-elements.js"></script>
+    <script src="quiz-script.js"></script>
+    </div>
+
+    <!-- Authentication Script -->
+    <script>
+        // Authentication System
+        class AuthenticationManager {
+            constructor() {
+                this.correctPassword = 'GL_Admin';
+                this.storageKey = 'periodicTableAuth';
+                this.init();
+            }
+
+            init() {
+                // Check if user is already authenticated
+                if (this.isAuthenticated()) {
+                    this.allowAccess();
+                } else {
+                    this.requireAuthentication();
+                }
+
+                // Setup event listeners
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                const authForm = document.getElementById('authForm');
+                const passwordInput = document.getElementById('passwordInput');
+                const showPasswordCheckbox = document.getElementById('showPassword');
+                const authError = document.getElementById('authError');
+
+                // Form submission
+                authForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.handleAuthentication();
+                });
+
+                // Show/hide password toggle
+                showPasswordCheckbox.addEventListener('change', (e) => {
+                    passwordInput.type = e.target.checked ? 'text' : 'password';
+                });
+
+                // Clear error on input
+                passwordInput.addEventListener('input', () => {
+                    authError.style.display = 'none';
+                    passwordInput.style.borderColor = '#e9ecef';
+                });
+
+                // Focus password input when overlay is shown
+                setTimeout(() => {
+                    passwordInput.focus();
+                }, 100);
+
+                // Handle Enter key on password input
+                passwordInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.handleAuthentication();
+                    }
+                });
+            }
+
+            handleAuthentication() {
+                const passwordInput = document.getElementById('passwordInput');
+                const rememberMeCheckbox = document.getElementById('rememberMe');
+                const authError = document.getElementById('authError');
+                const authBtn = document.getElementById('authBtn');
+                const enteredPassword = passwordInput.value;
+
+                // Disable button during processing
+                authBtn.disabled = true;
+                authBtn.textContent = 'Verifying...';
+
+                // Simulate processing time for better UX
+                setTimeout(() => {
+                    if (enteredPassword === this.correctPassword) {
+                        // Successful authentication
+                        if (rememberMeCheckbox.checked) {
+                            this.saveAuthenticationState();
+                        }
+                        this.allowAccess();
+                    } else {
+                        // Failed authentication
+                        this.showError();
+                        authBtn.disabled = false;
+                        authBtn.textContent = 'Access Advanced Quiz';
+                    }
+                }, 500);
+            }
+
+            showError() {
+                const passwordInput = document.getElementById('passwordInput');
+                const authError = document.getElementById('authError');
+                
+                authError.style.display = 'block';
+                passwordInput.style.borderColor = '#dc3545';
+                passwordInput.value = '';
+                passwordInput.focus();
+                
+                // Add shake animation
+                passwordInput.style.animation = 'shake 0.5s ease-in-out';
+                setTimeout(() => {
+                    passwordInput.style.animation = '';
+                }, 500);
+            }
+
+            allowAccess() {
+                const authOverlay = document.getElementById('authOverlay');
+                const mainContent = document.getElementById('mainContent');
+                
+                // Fade out overlay
+                authOverlay.style.opacity = '0';
+                
+                setTimeout(() => {
+                    authOverlay.style.display = 'none';
+                    mainContent.classList.remove('content-blurred');
+                    
+                    // Focus first interactive element if any
+                    const firstFocusable = mainContent.querySelector('a, button, input, select, textarea');
+                    if (firstFocusable) {
+                        firstFocusable.focus();
+                    }
+                }, 500);
+            }
+
+            requireAuthentication() {
+                const authOverlay = document.getElementById('authOverlay');
+                const mainContent = document.getElementById('mainContent');
+                
+                authOverlay.style.display = 'flex';
+                authOverlay.style.opacity = '1';
+                mainContent.classList.add('content-blurred');
+                
+                // Focus password input
+                setTimeout(() => {
+                    document.getElementById('passwordInput').focus();
+                }, 100);
+            }
+
+            saveAuthenticationState() {
+                const rememberExpiry = new Date();
+                rememberExpiry.setDate(rememberExpiry.getDate() + 30); // Remember for 30 days
+                
+                localStorage.setItem(this.storageKey, JSON.stringify({
+                    authenticated: true,
+                    expiry: rememberExpiry.getTime()
+                }));
+            }
+
+            isAuthenticated() {
+                try {
+                    const authData = localStorage.getItem(this.storageKey);
+                    if (!authData) return false;
+                    
+                    const parsed = JSON.parse(authData);
+                    const now = new Date().getTime();
+                    
+                    if (parsed.authenticated && parsed.expiry > now) {
+                        return true;
+                    } else {
+                        // Remove expired authentication
+                        localStorage.removeItem(this.storageKey);
+                        return false;
+                    }
+                } catch (error) {
+                    localStorage.removeItem(this.storageKey);
+                    return false;
+                }
+            }
+
+            logout() {
+                localStorage.removeItem(this.storageKey);
+                location.reload();
+            }
+        }
+
+        // Add shake animation CSS
+        const shakeStyle = document.createElement('style');
+        shakeStyle.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(shakeStyle);
+
+        // Initialize authentication when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            window.authManager = new AuthenticationManager();
+        });
+
+        // Add logout function to global scope for debugging (optional)
+        window.logout = () => {
+            if (window.authManager) {
+                window.authManager.logout();
+            }
+        };
+    </script>
+    
+    <!-- Dynamic Translation System -->
+    <script src="translator.js"></script>
+</body>
+</html> 
