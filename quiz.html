@@ -636,6 +636,110 @@
                 font-size: 1.5rem;
             }
         }
+
+        /* Additional styles for the duplicate control section */
+        .quiz-controls-bottom {
+            background: rgba(255,255,255,0.95);
+            border-radius: 15px;
+            padding: 15px 25px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            margin: 30px 0;
+            border: 2px solid rgba(255,255,255,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+        }
+
+        .quiz-controls-bottom::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .quiz-controls-bottom .score-display {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 2px solid #2196f3;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .quiz-controls-bottom .control-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-controls-bottom .show-answers-btn {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .quiz-controls-bottom .show-answers-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .quiz-controls-bottom .show-answers-btn.active {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+        }
+
+        .quiz-controls-bottom .btn-reset {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .quiz-controls-bottom .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .quiz-controls-bottom {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px 15px;
+            }
+            
+            .quiz-controls-bottom .score-display {
+                margin-bottom: 15px;
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .quiz-controls-bottom .control-buttons {
+                justify-content: center;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -742,6 +846,15 @@
             </div>
         </div>
 
+        <!-- Secondary Quiz Controls (between main table and lanthanides/actinides) -->
+        <div class="quiz-controls-bottom">
+            <div class="score-display" id="scoreDisplayBottom">Score: 0 / 354 (0%)</div>
+            <div class="control-buttons">
+                <button class="show-answers-btn" id="showAnswersBtnBottom" onclick="toggleAnswers()">Show Answers</button>
+                <button class="btn-reset" onclick="resetQuiz()">Reset Quiz</button>
+            </div>
+        </div>
+
         <!-- Lanthanides and Actinides -->
         <div class="lanthanides-actinides">
             <div class="special-rows-reset-buttons">
@@ -750,6 +863,15 @@
             </div>
             <div class="lanthanides-actinides-content">
                 <div id="lanthanides-actinides"></div>
+            </div>
+        </div>
+
+        <!-- Duplicate Quiz Controls -->
+        <div class="quiz-controls-bottom">
+            <div class="score-display" id="scoreDisplayBottom2">Score: 0 / 354 (0%)</div>
+            <div class="control-buttons">
+                <button class="show-answers-btn" id="showAnswersBtnBottom2" onclick="toggleAnswers()">Show Answers</button>
+                <button class="btn-reset" onclick="resetQuiz()">Reset Quiz</button>
             </div>
         </div>
     </div>
@@ -1342,6 +1464,8 @@
                 quizState.score = correctAnswers;
                 const percentage = quizState.totalQuestions > 0 ? ((correctAnswers / quizState.totalQuestions) * 100).toFixed(1) : 0;
                 document.getElementById('scoreDisplay').textContent = `Score: ${correctAnswers} / ${quizState.totalQuestions} (${percentage}%)`;
+                document.getElementById('scoreDisplayBottom').textContent = `Score: ${correctAnswers} / ${quizState.totalQuestions} (${percentage}%)`;
+                document.getElementById('scoreDisplayBottom2').textContent = `Score: ${correctAnswers} / ${quizState.totalQuestions} (${percentage}%)`;
             }
 
             saveQuizState() {
@@ -1359,6 +1483,8 @@
         // Global functions
         function toggleAnswers() {
             const btn = document.getElementById('showAnswersBtn');
+            const btnBottom = document.getElementById('showAnswersBtnBottom');
+            const btnBottom2 = document.getElementById('showAnswersBtnBottom2');
             const inputs = document.querySelectorAll('input[data-answer]');
             
             if (!quizState.showingAnswers) {
@@ -1366,6 +1492,10 @@
                 quizState.showingAnswers = true;
                 btn.textContent = 'Hide Answers';
                 btn.classList.add('active');
+                btnBottom.textContent = 'Hide Answers';
+                btnBottom.classList.add('active');
+                btnBottom2.textContent = 'Hide Answers';
+                btnBottom2.classList.add('active');
                 
                 inputs.forEach(input => {
                     input.value = input.dataset.answer;
@@ -1377,6 +1507,10 @@
                 quizState.showingAnswers = false;
                 btn.textContent = 'Show Answers';
                 btn.classList.remove('active');
+                btnBottom.textContent = 'Show Answers';
+                btnBottom.classList.remove('active');
+                btnBottom2.textContent = 'Show Answers';
+                btnBottom2.classList.remove('active');
                 
                 inputs.forEach(input => {
                     const elementId = input.dataset.element;
@@ -1512,4 +1646,4 @@
     <!-- Dynamic Translation System -->
     <script src="translator.js"></script>
 </body>
-</html> 
+</html>
