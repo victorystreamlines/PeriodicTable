@@ -611,20 +611,27 @@
 
         .element-image {
             width: 100%;
-            max-width: 200px;
-            height: 150px;
+            max-width: 300px;
+            height: 200px;
             border-radius: 15px;
-            object-fit: cover;
             margin: 15px auto;
             display: block;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
             background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #999;
-            font-size: 1.1rem;
-            border: 2px dashed #ccc;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .element-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .element-image:hover img {
+            transform: scale(1.05);
         }
 
         .fun-facts {
@@ -831,6 +838,103 @@
     </div>
 
     <script>
+        // Element images - using reliable sources
+        const elementImages = {
+            1: "https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=400&h=300&fit=crop", // Hydrogen flame
+            2: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop", // Helium balloons
+            3: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Lithium_paraffin.jpg/400px-Lithium_paraffin.jpg", // Lithium metal
+            4: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Beryllium_%2899.5%25%29.jpg/400px-Beryllium_%2899.5%25%29.jpg", // Beryllium
+            5: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Boron.jpg/400px-Boron.jpg", // Boron
+            6: "https://images.unsplash.com/photo-1602781664839-6a809045c8b3?w=400&h=300&fit=crop", // Diamond/Carbon
+            7: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop", // Liquid nitrogen
+            8: "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop", // Oxygen bubbles
+            9: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=400&h=300&fit=crop", // Toothpaste/Fluoride
+            10: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop", // Neon lights
+            11: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Na_%28Sodium%29.jpg/400px-Na_%28Sodium%29.jpg", // Sodium metal
+            12: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Mg-Kristall.jpg/400px-Mg-Kristall.jpg", // Magnesium crystal
+            13: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=300&fit=crop", // Aluminum cans
+            14: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop", // Silicon wafer
+            15: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/White_phosphorus_%286%29.jpg/400px-White_phosphorus_%286%29.jpg", // White phosphorus
+            16: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Sulfur-sample.jpg/400px-Sulfur-sample.jpg", // Sulfur crystals
+            17: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=400&h=300&fit=crop", // Swimming pool
+            18: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop", // Argon lighting
+            19: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=300&fit=crop", // Bananas (potassium)
+            20: "https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=300&fit=crop", // Limestone/Calcium
+            26: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop", // Iron/Steel
+            29: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop", // Copper pipes
+            35: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Bromine_25ml.jpg/400px-Bromine_25ml.jpg", // Bromine liquid
+            47: "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400&h=300&fit=crop", // Silver jewelry
+            54: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop", // Xenon lights
+            79: "https://images.unsplash.com/photo-1610375461369-d613b564b03e?w=400&h=300&fit=crop", // Gold bars
+            78: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Platinum_crystals.jpg/400px-Platinum_crystals.jpg", // Platinum
+            80: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Pouring_liquid_mercury_bionerd.jpg/400px-Pouring_liquid_mercury_bionerd.jpg", // Mercury
+            92: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/HEUraniumC.jpg/400px-HEUraniumC.jpg", // Uranium
+            21: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Scandium_sublimed_dendritic_and_1cm3_cube.jpg/400px-Scandium_sublimed_dendritic_and_1cm3_cube.jpg", // Scandium
+            22: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop", // Titanium
+            23: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Vanadium_etched.jpg/400px-Vanadium_etched.jpg", // Vanadium
+            24: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Chromium_crystals_and_1cm3_cube.jpg/400px-Chromium_crystals_and_1cm3_cube.jpg", // Chromium
+            25: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Manganese_electrolytic_and_1cm3_cube.jpg/400px-Manganese_electrolytic_and_1cm3_cube.jpg", // Manganese
+            27: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Cobalt_electrolytic_and_1cm3_cube.jpg/400px-Cobalt_electrolytic_and_1cm3_cube.jpg", // Cobalt
+            28: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Nickel_chunk.jpg/400px-Nickel_chunk.jpg", // Nickel
+            30: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Zinc_fragment_sublimed_and_1cm3_cube.jpg/400px-Zinc_fragment_sublimed_and_1cm3_cube.jpg", // Zinc
+            31: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Gallium1_300x300.jpg/400px-Gallium1_300x300.jpg", // Gallium
+            32: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Germanium_crystal.jpg/400px-Germanium_crystal.jpg", // Germanium
+            33: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Arsenic_1a.jpg/400px-Arsenic_1a.jpg", // Arsenic
+            34: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Selenium_1.jpg/400px-Selenium_1.jpg", // Selenium
+            36: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop", // Krypton (lights)
+            37: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Rb5.jpg/400px-Rb5.jpg", // Rubidium
+            38: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Strontium_destilled_crystals.jpg/400px-Strontium_destilled_crystals.jpg", // Strontium
+            39: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Yttrium_sublimed_dendritic_and_1cm3_cube.jpg/400px-Yttrium_sublimed_dendritic_and_1cm3_cube.jpg", // Yttrium
+            40: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Zirconium_crystal_bar_and_1cm3_cube.jpg/400px-Zirconium_crystal_bar_and_1cm3_cube.jpg", // Zirconium
+            41: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Niobium_crystals_and_1cm3_cube.jpg/400px-Niobium_crystals_and_1cm3_cube.jpg", // Niobium
+            42: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Molybdenum_crystals_and_1cm3_cube.jpg/400px-Molybdenum_crystals_and_1cm3_cube.jpg", // Molybdenum
+            44: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Ruthenium_a_half_bar.jpg/400px-Ruthenium_a_half_bar.jpg", // Ruthenium
+            45: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Rhodium05.jpg/400px-Rhodium05.jpg", // Rhodium
+            46: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Palladium_%2846_Pd%29.jpg/400px-Palladium_%2846_Pd%29.jpg", // Palladium
+            48: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Cadmium-crystal_bar.jpg/400px-Cadmium-crystal_bar.jpg", // Cadmium
+            49: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Indium.jpg/400px-Indium.jpg", // Indium
+            50: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Tin_crystals.jpg/400px-Tin_crystals.jpg", // Tin
+            51: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Antimony-4.jpg/400px-Antimony-4.jpg", // Antimony
+            52: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Tellurium2.jpg/400px-Tellurium2.jpg", // Tellurium
+            53: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Iodine-sample.jpg/400px-Iodine-sample.jpg", // Iodine
+            55: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Cesium.jpg/400px-Cesium.jpg", // Cesium
+            56: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Barium_unter_Argon_Schutzgas_Atmosphäre.jpg/400px-Barium_unter_Argon_Schutzgas_Atmosphäre.jpg", // Barium
+            57: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Lanthanum-2.jpg/400px-Lanthanum-2.jpg", // Lanthanum
+            72: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Hafnium_bar.jpg/400px-Hafnium_bar.jpg", // Hafnium
+            73: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Tantalum_single_crystal_and_1cm3_cube.jpg/400px-Tantalum_single_crystal_and_1cm3_cube.jpg", // Tantalum
+            74: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Wolfram_evaporated_crystals_and_1cm3_cube.jpg/400px-Wolfram_evaporated_crystals_and_1cm3_cube.jpg", // Tungsten
+            75: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Rhenium_single_crystal_bar_and_1cm3_cube.jpg/400px-Rhenium_single_crystal_bar_and_1cm3_cube.jpg", // Rhenium
+            76: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Osmium_crystals.jpg/400px-Osmium_crystals.jpg", // Osmium
+            77: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Iridium-2.jpg/400px-Iridium-2.jpg", // Iridium
+            81: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Thallium_pieces_in_ampoule.jpg/400px-Thallium_pieces_in_ampoule.jpg", // Thallium
+            82: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop", // Lead
+            83: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Bismuth_crystals_and_1cm3_cube.jpg/400px-Bismuth_crystals_and_1cm3_cube.jpg", // Bismuth
+            86: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop" // Radon (light representation)
+        };
+
+        // Function to get element image
+        const getElementImage = (atomicNumber, symbol, name, classification) => {
+            if (elementImages[atomicNumber]) {
+                return elementImages[atomicNumber];
+            }
+            
+            // Fallback: generate a representative image URL based on classification
+            const fallbackImages = {
+                'alkali-metals': 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?w=400&h=300&fit=crop', // Fire/flame
+                'alkaline-earth-metals': 'https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=400&h=300&fit=crop', // Limestone
+                'transition-metals': 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=300&fit=crop', // Steel/metal
+                'post-transition-metals': 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop', // Copper
+                'metalloids': 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop', // Silicon wafer
+                'nonmetals': 'https://images.unsplash.com/photo-1602781664839-6a809045c8b3?w=400&h=300&fit=crop', // Diamond
+                'halogens': 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?w=400&h=300&fit=crop', // Swimming pool
+                'noble-gases': 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=300&fit=crop', // Neon lights
+                'lanthanides': 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=300&fit=crop', // Tech/electronics
+                'actinides': 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=400&h=300&fit=crop' // Nuclear/energy
+            };
+            
+            return fallbackImages[classification] || fallbackImages['transition-metals']; // Default fallback
+        };
+
         // Element detailed information for popups
         const elementInfo = {
             1: {
@@ -1554,9 +1658,39 @@
                 propertiesContainer.appendChild(propertyCard);
             });
             
-            // Update element image (placeholder)
+            // Update element image with real image
             const imageContainer = document.getElementById('modalElementImage');
-            imageContainer.innerHTML = `📷 ${elementData.name} Image<br><small>Visual representation would go here</small>`;
+            const imageUrl = getElementImage(elementData.atomicNumber, elementData.symbol, elementData.name, elementData.classification);
+            
+            imageContainer.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = imageUrl;
+            img.alt = `${elementData.name} - ${elementData.symbol}`;
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.borderRadius = '15px';
+            
+            // Add loading placeholder
+            img.onload = function() {
+                // Image loaded successfully
+                this.style.opacity = '1';
+            };
+            
+            img.onerror = function() {
+                // Fallback if image fails to load
+                imageContainer.innerHTML = `
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; border-radius: 15px;">
+                        <div style="font-size: 3rem; margin-bottom: 10px;">${elementData.symbol}</div>
+                        <div style="font-size: 1.2rem; font-weight: bold;">${elementData.name}</div>
+                        <div style="font-size: 0.9rem; opacity: 0.8; margin-top: 5px;">Atomic #${elementData.atomicNumber}</div>
+                    </div>
+                `;
+            };
+            
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.3s ease';
+            imageContainer.appendChild(img);
             
             // Show modal
             modal.style.display = 'block';
