@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elements - Complete Periodic Table</title>
+    <link rel="icon" type="image/png" href="ChemistryLogo.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(240, 240, 240, 0.8);
+            border-radius: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+
+        .state-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(230, 230, 230, 0.8);
+            border-radius: 10px;
+        }
+
+        .state-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+
+        .state-solid { color: #8B4513; }
+        .state-liquid { color: #4169E1; }
+        .state-gas { color: #32CD32; }
+
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 3px;
+            margin-bottom: 30px;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .element {
+            aspect-ratio: 1;
+            min-height: 80px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .element:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+            z-index: 10;
+        }
+
+        .atomic-number {
+            font-size: 0.8rem;
+            font-weight: bold;
+            position: absolute;
+            top: 3px;
+            left: 5px;
+            opacity: 0.8;
+        }
+
+        .symbol {
+            font-size: 1.6rem;
+            font-weight: bold;
+            line-height: 1;
+            margin: 8px 0 4px 0;
+        }
+
+        .name {
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1;
+            margin: 2px 0;
+            opacity: 0.9;
+        }
+
+        .atomic-mass {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            line-height: 1;
+        }
+
+        .state {
+            position: absolute;
+            bottom: 2px;
+            right: 4px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            padding: 1px 3px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .state.solid { color: #8B4513; }
+        .state.liquid { color: #4169E1; }
+        .state.gas { color: #32CD32; }
+
+        .empty {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+
+        .empty:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Element Classifications */
+        .alkali-metals {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: white;
+        }
+
+        .alkaline-earth-metals {
+            background: linear-gradient(135deg, #ffa726, #ff9800);
+            color: white;
+        }
+
+        .transition-metals {
+            background: linear-gradient(135deg, #42a5f5, #2196f3);
+            color: white;
+        }
+
+        .post-transition-metals {
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+            color: white;
+        }
+
+        .metalloids {
+            background: linear-gradient(135deg, #ab47bc, #9c27b0);
+            color: white;
+        }
+
+        .nonmetals {
+            background: linear-gradient(135deg, #26c6da, #00bcd4);
+            color: white;
+        }
+
+        .halogens {
+            background: linear-gradient(135deg, #ffca28, #ffc107);
+            color: #333;
+        }
+
+        .noble-gases {
+            background: linear-gradient(135deg, #8d6e63, #795548);
+            color: white;
+        }
+
+        .lanthanides {
+            background: linear-gradient(135deg, #ec407a, #e91e63);
+            color: white;
+        }
+
+        .actinides {
+            background: linear-gradient(135deg, #5c6bc0, #3f51b5);
+            color: white;
+        }
+
+        .lanthanides-actinides {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(240, 240, 240, 0.5);
+            border-radius: 15px;
+        }
+
+        .series-section {
+            margin-bottom: 20px;
+        }
+
+        .series-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .lanthanides-title { color: #e91e63; }
+        .actinides-title { color: #3f51b5; }
+
+        .series-row {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            gap: 3px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .series-element {
+            aspect-ratio: 1;
+            min-height: 70px;
+            border: 2px solid rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 3px;
+            text-align: center;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .series-element:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .series-element .symbol {
+            font-size: 1.3rem;
+            margin: 5px 0 3px 0;
+        }
+
+        .series-element .name {
+            font-size: 0.65rem;
+        }
+
+        .series-element .atomic-mass {
+            font-size: 0.6rem;
+        }
+
+        .series-element .state {
+            bottom: 1px;
+            right: 3px;
+            font-size: 0.55rem;
+        }
+
+        @media (max-width: 1400px) {
+            .element {
+                min-height: 70px;
+            }
+            .symbol {
+                font-size: 1.4rem;
+            }
+            .name {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .periodic-table {
+                gap: 2px;
+            }
+            .element {
+                min-height: 60px;
+            }
+            .symbol {
+                font-size: 1.2rem;
+            }
+            .name {
+                font-size: 0.65rem;
+            }
+            .atomic-mass {
+                font-size: 0.6rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                padding: 15px;
+            }
+            .title {
+                font-size: 2.5rem;
+            }
+            .legend {
+                flex-direction: column;
+                align-items: center;
+            }
+            .element {
+                min-height: 50px;
+            }
+            .symbol {
+                font-size: 1rem;
+            }
+            .name {
+                font-size: 0.6rem;
+            }
+            .atomic-mass {
+                font-size: 0.55rem;
+            }
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button">← Back to Home</a>
+    
+    <div class="container">
+        <header>
+            <h1 class="title">Elements</h1>
+            <p class="subtitle">Complete Periodic Table with State Classification</p>
+        </header>
+
+        <!-- State Legend -->
+        <div class="state-legend">
+            <div class="state-item">
+                <span class="state-solid">● SOLID</span> - Solid at room temperature
+            </div>
+            <div class="state-item">
+                <span class="state-liquid">● LIQUID</span> - Liquid at room temperature
+            </div>
+            <div class="state-item">
+                <span class="state-gas">● GAS</span> - Gas at room temperature
+            </div>
+        </div>
+
+        <!-- Classification Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color alkali-metals"></div>
+                <span>Alkali Metals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color alkaline-earth-metals"></div>
+                <span>Alkaline Earth Metals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color transition-metals"></div>
+                <span>Transition Metals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color post-transition-metals"></div>
+                <span>Post-Transition Metals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color metalloids"></div>
+                <span>Metalloids</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color nonmetals"></div>
+                <span>Nonmetals</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color halogens"></div>
+                <span>Halogens</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color noble-gases"></div>
+                <span>Noble Gases</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color lanthanides"></div>
+                <span>Lanthanides</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color actinides"></div>
+                <span>Actinides</span>
+            </div>
+        </div>
+
+        <!-- Main Periodic Table -->
+        <div id="periodic-table" class="periodic-table"></div>
+
+        <!-- Lanthanides and Actinides -->
+        <div class="lanthanides-actinides">
+            <div class="series-section">
+                <h3 class="series-title lanthanides-title">Lanthanides</h3>
+                <div id="lanthanides-row" class="series-row"></div>
+            </div>
+            <div class="series-section">
+                <h3 class="series-title actinides-title">Actinides</h3>
+                <div id="actinides-row" class="series-row"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Complete periodic table data with all 118 elements
+        const elements = [
+            // Period 1
+            { atomicNumber: 1, symbol: "H", name: "Hydrogen", atomicMass: "1.008", classification: "nonmetals", state: "gas", position: {row: 1, col: 1} },
+            { atomicNumber: 2, symbol: "He", name: "Helium", atomicMass: "4.003", classification: "noble-gases", state: "gas", position: {row: 1, col: 18} },
+            
+            // Period 2
+            { atomicNumber: 3, symbol: "Li", name: "Lithium", atomicMass: "6.94", classification: "alkali-metals", state: "solid", position: {row: 2, col: 1} },
+            { atomicNumber: 4, symbol: "Be", name: "Beryllium", atomicMass: "9.012", classification: "alkaline-earth-metals", state: "solid", position: {row: 2, col: 2} },
+            { atomicNumber: 5, symbol: "B", name: "Boron", atomicMass: "10.81", classification: "metalloids", state: "solid", position: {row: 2, col: 13} },
+            { atomicNumber: 6, symbol: "C", name: "Carbon", atomicMass: "12.01", classification: "nonmetals", state: "solid", position: {row: 2, col: 14} },
+            { atomicNumber: 7, symbol: "N", name: "Nitrogen", atomicMass: "14.01", classification: "nonmetals", state: "gas", position: {row: 2, col: 15} },
+            { atomicNumber: 8, symbol: "O", name: "Oxygen", atomicMass: "16.00", classification: "nonmetals", state: "gas", position: {row: 2, col: 16} },
+            { atomicNumber: 9, symbol: "F", name: "Fluorine", atomicMass: "19.00", classification: "halogens", state: "gas", position: {row: 2, col: 17} },
+            { atomicNumber: 10, symbol: "Ne", name: "Neon", atomicMass: "20.18", classification: "noble-gases", state: "gas", position: {row: 2, col: 18} },
+            
+            // Period 3
+            { atomicNumber: 11, symbol: "Na", name: "Sodium", atomicMass: "22.99", classification: "alkali-metals", state: "solid", position: {row: 3, col: 1} },
+            { atomicNumber: 12, symbol: "Mg", name: "Magnesium", atomicMass: "24.31", classification: "alkaline-earth-metals", state: "solid", position: {row: 3, col: 2} },
+            { atomicNumber: 13, symbol: "Al", name: "Aluminum", atomicMass: "26.98", classification: "post-transition-metals", state: "solid", position: {row: 3, col: 13} },
+            { atomicNumber: 14, symbol: "Si", name: "Silicon", atomicMass: "28.09", classification: "metalloids", state: "solid", position: {row: 3, col: 14} },
+            { atomicNumber: 15, symbol: "P", name: "Phosphorus", atomicMass: "30.97", classification: "nonmetals", state: "solid", position: {row: 3, col: 15} },
+            { atomicNumber: 16, symbol: "S", name: "Sulfur", atomicMass: "32.07", classification: "nonmetals", state: "solid", position: {row: 3, col: 16} },
+            { atomicNumber: 17, symbol: "Cl", name: "Chlorine", atomicMass: "35.45", classification: "halogens", state: "gas", position: {row: 3, col: 17} },
+            { atomicNumber: 18, symbol: "Ar", name: "Argon", atomicMass: "39.95", classification: "noble-gases", state: "gas", position: {row: 3, col: 18} },
+            
+            // Period 4
+            { atomicNumber: 19, symbol: "K", name: "Potassium", atomicMass: "39.10", classification: "alkali-metals", state: "solid", position: {row: 4, col: 1} },
+            { atomicNumber: 20, symbol: "Ca", name: "Calcium", atomicMass: "40.08", classification: "alkaline-earth-metals", state: "solid", position: {row: 4, col: 2} },
+            { atomicNumber: 21, symbol: "Sc", name: "Scandium", atomicMass: "44.96", classification: "transition-metals", state: "solid", position: {row: 4, col: 3} },
+            { atomicNumber: 22, symbol: "Ti", name: "Titanium", atomicMass: "47.87", classification: "transition-metals", state: "solid", position: {row: 4, col: 4} },
+            { atomicNumber: 23, symbol: "V", name: "Vanadium", atomicMass: "50.94", classification: "transition-metals", state: "solid", position: {row: 4, col: 5} },
+            { atomicNumber: 24, symbol: "Cr", name: "Chromium", atomicMass: "52.00", classification: "transition-metals", state: "solid", position: {row: 4, col: 6} },
+            { atomicNumber: 25, symbol: "Mn", name: "Manganese", atomicMass: "54.94", classification: "transition-metals", state: "solid", position: {row: 4, col: 7} },
+            { atomicNumber: 26, symbol: "Fe", name: "Iron", atomicMass: "55.85", classification: "transition-metals", state: "solid", position: {row: 4, col: 8} },
+            { atomicNumber: 27, symbol: "Co", name: "Cobalt", atomicMass: "58.93", classification: "transition-metals", state: "solid", position: {row: 4, col: 9} },
+            { atomicNumber: 28, symbol: "Ni", name: "Nickel", atomicMass: "58.69", classification: "transition-metals", state: "solid", position: {row: 4, col: 10} },
+            { atomicNumber: 29, symbol: "Cu", name: "Copper", atomicMass: "63.55", classification: "transition-metals", state: "solid", position: {row: 4, col: 11} },
+            { atomicNumber: 30, symbol: "Zn", name: "Zinc", atomicMass: "65.38", classification: "transition-metals", state: "solid", position: {row: 4, col: 12} },
+            { atomicNumber: 31, symbol: "Ga", name: "Gallium", atomicMass: "69.72", classification: "post-transition-metals", state: "solid", position: {row: 4, col: 13} },
+            { atomicNumber: 32, symbol: "Ge", name: "Germanium", atomicMass: "72.63", classification: "metalloids", state: "solid", position: {row: 4, col: 14} },
+            { atomicNumber: 33, symbol: "As", name: "Arsenic", atomicMass: "74.92", classification: "metalloids", state: "solid", position: {row: 4, col: 15} },
+            { atomicNumber: 34, symbol: "Se", name: "Selenium", atomicMass: "78.97", classification: "nonmetals", state: "solid", position: {row: 4, col: 16} },
+            { atomicNumber: 35, symbol: "Br", name: "Bromine", atomicMass: "79.90", classification: "halogens", state: "liquid", position: {row: 4, col: 17} },
+            { atomicNumber: 36, symbol: "Kr", name: "Krypton", atomicMass: "83.80", classification: "noble-gases", state: "gas", position: {row: 4, col: 18} },
+            
+            // Period 5
+            { atomicNumber: 37, symbol: "Rb", name: "Rubidium", atomicMass: "85.47", classification: "alkali-metals", state: "solid", position: {row: 5, col: 1} },
+            { atomicNumber: 38, symbol: "Sr", name: "Strontium", atomicMass: "87.62", classification: "alkaline-earth-metals", state: "solid", position: {row: 5, col: 2} },
+            { atomicNumber: 39, symbol: "Y", name: "Yttrium", atomicMass: "88.91", classification: "transition-metals", state: "solid", position: {row: 5, col: 3} },
+            { atomicNumber: 40, symbol: "Zr", name: "Zirconium", atomicMass: "91.22", classification: "transition-metals", state: "solid", position: {row: 5, col: 4} },
+            { atomicNumber: 41, symbol: "Nb", name: "Niobium", atomicMass: "92.91", classification: "transition-metals", state: "solid", position: {row: 5, col: 5} },
+            { atomicNumber: 42, symbol: "Mo", name: "Molybdenum", atomicMass: "95.95", classification: "transition-metals", state: "solid", position: {row: 5, col: 6} },
+            { atomicNumber: 43, symbol: "Tc", name: "Technetium", atomicMass: "98.00", classification: "transition-metals", state: "solid", position: {row: 5, col: 7} },
+            { atomicNumber: 44, symbol: "Ru", name: "Ruthenium", atomicMass: "101.07", classification: "transition-metals", state: "solid", position: {row: 5, col: 8} },
+            { atomicNumber: 45, symbol: "Rh", name: "Rhodium", atomicMass: "102.91", classification: "transition-metals", state: "solid", position: {row: 5, col: 9} },
+            { atomicNumber: 46, symbol: "Pd", name: "Palladium", atomicMass: "106.42", classification: "transition-metals", state: "solid", position: {row: 5, col: 10} },
+            { atomicNumber: 47, symbol: "Ag", name: "Silver", atomicMass: "107.87", classification: "transition-metals", state: "solid", position: {row: 5, col: 11} },
+            { atomicNumber: 48, symbol: "Cd", name: "Cadmium", atomicMass: "112.41", classification: "transition-metals", state: "solid", position: {row: 5, col: 12} },
+            { atomicNumber: 49, symbol: "In", name: "Indium", atomicMass: "114.82", classification: "post-transition-metals", state: "solid", position: {row: 5, col: 13} },
+            { atomicNumber: 50, symbol: "Sn", name: "Tin", atomicMass: "118.71", classification: "post-transition-metals", state: "solid", position: {row: 5, col: 14} },
+            { atomicNumber: 51, symbol: "Sb", name: "Antimony", atomicMass: "121.76", classification: "metalloids", state: "solid", position: {row: 5, col: 15} },
+            { atomicNumber: 52, symbol: "Te", name: "Tellurium", atomicMass: "127.60", classification: "metalloids", state: "solid", position: {row: 5, col: 16} },
+            { atomicNumber: 53, symbol: "I", name: "Iodine", atomicMass: "126.90", classification: "halogens", state: "solid", position: {row: 5, col: 17} },
+            { atomicNumber: 54, symbol: "Xe", name: "Xenon", atomicMass: "131.29", classification: "noble-gases", state: "gas", position: {row: 5, col: 18} },
+            
+            // Period 6
+            { atomicNumber: 55, symbol: "Cs", name: "Cesium", atomicMass: "132.91", classification: "alkali-metals", state: "solid", position: {row: 6, col: 1} },
+            { atomicNumber: 56, symbol: "Ba", name: "Barium", atomicMass: "137.33", classification: "alkaline-earth-metals", state: "solid", position: {row: 6, col: 2} },
+            // Lanthanides placeholder
+            { atomicNumber: 57, symbol: "La*", name: "Lanthanides", atomicMass: "138.91", classification: "lanthanides", state: "solid", position: {row: 6, col: 3} },
+            // Continue Period 6
+            { atomicNumber: 72, symbol: "Hf", name: "Hafnium", atomicMass: "178.49", classification: "transition-metals", state: "solid", position: {row: 6, col: 4} },
+            { atomicNumber: 73, symbol: "Ta", name: "Tantalum", atomicMass: "180.95", classification: "transition-metals", state: "solid", position: {row: 6, col: 5} },
+            { atomicNumber: 74, symbol: "W", name: "Tungsten", atomicMass: "183.84", classification: "transition-metals", state: "solid", position: {row: 6, col: 6} },
+            { atomicNumber: 75, symbol: "Re", name: "Rhenium", atomicMass: "186.21", classification: "transition-metals", state: "solid", position: {row: 6, col: 7} },
+            { atomicNumber: 76, symbol: "Os", name: "Osmium", atomicMass: "190.23", classification: "transition-metals", state: "solid", position: {row: 6, col: 8} },
+            { atomicNumber: 77, symbol: "Ir", name: "Iridium", atomicMass: "192.22", classification: "transition-metals", state: "solid", position: {row: 6, col: 9} },
+            { atomicNumber: 78, symbol: "Pt", name: "Platinum", atomicMass: "195.08", classification: "transition-metals", state: "solid", position: {row: 6, col: 10} },
+            { atomicNumber: 79, symbol: "Au", name: "Gold", atomicMass: "196.97", classification: "transition-metals", state: "solid", position: {row: 6, col: 11} },
+            { atomicNumber: 80, symbol: "Hg", name: "Mercury", atomicMass: "200.59", classification: "transition-metals", state: "liquid", position: {row: 6, col: 12} },
+            { atomicNumber: 81, symbol: "Tl", name: "Thallium", atomicMass: "204.38", classification: "post-transition-metals", state: "solid", position: {row: 6, col: 13} },
+            { atomicNumber: 82, symbol: "Pb", name: "Lead", atomicMass: "207.2", classification: "post-transition-metals", state: "solid", position: {row: 6, col: 14} },
+            { atomicNumber: 83, symbol: "Bi", name: "Bismuth", atomicMass: "208.98", classification: "post-transition-metals", state: "solid", position: {row: 6, col: 15} },
+            { atomicNumber: 84, symbol: "Po", name: "Polonium", atomicMass: "209.00", classification: "post-transition-metals", state: "solid", position: {row: 6, col: 16} },
+            { atomicNumber: 85, symbol: "At", name: "Astatine", atomicMass: "210.00", classification: "halogens", state: "solid", position: {row: 6, col: 17} },
+            { atomicNumber: 86, symbol: "Rn", name: "Radon", atomicMass: "222.00", classification: "noble-gases", state: "gas", position: {row: 6, col: 18} },
+            
+            // Period 7
+            { atomicNumber: 87, symbol: "Fr", name: "Francium", atomicMass: "223.00", classification: "alkali-metals", state: "solid", position: {row: 7, col: 1} },
+            { atomicNumber: 88, symbol: "Ra", name: "Radium", atomicMass: "226.00", classification: "alkaline-earth-metals", state: "solid", position: {row: 7, col: 2} },
+            // Actinides placeholder
+            { atomicNumber: 89, symbol: "Ac*", name: "Actinides", atomicMass: "227.00", classification: "actinides", state: "solid", position: {row: 7, col: 3} },
+            // Continue Period 7
+            { atomicNumber: 104, symbol: "Rf", name: "Rutherfordium", atomicMass: "267.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 4} },
+            { atomicNumber: 105, symbol: "Db", name: "Dubnium", atomicMass: "270.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 5} },
+            { atomicNumber: 106, symbol: "Sg", name: "Seaborgium", atomicMass: "271.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 6} },
+            { atomicNumber: 107, symbol: "Bh", name: "Bohrium", atomicMass: "272.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 7} },
+            { atomicNumber: 108, symbol: "Hs", name: "Hassium", atomicMass: "277.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 8} },
+            { atomicNumber: 109, symbol: "Mt", name: "Meitnerium", atomicMass: "276.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 9} },
+            { atomicNumber: 110, symbol: "Ds", name: "Darmstadtium", atomicMass: "281.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 10} },
+            { atomicNumber: 111, symbol: "Rg", name: "Roentgenium", atomicMass: "280.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 11} },
+            { atomicNumber: 112, symbol: "Cn", name: "Copernicium", atomicMass: "285.00", classification: "transition-metals", state: "solid", position: {row: 7, col: 12} },
+            { atomicNumber: 113, symbol: "Nh", name: "Nihonium", atomicMass: "284.00", classification: "post-transition-metals", state: "solid", position: {row: 7, col: 13} },
+            { atomicNumber: 114, symbol: "Fl", name: "Flerovium", atomicMass: "289.00", classification: "post-transition-metals", state: "solid", position: {row: 7, col: 14} },
+            { atomicNumber: 115, symbol: "Mc", name: "Moscovium", atomicMass: "288.00", classification: "post-transition-metals", state: "solid", position: {row: 7, col: 15} },
+            { atomicNumber: 116, symbol: "Lv", name: "Livermorium", atomicMass: "293.00", classification: "post-transition-metals", state: "solid", position: {row: 7, col: 16} },
+            { atomicNumber: 117, symbol: "Ts", name: "Tennessine", atomicMass: "292.00", classification: "halogens", state: "solid", position: {row: 7, col: 17} },
+            { atomicNumber: 118, symbol: "Og", name: "Oganesson", atomicMass: "294.00", classification: "noble-gases", state: "solid", position: {row: 7, col: 18} }
+        ];
+
+        // Lanthanides (57-71)
+        const lanthanides = [
+            { atomicNumber: 57, symbol: "La", name: "Lanthanum", atomicMass: "138.91", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 58, symbol: "Ce", name: "Cerium", atomicMass: "140.12", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 59, symbol: "Pr", name: "Praseodymium", atomicMass: "140.91", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 60, symbol: "Nd", name: "Neodymium", atomicMass: "144.24", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 61, symbol: "Pm", name: "Promethium", atomicMass: "145.00", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 62, symbol: "Sm", name: "Samarium", atomicMass: "150.36", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 63, symbol: "Eu", name: "Europium", atomicMass: "151.96", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 64, symbol: "Gd", name: "Gadolinium", atomicMass: "157.25", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 65, symbol: "Tb", name: "Terbium", atomicMass: "158.93", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 66, symbol: "Dy", name: "Dysprosium", atomicMass: "162.50", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 67, symbol: "Ho", name: "Holmium", atomicMass: "164.93", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 68, symbol: "Er", name: "Erbium", atomicMass: "167.26", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 69, symbol: "Tm", name: "Thulium", atomicMass: "168.93", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 70, symbol: "Yb", name: "Ytterbium", atomicMass: "173.05", classification: "lanthanides", state: "solid" },
+            { atomicNumber: 71, symbol: "Lu", name: "Lutetium", atomicMass: "174.97", classification: "lanthanides", state: "solid" }
+        ];
+
+        // Actinides (89-103)
+        const actinides = [
+            { atomicNumber: 89, symbol: "Ac", name: "Actinium", atomicMass: "227.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 90, symbol: "Th", name: "Thorium", atomicMass: "232.04", classification: "actinides", state: "solid" },
+            { atomicNumber: 91, symbol: "Pa", name: "Protactinium", atomicMass: "231.04", classification: "actinides", state: "solid" },
+            { atomicNumber: 92, symbol: "U", name: "Uranium", atomicMass: "238.03", classification: "actinides", state: "solid" },
+            { atomicNumber: 93, symbol: "Np", name: "Neptunium", atomicMass: "237.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 94, symbol: "Pu", name: "Plutonium", atomicMass: "244.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 95, symbol: "Am", name: "Americium", atomicMass: "243.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 96, symbol: "Cm", name: "Curium", atomicMass: "247.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 97, symbol: "Bk", name: "Berkelium", atomicMass: "247.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 98, symbol: "Cf", name: "Californium", atomicMass: "251.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 99, symbol: "Es", name: "Einsteinium", atomicMass: "252.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 100, symbol: "Fm", name: "Fermium", atomicMass: "257.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 101, symbol: "Md", name: "Mendelevium", atomicMass: "258.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 102, symbol: "No", name: "Nobelium", atomicMass: "259.00", classification: "actinides", state: "solid" },
+            { atomicNumber: 103, symbol: "Lr", name: "Lawrencium", atomicMass: "262.00", classification: "actinides", state: "solid" }
+        ];
+
+        function createPeriodicTable() {
+            const periodicTableElement = document.getElementById('periodic-table');
+            const totalCells = 7 * 18; // 7 periods x 18 groups
+            
+            for (let i = 0; i < totalCells; i++) {
+                const row = Math.floor(i / 18) + 1;
+                const col = (i % 18) + 1;
+                
+                const element = elements.find(el => 
+                    el.position.row === row && el.position.col === col
+                );
+                
+                const cellElement = createElement(element);
+                periodicTableElement.appendChild(cellElement);
+            }
+        }
+
+        function createElement(elementData) {
+            const elementDiv = document.createElement('div');
+            
+            if (!elementData) {
+                elementDiv.className = 'element empty';
+                return elementDiv;
+            }
+            
+            elementDiv.className = `element ${elementData.classification}`;
+            elementDiv.innerHTML = `
+                <div class="atomic-number">${elementData.atomicNumber}</div>
+                <div class="symbol">${elementData.symbol}</div>
+                <div class="name">${elementData.name}</div>
+                <div class="atomic-mass">${elementData.atomicMass}</div>
+                <div class="state ${elementData.state}">${elementData.state.toUpperCase()}</div>
+            `;
+            
+            // Add hover effect with detailed info
+            elementDiv.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.05)';
+            });
+            
+            elementDiv.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+            
+            return elementDiv;
+        }
+
+        function createSeriesElement(elementData) {
+            const elementDiv = document.createElement('div');
+            elementDiv.className = `series-element ${elementData.classification}`;
+            elementDiv.innerHTML = `
+                <div class="atomic-number">${elementData.atomicNumber}</div>
+                <div class="symbol">${elementData.symbol}</div>
+                <div class="name">${elementData.name}</div>
+                <div class="atomic-mass">${elementData.atomicMass}</div>
+                <div class="state ${elementData.state}">${elementData.state.toUpperCase()}</div>
+            `;
+            
+            // Add hover effects
+            elementDiv.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px) scale(1.05)';
+            });
+            
+            elementDiv.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+            
+            return elementDiv;
+        }
+
+        function createLanthanidesActinides() {
+            const lanthanidesRow = document.getElementById('lanthanides-row');
+            const actinidesRow = document.getElementById('actinides-row');
+            
+            // Create lanthanides
+            lanthanides.forEach(element => {
+                const elementDiv = createSeriesElement(element);
+                lanthanidesRow.appendChild(elementDiv);
+            });
+            
+            // Create actinides
+            actinides.forEach(element => {
+                const elementDiv = createSeriesElement(element);
+                actinidesRow.appendChild(elementDiv);
+            });
+        }
+
+        // Initialize the periodic table
+        document.addEventListener('DOMContentLoaded', function() {
+            createPeriodicTable();
+            createLanthanidesActinides();
+        });
+    </script>
+</body>
+</html>
