@@ -386,10 +386,34 @@
             color: white;
             text-decoration: none;
         }
+
+        .quiz-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            color: white;
+            text-decoration: none;
+            background: linear-gradient(135deg, #45a049, #4caf50);
+        }
     </style>
 </head>
 <body>
     <a href="index.html" class="back-button">← Back to Home</a>
+    <a href="quiz.html" class="quiz-button">🧪 Basic Quiz</a>
     
     <div class="container">
         <header>
