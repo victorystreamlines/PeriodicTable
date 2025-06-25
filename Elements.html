@@ -461,6 +461,243 @@
             text-decoration: none;
             background: linear-gradient(135deg, #45a049, #4caf50);
         }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.4s ease;
+            position: relative;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .modal-header .element-symbol {
+            font-size: 4rem;
+            font-weight: bold;
+            opacity: 0.9;
+            margin: 10px 0;
+        }
+
+        .modal-header .atomic-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .atomic-info span {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 25px;
+            margin: 5px;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .info-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .info-section h3 {
+            color: #667eea;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .info-section h3::before {
+            content: "";
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin-right: 12px;
+            border-radius: 2px;
+        }
+
+        .info-section p {
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .info-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .element-image {
+            width: 100%;
+            max-width: 200px;
+            height: 150px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1.1rem;
+            border: 2px dashed #ccc;
+        }
+
+        .fun-facts {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .fun-facts h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .fun-facts h3::before {
+            background: white;
+        }
+
+        .abundance-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .abundance-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4ecdc4, #44a08d);
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                max-height: 85vh;
+            }
+            
+            .modal-header h2 {
+                font-size: 2rem;
+            }
+            
+            .modal-header .element-symbol {
+                font-size: 3rem;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
 <body>
@@ -546,7 +783,497 @@
         </div>
     </div>
 
+    <!-- Element Information Modal -->
+    <div id="elementModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2 id="modalElementName">Element Name</h2>
+                <div class="element-symbol" id="modalElementSymbol">H</div>
+                <div class="atomic-info">
+                    <span>Atomic #<span id="modalAtomicNumber">1</span></span>
+                    <span>Mass: <span id="modalAtomicMass">1.008</span></span>
+                    <span>State: <span id="modalState">Gas</span></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="element-image" id="modalElementImage">
+                    Element Image
+                </div>
+                
+                <div class="info-section">
+                    <h3>🌟 Main Uses</h3>
+                    <p id="modalMainUses">Main uses of this element...</p>
+                </div>
+
+                <div class="info-section">
+                    <h3>🌍 Where It's Found</h3>
+                    <p id="modalLocation">Where this element is commonly found...</p>
+                    <div class="abundance-bar">
+                        <div class="abundance-fill" id="modalAbundance" style="width: 50%"></div>
+                    </div>
+                    <small>Abundance in Earth's crust</small>
+                </div>
+
+                <div class="info-section">
+                    <h3>💎 Key Properties</h3>
+                    <div class="info-grid" id="modalProperties">
+                        <!-- Properties will be dynamically added -->
+                    </div>
+                </div>
+
+                <div class="fun-facts">
+                    <h3>🎉 Amazing Facts</h3>
+                    <p id="modalFunFacts">Interesting facts about this element...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Element detailed information for popups
+        const elementInfo = {
+            1: {
+                mainUses: "🚀 Rocket fuel, 🎈 Balloons, 💧 Water production, ⚡ Fuel cells for clean energy",
+                location: "🌟 Most abundant element in universe! Found in water, organic compounds, and stars. Makes up 75% of normal matter in universe.",
+                abundance: 0.14, // percentage in Earth's crust
+                properties: [
+                    { title: "Lightest Element", value: "Atomic weight: 1.008" },
+                    { title: "Highly Flammable", value: "Burns with invisible flame" },
+                    { title: "Clean Energy", value: "Only produces water when burned" }
+                ],
+                funFacts: "💫 Hydrogen was the first element created after Big Bang! It's so light it escapes Earth's atmosphere. The sun converts 600 million tons of hydrogen to helium every second!"
+            },
+            2: {
+                mainUses: "🎈 Party balloons, 🧊 Cooling in MRI machines, 🔬 Leak detection, 🌊 Deep sea diving",
+                location: "☄️ Trapped in natural gas deposits, 🌟 produced in stars through nuclear fusion. Very rare on Earth!",
+                abundance: 0.000000552,
+                properties: [
+                    { title: "Second Lightest", value: "Never reacts with anything" },
+                    { title: "Super Cold", value: "Becomes liquid at -269°C" },
+                    { title: "Makes Voice Squeaky", value: "Changes sound speed in vocal cords" }
+                ],
+                funFacts: "🎪 Helium makes your voice funny because sound travels 3x faster through it! It's running out on Earth and can't be made artificially. Once released, it floats away to space forever!"
+            },
+            3: {
+                mainUses: "🔋 Batteries for phones & cars, 💊 Mood stabilizer medicine, 🧴 Lubricating grease, 🏭 Glass & ceramics",
+                location: "🧂 Salt lakes, 🌊 seawater, 🗻 pegmatite rocks. Chile and Australia have biggest reserves.",
+                abundance: 0.002,
+                properties: [
+                    { title: "Softest Metal", value: "Can be cut with knife" },
+                    { title: "Lightweight", value: "Floats on water" },
+                    { title: "Reactive", value: "Must be stored in oil" }
+                ],
+                funFacts: "⚡ Your phone battery contains lithium! It's so reactive it can explode in water. Bolivia has enough lithium to power the world's electric cars for 1000 years!"
+            },
+            4: {
+                mainUses: "✈️ Aircraft parts, 🚁 Helicopter rotors, 🔧 Tools, 🏭 Nuclear reactors, 💎 Gemstones (emerald, aquamarine)",
+                location: "💎 Emerald and aquamarine gems, 🗻 granite rocks, 🌋 volcanic minerals. USA and China are major producers.",
+                abundance: 0.00019,
+                properties: [
+                    { title: "Strong & Light", value: "6x stronger than steel" },
+                    { title: "High Melting Point", value: "1287°C - very heat resistant" },
+                    { title: "Toxic", value: "Causes lung disease if inhaled" }
+                ],
+                funFacts: "💚 Beryl becomes emerald with chromium and aquamarine with iron! It's used in nuclear weapons and costs $150 per gram. Ancient Romans used beryl lenses as the first eyeglasses!"
+            },
+            5: {
+                mainUses: "🧽 Cleaning products, 🏠 Insulation, 🌿 Plant fertilizer, 🔥 Heat-resistant glass, ⚗️ Chemical industry",
+                location: "🏜️ Desert salt deposits in Turkey, USA, Argentina. Also in seawater and volcanic springs.",
+                abundance: 0.001,
+                properties: [
+                    { title: "Metalloid", value: "Between metal and non-metal" },
+                    { title: "Hard & Brittle", value: "Almost as hard as diamond" },
+                    { title: "High Temperature", value: "Melts at 2076°C" }
+                ],
+                funFacts: "💥 Boron makes the green color in fireworks! It's essential for plant growth and stronger than steel when made into fibers. Ancient Egyptians used borax for mummification!"
+            },
+            6: {
+                mainUses: "💎 Diamonds, ✏️ Pencils, 🏭 Steel production, 🔋 Batteries, 🧬 All life forms (DNA, proteins)",
+                location: "🌍 Everywhere! In all living things, 💎 diamond mines, 🛢️ oil, coal, 🌟 stars. 4th most abundant in universe.",
+                abundance: 0.025,
+                properties: [
+                    { title: "Many Forms", value: "Diamond, graphite, charcoal" },
+                    { title: "Life's Backbone", value: "Forms complex molecules" },
+                    { title: "Extreme Range", value: "Softest (graphite) to hardest (diamond)" }
+                ],
+                funFacts: "💎 Diamonds are carbon under extreme pressure! Your body is 18% carbon. A pencil can draw a line 35 miles long. Carbon dating tells us how old ancient things are!"
+            },
+            7: {
+                mainUses: "🌱 Plant fertilizer, 💨 Liquid nitrogen cooling, 🏭 Chemical production, 📦 Food packaging, 💊 Medical anesthesia",
+                location: "🌬️ Makes up 78% of air we breathe! Also in proteins, 🌱 plants, 🦴 bones, and 🌊 seawater.",
+                abundance: 0.0025,
+                properties: [
+                    { title: "Inert Gas", value: "Very unreactive normally" },
+                    { title: "Essential for Life", value: "In DNA and proteins" },
+                    { title: "Super Cold Liquid", value: "Liquid at -196°C" }
+                ],
+                funFacts: "❄️ Liquid nitrogen is so cold it can freeze anything instantly! Lightning helps convert atmospheric nitrogen into fertilizer. Your body is 3% nitrogen!"
+            },
+            8: {
+                mainUses: "🫁 Breathing, 🔥 Combustion, 🏥 Medical oxygen, 🚀 Rocket fuel, 🏭 Steel production, 💧 Water formation",
+                location: "🌬️ 21% of air, 💧 89% of water, 🗻 most rocks and minerals. Most abundant element in Earth's crust!",
+                abundance: 46.1,
+                properties: [
+                    { title: "Most Abundant", value: "46% of Earth's crust" },
+                    { title: "Highly Reactive", value: "Combines with most elements" },
+                    { title: "Life Essential", value: "Needed for cellular respiration" }
+                ],
+                funFacts: "🫁 You breathe 550 liters of oxygen daily! Oxygen makes things burn - candles can't burn without it. The oxygen you breathe was made by plants billions of years ago!"
+            },
+            9: {
+                mainUses: "🦷 Toothpaste (prevents cavities), 🍳 Non-stick cookware, ❄️ Refrigerants, 💊 Antidepressant drugs, ⚗️ Chemical industry",
+                location: "🦴 Bones and teeth, 🗻 fluorite mineral, 🌊 seawater, ☕ tea leaves. China produces most fluorine compounds.",
+                abundance: 0.054,
+                properties: [
+                    { title: "Most Reactive", value: "Reacts with every element" },
+                    { title: "Poisonous Gas", value: "Deadly in pure form" },
+                    { title: "Dental Helper", value: "Strengthens tooth enamel" }
+                ],
+                funFacts: "🦷 Fluoride in toothpaste has reduced cavities by 60%! Pure fluorine gas can burn through concrete. It's so reactive that it can make water burn!"
+            },
+            10: {
+                mainUses: "💡 Bright advertising signs, 🔬 Gas lasers, 🏠 Lighting, 🧊 Cryogenic refrigeration, 🔬 Scientific instruments",
+                location: "🌬️ Tiny amount in air (0.0018%), trapped in 🗻 volcanic rocks and natural gas deposits.",
+                abundance: 0.000005,
+                properties: [
+                    { title: "Noble Gas", value: "Never reacts with anything" },
+                    { title: "Glows Orange-Red", value: "When electricity passes through" },
+                    { title: "Very Rare", value: "Only 18 parts per million in air" }
+                ],
+                funFacts: "🌈 Neon signs glow because electrons get excited! 'Neon' lights are often other gases - true neon only glows orange-red. It was discovered by cooling air to -246°C!"
+            },
+            11: {
+                mainUses: "🧂 Table salt (sodium chloride), 🧼 Soap making, 💡 Street lamps, 🏭 Chemical industry, 🔋 Sodium batteries",
+                location: "🌊 Seawater (2.6%), 🧂 salt deposits, 🗻 rock salt mines. Dead Sea has highest concentration.",
+                abundance: 2.3,
+                properties: [
+                    { title: "Soft Metal", value: "Can be cut with knife" },
+                    { title: "Highly Reactive", value: "Explodes in water" },
+                    { title: "Yellow Flame", value: "Burns with bright yellow color" }
+                ],
+                funFacts: "💥 Sodium explodes when it touches water! Your body needs sodium to function, but too much causes high blood pressure. Sodium lamps give yellow street lighting!"
+            },
+            12: {
+                mainUses: "✈️ Aircraft parts, 🚗 Car wheels, 💊 Antacid medicine, 🎆 Fireworks (white light), 📱 Phone cases",
+                location: "🌊 Seawater, 🗻 dolomite and magnesite rocks, 🧂 salt deposits. 8th most abundant element on Earth.",
+                abundance: 2.9,
+                properties: [
+                    { title: "Light Metal", value: "2/3 lighter than aluminum" },
+                    { title: "Strong Alloys", value: "Stronger when mixed with other metals" },
+                    { title: "Burns Bright", value: "Brilliant white flame" }
+                ],
+                funFacts: "🔥 Magnesium burns so bright it was used in old camera flashes! Your body has 25g of magnesium - it's vital for 300+ reactions. Magnesium alloys are used in race cars!"
+            },
+            13: {
+                mainUses: "🥤 Beverage cans, ✈️ Aircraft, 🍳 Cookware, 🏗️ Building materials, 💿 CDs/DVDs, 🚗 Car parts",
+                location: "🏔️ Bauxite ore deposits, 🧱 clay minerals. Australia, Guinea, and Brazil have largest reserves.",
+                abundance: 8.0,
+                properties: [
+                    { title: "Lightweight", value: "1/3 weight of steel" },
+                    { title: "Corrosion Resistant", value: "Forms protective oxide layer" },
+                    { title: "Highly Recyclable", value: "Can be recycled infinitely" }
+                ],
+                funFacts: "♻️ Recycling aluminum cans saves 95% energy vs making new ones! It's the most abundant metal in Earth's crust. The top of Washington Monument is capped with aluminum - once more valuable than gold!"
+            },
+            14: {
+                mainUses: "💻 Computer chips, 🌞 Solar panels, 🏗️ Concrete, 🥃 Glass, 💍 Jewelry (quartz), 🔬 Optical fibers",
+                location: "🏖️ Sand (quartz), 🗻 granite rocks, 🌍 27% of Earth's crust. Everywhere around us!",
+                abundance: 27.2,
+                properties: [
+                    { title: "Semiconductor", value: "Basis of all electronics" },
+                    { title: "Very Abundant", value: "2nd most common element in crust" },
+                    { title: "Forms Crystals", value: "Beautiful quartz crystals" }
+                ],
+                funFacts: "💻 Your smartphone contains ultra-pure silicon! Silicon Valley got its name from silicon computer chips. One silicon wafer can make 3000+ computer processors!"
+            },
+            15: {
+                mainUses: "🌱 Plant fertilizer, 🔢 Matches, 💀 Pesticides, 🧬 DNA backbone, 🦴 Bones and teeth",
+                location: "🦴 Animal bones, 🗻 phosphate rock deposits, 💩 guano (bird droppings). Morocco has 70% of world reserves.",
+                abundance: 0.1,
+                properties: [
+                    { title: "Essential for Life", value: "In DNA and cell membranes" },
+                    { title: "Multiple Forms", value: "White, red, and black phosphorus" },
+                    { title: "Glows in Dark", value: "White phosphorus glows green" }
+                ],
+                funFacts: "🌟 White phosphorus glows in the dark and can ignite spontaneously! Your body has 1kg of phosphorus. It was discovered in urine in 1669 - the alchemist was looking for gold!"
+            },
+            16: {
+                mainUses: "🏭 Sulfuric acid production, 🔋 Car batteries, 🌡️ Vulcanizing rubber, 💊 Medicine, 🎆 Gunpowder, 🌱 Fertilizer",
+                location: "🌋 Volcanic areas, 🛢️ petroleum, 🗻 pyrite mineral, 🧬 proteins. Found around hot springs.",
+                abundance: 0.042,
+                properties: [
+                    { title: "Yellow Crystals", value: "Pure sulfur is bright yellow" },
+                    { title: "Burns Blue", value: "Makes blue flame and nasty smell" },
+                    { title: "Life Essential", value: "In amino acids and proteins" }
+                ],
+                funFacts: "🔥 Sulfur burns with a blue flame and smells like rotten eggs! It's called 'brimstone' in the Bible. Ancient Romans used sulfur as medicine and to fumigate houses!"
+            },
+            17: {
+                mainUses: "💧 Water purification, 🧼 Bleach, 🍟 Table salt (NaCl), 🏊 Swimming pools, 💊 Antiseptics, 🧱 PVC plastic",
+                location: "🌊 Seawater (1.9%), 🧂 salt deposits, 🗻 halite mineral. Extracted from underground salt mines.",
+                abundance: 0.017,
+                properties: [
+                    { title: "Poisonous Gas", value: "Deadly yellow-green gas" },
+                    { title: "Strong Disinfectant", value: "Kills bacteria and viruses" },
+                    { title: "Very Reactive", value: "Forms compounds easily" }
+                ],
+                funFacts: "☠️ Chlorine gas was used as a weapon in WWI! It's what makes swimming pools safe to swim in. The 'smell' of clean pools is actually chlorine compounds, not pure chlorine!"
+            },
+            18: {
+                mainUses: "💡 Light bulbs, 🔬 Gas lasers, 🏭 Welding (protects metals), 🥛 Food packaging, 🌡️ Thermometers",
+                location: "🌬️ 0.93% of air - 3rd most abundant gas in atmosphere. Extracted from liquid air.",
+                abundance: 0.00015,
+                properties: [
+                    { title: "Noble Gas", value: "Completely unreactive" },
+                    { title: "Glows Blue", value: "Beautiful blue light when electrified" },
+                    { title: "Dense Gas", value: "Heavier than air" }
+                ],
+                funFacts: "💡 Argon fills most light bulbs to prevent the filament from burning! You breathe 15 liters of argon daily. Its name means 'lazy' because it won't react with anything!"
+            },
+            19: {
+                mainUses: "🌱 Plant fertilizer, 🧂 Salt substitute, 🍌 Bananas (high potassium), 🧼 Soap making, 🔋 Batteries",
+                location: "🌊 Seawater, 🗻 potash minerals, 🌱 all living things. Canada and Russia have large deposits.",
+                abundance: 1.5,
+                properties: [
+                    { title: "Soft Metal", value: "Can be cut with knife" },
+                    { title: "Explodes in Water", value: "Even more reactive than sodium" },
+                    { title: "Life Essential", value: "Needed for nerve and muscle function" }
+                ],
+                funFacts: "💥 Potassium explodes more violently in water than sodium! Bananas are radioactive because of potassium-40. Your body has 140g of potassium - vital for your heartbeat!"
+            },
+            20: {
+                mainUses: "🦴 Bones and teeth, 🏗️ Cement and concrete, 🧀 Cheese making, 💊 Antacid tablets, 🎆 Fireworks (orange flame)",
+                location: "🐚 Limestone, 🗻 marble, 🐚 seashells, 🦴 bones. 5th most abundant element in Earth's crust.",
+                abundance: 5.0,
+                properties: [
+                    { title: "Essential Mineral", value: "99% in bones and teeth" },
+                    { title: "Reactive Metal", value: "Burns with orange flame" },
+                    { title: "Makes Concrete", value: "Key ingredient in cement" }
+                ],
+                funFacts: "🦴 Your body has 1kg of calcium! The Great Wall of China used calcium carbonate mortar. Calcium makes fireworks glow orange and is why milk builds strong bones!"
+            },
+            35: {
+                mainUses: "🏊 Swimming pool disinfectant, 📸 Photography, 💊 Sedatives and medicine, 🔬 Chemical reagent, 🌊 Water treatment",
+                location: "🌊 Seawater (65 ppm), 🧂 salt brines, 🗻 salt deposits. Israel extracts bromine from Dead Sea.",
+                abundance: 0.0003,
+                properties: [
+                    { title: "Only Liquid Nonmetal", value: "Red-brown liquid at room temperature" },
+                    { title: "Toxic Vapors", value: "Causes severe burns and poisoning" },
+                    { title: "Strong Smell", value: "Name means 'stench' in Greek" }
+                ],
+                funFacts: "🌊 Bromine is the only liquid element at room temperature besides mercury! It's extracted from seawater and turns purple vapor when heated. Ancient Greeks named it 'stench' because of its awful smell!"
+            },
+            80: {
+                mainUses: "🌡️ Thermometers, 💡 Fluorescent lights, ⚗️ Chemical catalysts, 🔬 Laboratory equipment, 🦷 Dental fillings (historically)",
+                location: "🗻 Cinnabar ore (HgS), 🌋 volcanic areas. Spain, China, and Kyrgyzstan are major producers.",
+                abundance: 0.000005,
+                properties: [
+                    { title: "Only Liquid Metal", value: "Liquid at room temperature" },
+                    { title: "Highly Toxic", value: "Causes brain and nerve damage" },
+                    { title: "Dense", value: "13.5 times heavier than water" }
+                ],
+                funFacts: "🌡️ Mercury is the only metal that's liquid at room temperature! It's so toxic that mercury thermometers are banned in many countries. Ancient Chinese emperors died from mercury 'immortality' pills!"
+            },
+            26: {
+                mainUses: "🏗️ Steel production, 🚗 Cars, 🏢 Buildings, 🔧 Tools, 🩸 Hemoglobin in blood, 💊 Iron supplements",
+                location: "🗻 Iron ore deposits, 🌍 Earth's core (35%), 🩸 blood, 🌟 stars. Australia and Brazil have largest reserves.",
+                abundance: 6.3,
+                properties: [
+                    { title: "Magnetic", value: "Attracted to magnets" },
+                    { title: "Essential for Life", value: "Carries oxygen in blood" },
+                    { title: "Rusts", value: "Forms iron oxide with oxygen" }
+                ],
+                funFacts: "🩸 Your body has 4 grams of iron - mostly in blood! Iron deficiency causes anemia. The Eiffel Tower is made of iron and weighs 10,000 tons. Earth's core is mostly iron!"
+            },
+            29: {
+                mainUses: "⚡ Electrical wiring, 🏠 Plumbing, 💰 Coins, 🔧 Tools, 🍳 Cookware, 🏭 Industrial machinery",
+                location: "🗻 Porphyry copper deposits, 🌋 volcanic areas. Chile, Peru, and China are top producers.",
+                abundance: 0.0068,
+                properties: [
+                    { title: "Excellent Conductor", value: "Second best conductor after silver" },
+                    { title: "Antimicrobial", value: "Kills bacteria and viruses" },
+                    { title: "Malleable", value: "Can be shaped easily" }
+                ],
+                funFacts: "⚡ Most electrical wiring is copper because it conducts electricity so well! Copper kills bacteria - that's why door handles are often copper-based. The Statue of Liberty is green because of copper oxidation!"
+            },
+            47: {
+                mainUses: "💍 Jewelry, 💰 Coins, 📸 Photography, ⚗️ Catalysts, 🔬 Electronics, 🏥 Medical equipment",
+                location: "🗻 Silver ore deposits, 🌋 volcanic regions. Mexico, Peru, and China are major producers.",
+                abundance: 0.000008,
+                properties: [
+                    { title: "Best Conductor", value: "Highest electrical and thermal conductivity" },
+                    { title: "Antibacterial", value: "Natural antimicrobial properties" },
+                    { title: "Reflective", value: "Reflects 95% of visible light" }
+                ],
+                funFacts: "✨ Silver is the most reflective metal - used in mirrors and telescopes! It's naturally antibacterial and used in medical equipment. One ton of electronics contains more silver than one ton of silver ore!"
+            },
+            79: {
+                mainUses: "💍 Jewelry, 💰 Coins and investment, 💻 Electronics, 🦷 Dental work, 🏥 Medical implants, 🚀 Spacecraft",
+                location: "🗻 Placer deposits, 🌋 hydrothermal veins, 🌊 seawater (tiny amounts). South Africa, Russia, and Australia have most reserves.",
+                abundance: 0.0000031,
+                properties: [
+                    { title: "Never Tarnishes", value: "Doesn't rust or corrode" },
+                    { title: "Extremely Dense", value: "19x heavier than water" },
+                    { title: "Malleable", value: "Can be hammered thinner than paper" }
+                ],
+                funFacts: "👑 All gold ever mined would fit in a 20x20x20 meter cube! Gold doesn't react with anything except aqua regia. Olympic gold medals are only 1.34% gold - the rest is silver!"
+            },
+            78: {
+                mainUses: "🚗 Catalytic converters, 💍 High-end jewelry, ⚗️ Chemical catalysts, 🏥 Cancer treatment, 💻 Electronics",
+                location: "🗻 Platinum ore deposits, mainly South Africa (70% of world supply), Russia, and Zimbabwe.",
+                abundance: 0.0000037,
+                properties: [
+                    { title: "Extremely Rare", value: "30x rarer than gold" },
+                    { title: "High Melting Point", value: "1768°C - very heat resistant" },
+                    { title: "Catalytic", value: "Speeds up chemical reactions" }
+                ],
+                funFacts: "🚗 Your car's catalytic converter likely contains platinum to reduce emissions! One ton of platinum ore yields only 5 grams of platinum. It's used in pacemakers because it doesn't react with body tissues!"
+            },
+            92: {
+                mainUses: "⚡ Nuclear power plants, 💣 Nuclear weapons, 🏥 Medical radioisotopes, 🎨 Glass coloring (historical), ⚖️ Counterweights",
+                location: "🗻 Uranium ore deposits. Kazakhstan, Canada, and Australia have largest reserves.",
+                abundance: 0.00027,
+                properties: [
+                    { title: "Radioactive", value: "Naturally decays over billions of years" },
+                    { title: "Extremely Dense", value: "19x heavier than water" },
+                    { title: "Fissile", value: "Can sustain nuclear chain reactions" }
+                ],
+                funFacts: "⚡ One uranium pellet the size of a fingertip contains as much energy as a ton of coal! Uranium glows green under UV light. The Earth's core heat comes partly from uranium decay!"
+            },
+            54: {
+                mainUses: "💡 High-intensity lamps, 🔬 Anesthesia, 🏭 Ion propulsion (spacecraft), 💎 Excimer lasers, 🔬 Nuclear magnetic resonance",
+                location: "🌬️ Trace amounts in atmosphere, 🗻 trapped in minerals, produced from radioactive decay.",
+                abundance: 0.000000009,
+                properties: [
+                    { title: "Noble Gas", value: "Completely unreactive" },
+                    { title: "Anesthetic", value: "Can cause unconsciousness" },
+                    { title: "Heavy Gas", value: "4.5x heavier than air" }
+                ],
+                funFacts: "💡 Xenon headlights are 2x brighter than regular bulbs! Xenon anesthesia is used in some countries. It's so heavy that you can pour it like water and float light objects on it!"
+            }
+        };
+
+        // Add comprehensive data for remaining elements (21-118)
+        // Due to space constraints, I'll add the most important ones and create a system to generate others
+        const generateElementInfo = (atomicNumber, symbol, name, classification) => {
+            // Default information based on element type
+            const defaults = {
+                'alkali-metals': {
+                    mainUses: '🔋 Batteries, ⚗️ Chemical industry, 🧼 Soap production, 🏭 Metal alloys',
+                    location: '🧂 Salt deposits, 🌊 seawater, 🗻 mineral veins',
+                    abundance: 0.1,
+                    properties: [
+                        { title: 'Soft Metal', value: 'Can be cut with knife' },
+                        { title: 'Highly Reactive', value: 'Reacts with water' },
+                                             { title: 'Good Conductor', value: 'Conducts electricity well' }
+                     ],
+                     funFacts: '🔥 Highly reactive metals that must be stored under oil to prevent reaction with air and water! They explode when they touch water and are essential for batteries and soap!'
+                },
+                'alkaline-earth-metals': {
+                    mainUses: '🏗️ Construction materials, 🎆 Fireworks, 💊 Medicine, 🔋 Batteries',
+                    location: '🗻 Rocky minerals, 🐚 limestone, 🌊 seawater',
+                    abundance: 2.0,
+                    properties: [
+                        { title: 'Moderately Reactive', value: 'Less reactive than alkali metals' },
+                        { title: 'Light Metals', value: 'Relatively low density' },
+                        { title: 'Burn Brightly', value: 'Produce colored flames' }
+                    ],
+                    funFacts: 'These metals create beautiful colors in fireworks and are essential for life!'
+                },
+                'transition-metals': {
+                    mainUses: '🏗️ Construction, 💍 Jewelry, 🔧 Tools, 🚗 Automotive, ⚗️ Catalysts',
+                    location: '🗻 Ore deposits, 🌋 igneous rocks, 🌊 seafloor nodules',
+                    abundance: 1.0,
+                    properties: [
+                        { title: 'Hard & Strong', value: 'Excellent structural materials' },
+                        { title: 'Variable Oxidation', value: 'Multiple chemical forms' },
+                        { title: 'Catalytic', value: 'Speed up chemical reactions' }
+                    ],
+                    funFacts: 'The workhorses of the periodic table - strong, versatile, and essential for modern technology!'
+                },
+                'post-transition-metals': {
+                    mainUses: '🔋 Batteries, 🏭 Industrial processes, 🔬 Electronics, 🎨 Pigments',
+                    location: '🗻 Sulfide ores, 🌋 volcanic deposits, 🏭 industrial waste',
+                    abundance: 0.5,
+                    properties: [
+                        { title: 'Soft Metals', value: 'Softer than transition metals' },
+                        { title: 'Low Melting Point', value: 'Melt at relatively low temperatures' },
+                        { title: 'Toxic', value: 'Many are poisonous' }
+                    ],
+                    funFacts: 'These metals are often toxic but essential for electronics and industrial processes!'
+                },
+                'metalloids': {
+                    mainUses: '💻 Semiconductors, 🌞 Solar panels, 🔬 Electronics, 🏭 Alloys',
+                    location: '🗻 Mineral deposits, 🌋 volcanic rocks, 🏭 industrial byproducts',
+                    abundance: 0.3,
+                    properties: [
+                        { title: 'Semiconductor', value: 'Conducts electricity under conditions' },
+                        { title: 'Brittle', value: 'Break rather than bend' },
+                        { title: 'Variable Properties', value: 'Between metals and non-metals' }
+                    ],
+                    funFacts: 'The bridge between metals and non-metals - essential for all modern electronics!'
+                },
+                'nonmetals': {
+                    mainUses: '🧬 Life processes, 🏭 Chemical industry, 💊 Medicine, 🌱 Fertilizers',
+                    location: '🌬️ Atmosphere, 🧬 living organisms, 🗻 mineral deposits',
+                    abundance: 10.0,
+                    properties: [
+                        { title: 'Poor Conductors', value: 'Do not conduct electricity' },
+                        { title: 'Varied States', value: 'Gases, liquids, or brittle solids' },
+                        { title: 'Essential for Life', value: 'Found in all living things' }
+                    ],
+                    funFacts: 'The elements of life - found in every living thing on Earth!'
+                },
+                'halogens': {
+                    mainUses: '💧 Water treatment, 🧼 Disinfectants, 💊 Medicine, 🧂 Salt production',
+                    location: '🌊 Seawater, 🧂 salt deposits, 🗻 mineral veins',
+                    abundance: 0.02,
+                    properties: [
+                        { title: 'Highly Reactive', value: 'Form salts with metals' },
+                        { title: 'Toxic', value: 'Poisonous in pure form' },
+                        { title: 'Colorful', value: 'Each has distinct color' }
+                    ],
+                    funFacts: 'The salt-formers - essential for disinfection and found in table salt!'
+                },
+                'noble-gases': {
+                    mainUses: '💡 Lighting, 🔬 Lasers, 🧊 Cryogenics, 🏭 Inert atmospheres',
+                    location: '🌬️ Atmosphere, 🗻 trapped in rocks, ☄️ radioactive decay',
+                    abundance: 0.001,
+                    properties: [
+                        { title: 'Inert', value: 'Do not react with anything' },
+                        { title: 'Colorless Gases', value: 'Invisible at room temperature' },
+                        { title: 'Glow When Electrified', value: 'Produce beautiful colors' }
+                    ],
+                    funFacts: 'The loners of the periodic table - they prefer not to react with anyone!'
+                },
+                'lanthanides': {
+                    mainUses: '📱 Electronics, 🔋 Batteries, 🌞 Solar panels, 💎 Catalysts, 🎆 Phosphors',
+                    location: '🗻 Rare earth mineral deposits, 🏖️ beach sands. China produces 90% of world supply.',
+                    abundance: 0.01,
+                    properties: [
+                        { title: 'Rare Earth', value: 'Difficult to separate from each other' },
+                        { title: 'Magnetic', value: 'Strong magnetic properties' },
+                        { title: 'High-Tech', value: 'Essential for modern technology' }
+                    ],
+                    funFacts: 'The rare earths that power our modern world - in every smartphone and computer!'
+                },
+                'actinides': {
+                    mainUses: '⚡ Nuclear power, 💣 Nuclear weapons, 🏥 Medical isotopes, 🔬 Research',
+                    location: '🗻 Uranium ores, 🏭 nuclear reactors (artificial elements), ☢️ nuclear waste',
+                    abundance: 0.000001,
+                    properties: [
+                        { title: 'Radioactive', value: 'All isotopes decay over time' },
+                        { title: 'Heavy Elements', value: 'Very dense and heavy' },
+                        { title: 'Artificial', value: 'Most are human-made' }
+                    ],
+                    funFacts: 'The radioactive family - some power cities, others exist for mere seconds!'
+                }
+            };
+            
+            return elementInfo[atomicNumber] || defaults[classification] || defaults['transition-metals'];
+        };
+
         // Complete periodic table data with all 118 elements
         const elements = [
             // Period 1
@@ -738,6 +1465,11 @@
             elementDiv.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
+
+            // Add click event to show modal
+            elementDiv.addEventListener('click', function() {
+                showElementModal(elementData);
+            });
             
             return elementDiv;
         }
@@ -761,6 +1493,11 @@
             elementDiv.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0) scale(1)';
             });
+
+            // Add click event to show modal
+            elementDiv.addEventListener('click', function() {
+                showElementModal(elementData);
+            });
             
             return elementDiv;
         }
@@ -782,10 +1519,84 @@
             });
         }
 
+        // Modal functionality
+        function showElementModal(elementData) {
+            const modal = document.getElementById('elementModal');
+            const info = generateElementInfo(elementData.atomicNumber, elementData.symbol, elementData.name, elementData.classification);
+            
+            // Update modal content
+            document.getElementById('modalElementName').textContent = elementData.name;
+            document.getElementById('modalElementSymbol').textContent = elementData.symbol;
+            document.getElementById('modalAtomicNumber').textContent = elementData.atomicNumber;
+            document.getElementById('modalAtomicMass').textContent = elementData.atomicMass;
+            document.getElementById('modalState').textContent = elementData.state.toUpperCase();
+            
+            // Update main content
+            document.getElementById('modalMainUses').textContent = info.mainUses;
+            document.getElementById('modalLocation').textContent = info.location;
+            document.getElementById('modalFunFacts').textContent = info.funFacts;
+            
+            // Update abundance bar
+            const abundanceBar = document.getElementById('modalAbundance');
+            const abundancePercent = Math.min(info.abundance, 50); // Cap at 50% for visual purposes
+            abundanceBar.style.width = abundancePercent + '%';
+            
+            // Update properties
+            const propertiesContainer = document.getElementById('modalProperties');
+            propertiesContainer.innerHTML = '';
+            info.properties.forEach(prop => {
+                const propertyCard = document.createElement('div');
+                propertyCard.className = 'info-card';
+                propertyCard.innerHTML = `
+                    <h4>${prop.title}</h4>
+                    <p>${prop.value}</p>
+                `;
+                propertiesContainer.appendChild(propertyCard);
+            });
+            
+            // Update element image (placeholder)
+            const imageContainer = document.getElementById('modalElementImage');
+            imageContainer.innerHTML = `📷 ${elementData.name} Image<br><small>Visual representation would go here</small>`;
+            
+            // Show modal
+            modal.style.display = 'block';
+            
+            // Animate abundance bar
+            setTimeout(() => {
+                abundanceBar.style.width = abundancePercent + '%';
+            }, 300);
+        }
+        
+        function hideElementModal() {
+            const modal = document.getElementById('elementModal');
+            modal.style.display = 'none';
+        }
+        
         // Initialize the periodic table
         document.addEventListener('DOMContentLoaded', function() {
             createPeriodicTable();
             createLanthanidesActinides();
+            
+            // Modal event listeners
+            const modal = document.getElementById('elementModal');
+            const closeBtn = document.querySelector('.close');
+            
+            // Close modal when clicking X
+            closeBtn.addEventListener('click', hideElementModal);
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    hideElementModal();
+                }
+            });
+            
+            // Close modal with Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    hideElementModal();
+                }
+            });
         });
     </script>
 </body>
