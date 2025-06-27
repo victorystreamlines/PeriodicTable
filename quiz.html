@@ -1315,6 +1315,8 @@
             }
 
             init() {
+                // Reset totalQuestions to 0 before creating elements to avoid accumulation
+                quizState.totalQuestions = 0;
                 this.createPeriodicTable();
                 this.createLanthanidesActinides();
                 this.updateScore();
@@ -1556,13 +1558,24 @@
             }
 
             saveQuizState() {
-                localStorage.setItem('periodicTableQuizState', JSON.stringify(quizState));
+                // Don't save totalQuestions as it should be calculated fresh each time
+                const stateToSave = {
+                    score: quizState.score,
+                    showingAnswers: quizState.showingAnswers,
+                    userAnswers: quizState.userAnswers
+                };
+                localStorage.setItem('periodicTableQuizState', JSON.stringify(stateToSave));
             }
 
             loadQuizState() {
                 const saved = localStorage.getItem('periodicTableQuizState');
                 if (saved) {
-                    quizState = { ...quizState, ...JSON.parse(saved) };
+                    const savedState = JSON.parse(saved);
+                    // Only restore these properties, not totalQuestions
+                    quizState.score = savedState.score || 0;
+                    quizState.showingAnswers = savedState.showingAnswers || false;
+                    quizState.userAnswers = savedState.userAnswers || {};
+                    // totalQuestions will be calculated fresh during element creation
                 }
             }
         }
@@ -1620,11 +1633,10 @@
 
         function resetQuiz() {
             localStorage.removeItem('periodicTableQuizState');
-            // Preserve totalQuestions value and only reset score, showingAnswers, and userAnswers
-            const currentTotalQuestions = quizState.totalQuestions;
+            // Reset score, showingAnswers, and userAnswers (totalQuestions will be recalculated automatically)
             quizState = {
                 score: 0,
-                totalQuestions: currentTotalQuestions, // Keep the original total questions count
+                totalQuestions: quizState.totalQuestions, // Keep current calculated value
                 showingAnswers: false,
                 userAnswers: {}
             };
