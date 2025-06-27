@@ -780,6 +780,23 @@
             box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
         }
 
+        .quiz-controls-bottom .btn-refresh {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .quiz-controls-bottom .btn-refresh:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+        }
+
         @media (max-width: 768px) {
             .quiz-controls-bottom {
                 flex-direction: column;
@@ -871,6 +888,7 @@
             <div class="score-display" id="scoreDisplay">Score: 0 / 354 (0%)</div>
             <button class="show-answers-btn" id="showAnswersBtn" onclick="toggleAnswers()">Show Answers</button>
             <button class="btn btn-warning ms-3" onclick="resetQuiz()">Reset Quiz</button>
+            <button class="btn btn-info ms-3" onclick="refreshPage()" title="Refresh Page">🔄 Refresh</button>
         </div>
 
         <!-- Periodic Table -->
@@ -915,6 +933,7 @@
             <div class="control-buttons">
                 <button class="show-answers-btn" id="showAnswersBtnBottom" onclick="toggleAnswers()">Show Answers</button>
                 <button class="btn-reset" onclick="resetQuiz()">Reset Quiz</button>
+                <button class="btn-refresh" onclick="refreshPage()" title="Refresh Page">🔄 Refresh</button>
             </div>
         </div>
 
@@ -935,6 +954,7 @@
             <div class="control-buttons">
                 <button class="show-answers-btn" id="showAnswersBtnBottom2" onclick="toggleAnswers()">Show Answers</button>
                 <button class="btn-reset" onclick="resetQuiz()">Reset Quiz</button>
+                <button class="btn-refresh" onclick="refreshPage()" title="Refresh Page">🔄 Refresh</button>
             </div>
         </div>
     </div>
@@ -1701,6 +1721,11 @@
             // Update score and save state
             quiz.updateScore();
             quiz.saveQuizState();
+        }
+
+        // Refresh page function
+        function refreshPage() {
+            location.reload();
         }
 
         // Initialize quiz when page loads
