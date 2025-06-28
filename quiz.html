@@ -358,6 +358,17 @@
             color: #d32f2f;
         }
 
+        /* Override transparent background for state fields when correct/incorrect */
+        .element .state.correct {
+            background-color: rgba(76, 175, 80, 0.2) !important;
+            color: #2e7d32 !important;
+        }
+
+        .element .state.incorrect {
+            background-color: rgba(244, 67, 54, 0.2) !important;
+            color: #d32f2f !important;
+        }
+
         /* Lanthanides and Actinides correct/incorrect styling */
         .lanthanides-row .element input.correct, .actinides-row .element input.correct {
             background-color: rgba(76, 175, 80, 0.2) !important;
