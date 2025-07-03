@@ -358,46 +358,44 @@
             color: #d32f2f;
         }
 
-        /* Override transparent background for state fields when correct/incorrect */
-        .element .state.correct {
+        /* Override transparent background for state-type container fields when correct/incorrect */
+        .element .state-type-container .state.correct {
             background-color: rgba(76, 175, 80, 0.2) !important;
             color: #2e7d32 !important;
         }
 
-        .element .state.incorrect {
+        .element .state-type-container .state.incorrect {
             background-color: rgba(244, 67, 54, 0.2) !important;
             color: #d32f2f !important;
         }
 
-        /* Override transparent background for metal-type fields when correct/incorrect */
-        .element .metal-type.correct {
+        .element .state-type-container .metal-type.correct {
             background-color: rgba(76, 175, 80, 0.2) !important;
             color: #2e7d32 !important;
         }
 
-        .element .metal-type.incorrect {
+        .element .state-type-container .metal-type.incorrect {
             background-color: rgba(244, 67, 54, 0.2) !important;
             color: #d32f2f !important;
         }
 
-        /* Lanthanides and Actinides correct/incorrect styling */
-        .lanthanides-row .element input.correct, .actinides-row .element input.correct {
+        /* Lanthanides and Actinides state-type correct/incorrect styling */
+        .lanthanides-row .element .state-type-container .state.correct, .actinides-row .element .state-type-container .state.correct {
             background-color: rgba(76, 175, 80, 0.2) !important;
             color: #2e7d32 !important;
         }
 
-        .lanthanides-row .element input.incorrect, .actinides-row .element input.incorrect {
+        .lanthanides-row .element .state-type-container .state.incorrect, .actinides-row .element .state-type-container .state.incorrect {
             background-color: rgba(244, 67, 54, 0.2) !important;
             color: #d32f2f !important;
         }
 
-        /* Lanthanides and Actinides metal-type correct/incorrect styling */
-        .lanthanides-row .element .metal-type.correct, .actinides-row .element .metal-type.correct {
+        .lanthanides-row .element .state-type-container .metal-type.correct, .actinides-row .element .state-type-container .metal-type.correct {
             background-color: rgba(76, 175, 80, 0.2) !important;
             color: #2e7d32 !important;
         }
 
-        .lanthanides-row .element .metal-type.incorrect, .actinides-row .element .metal-type.incorrect {
+        .lanthanides-row .element .state-type-container .metal-type.incorrect, .actinides-row .element .state-type-container .metal-type.incorrect {
             background-color: rgba(244, 67, 54, 0.2) !important;
             color: #d32f2f !important;
         }
@@ -430,19 +428,35 @@
             line-height: 1;
         }
 
+        .element .state-type-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 0.5px 0;
+            gap: 2px;
+        }
+
         .element .state {
             font-size: 0.6rem;
             font-weight: 400;
             opacity: 0.8;
             line-height: 1;
-            width: 100% !important;
+            width: 40% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
             padding: 1px !important;
-            margin: 0.5px 0 !important;
+            margin: 0 !important;
+        }
+
+        .element .state-type-separator {
+            font-size: 0.6rem;
+            opacity: 0.6;
+            color: inherit;
+            margin: 0 1px;
         }
 
         .element .metal-type {
@@ -450,14 +464,14 @@
             font-weight: 400;
             opacity: 0.8;
             line-height: 1;
-            width: 100% !important;
+            width: 40% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
             padding: 1px !important;
-            margin: 0.5px 0 !important;
+            margin: 0 !important;
         }
 
         /* Empty cells */
@@ -647,19 +661,35 @@
             line-height: 1;
         }
 
+        .lanthanides-row .element .state-type-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 0.5px 0;
+            gap: 2px;
+        }
+
         .lanthanides-row .element .state, .actinides-row .element .state {
             font-size: 0.6rem;
             font-weight: 400;
             opacity: 0.8;
             line-height: 1;
-            width: 100% !important;
+            width: 40% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
             padding: 1px !important;
-            margin: 0.5px 0 !important;
+            margin: 0 !important;
+        }
+
+        .lanthanides-row .element .state-type-separator, .actinides-row .element .state-type-separator {
+            font-size: 0.6rem;
+            opacity: 0.6;
+            color: inherit;
+            margin: 0 1px;
         }
 
         .lanthanides-row .element .metal-type, .actinides-row .element .metal-type {
@@ -667,14 +697,23 @@
             font-weight: 400;
             opacity: 0.8;
             line-height: 1;
-            width: 100% !important;
+            width: 40% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
             padding: 1px !important;
-            margin: 0.5px 0 !important;
+            margin: 0 !important;
+        }
+
+        .actinides-row .element .state-type-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin: 0.5px 0;
+            gap: 2px;
         }
 
         .series-label {
@@ -704,7 +743,7 @@
             .element .symbol {
                 font-size: 1rem;
             }
-            .element .state {
+            .element .state, .element .metal-type {
                 font-size: 0.5rem;
             }
             .lanthanides-row .element, .actinides-row .element {
@@ -716,7 +755,8 @@
             .lanthanides-row .element .symbol, .actinides-row .element .symbol {
                 font-size: 1rem;
             }
-            .lanthanides-row .element .state, .actinides-row .element .state {
+            .lanthanides-row .element .state, .actinides-row .element .state,
+            .lanthanides-row .element .metal-type, .actinides-row .element .metal-type {
                 font-size: 0.5rem;
             }
         }
@@ -732,7 +772,7 @@
             .element .symbol {
                 font-size: 0.9rem;
             }
-            .element .state {
+            .element .state, .element .metal-type {
                 font-size: 0.45rem;
             }
             .lanthanides-row .element, .actinides-row .element {
@@ -744,7 +784,8 @@
             .lanthanides-row .element .symbol, .actinides-row .element .symbol {
                 font-size: 0.9rem;
             }
-            .lanthanides-row .element .state, .actinides-row .element .state {
+            .lanthanides-row .element .state, .actinides-row .element .state,
+            .lanthanides-row .element .metal-type, .actinides-row .element .metal-type {
                 font-size: 0.45rem;
             }
             
@@ -1426,10 +1467,13 @@
                            data-answer="${elementData.name}" data-field="name" data-element="${elementData.atomicNumber}">
                     <input type="text" class="atomic-mass" id="${elementId}-mass" placeholder="Mass" 
                            data-answer="${elementData.atomicMass}" data-field="mass" data-element="${elementData.atomicNumber}">
-                    <input type="text" class="state" id="${elementId}-state" placeholder="State" 
-                           data-answer="${elementData.state}" data-field="state" data-element="${elementData.atomicNumber}">
-                    <input type="text" class="metal-type" id="${elementId}-metaltype" placeholder="M/N" 
-                           data-answer="${elementData.metalType}" data-field="metaltype" data-element="${elementData.atomicNumber}">
+                    <div class="state-type-container">
+                        <input type="text" class="state" id="${elementId}-state" placeholder="" 
+                               data-answer="${elementData.state}" data-field="state" data-element="${elementData.atomicNumber}">
+                        <span class="state-type-separator">/</span>
+                        <input type="text" class="metal-type" id="${elementId}-metaltype" placeholder="" 
+                               data-answer="${elementData.metalType}" data-field="metaltype" data-element="${elementData.atomicNumber}">
+                    </div>
                 `;
 
                 // Add event listeners for immediate checking
@@ -1552,10 +1596,13 @@
                            data-answer="${elementData.name}" data-field="name" data-element="${elementData.atomicNumber}">
                     <input type="text" class="atomic-mass" id="${elementId}-mass" placeholder="Mass" 
                            data-answer="${elementData.atomicMass}" data-field="mass" data-element="${elementData.atomicNumber}">
-                    <input type="text" class="state" id="${elementId}-state" placeholder="State" 
-                           data-answer="${elementData.state}" data-field="state" data-element="${elementData.atomicNumber}">
-                    <input type="text" class="metal-type" id="${elementId}-metaltype" placeholder="M/N" 
-                           data-answer="${elementData.metalType}" data-field="metaltype" data-element="${elementData.atomicNumber}">
+                    <div class="state-type-container">
+                        <input type="text" class="state" id="${elementId}-state" placeholder="" 
+                               data-answer="${elementData.state}" data-field="state" data-element="${elementData.atomicNumber}">
+                        <span class="state-type-separator">/</span>
+                        <input type="text" class="metal-type" id="${elementId}-metaltype" placeholder="" 
+                               data-answer="${elementData.metalType}" data-field="metaltype" data-element="${elementData.atomicNumber}">
+                    </div>
                 `;
 
                 // Add event listeners for immediate checking
