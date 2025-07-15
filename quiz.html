@@ -416,6 +416,7 @@
             font-weight: 400;
             opacity: 0.8;
             line-height: 1;
+            flex: 1;
         }
 
         .element .symbol {
@@ -649,6 +650,7 @@
             font-weight: 400;
             opacity: 0.8;
             line-height: 1;
+            flex: 1;
         }
 
         .lanthanides-row .element .symbol, .actinides-row .element .symbol {
@@ -912,6 +914,176 @@
             box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
         }
 
+        /* AI Prompt Button Styles */
+        .atomic-number-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 2px;
+            position: relative;
+        }
+
+        .lanthanides-row .element .atomic-number-container, 
+        .actinides-row .element .atomic-number-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 2px;
+            position: relative;
+        }
+
+        .ai-prompt-btn {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: white;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+
+        .ai-prompt-btn-arabic {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: white;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+            margin-right: 2px;
+        }
+
+        .ai-prompt-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .ai-prompt-btn:active {
+            transform: scale(0.95);
+        }
+
+        .ai-prompt-btn::before {
+            content: '🤖';
+            font-size: 6px;
+        }
+
+        .ai-prompt-btn-arabic:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .ai-prompt-btn-arabic:active {
+            transform: scale(0.95);
+        }
+
+        .ai-prompt-btn-arabic::before {
+            content: '🤖';
+            font-size: 6px;
+        }
+
+        .lanthanides-row .element .ai-prompt-btn, 
+        .actinides-row .element .ai-prompt-btn {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+            color: white;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+            margin-left: 2px;
+        }
+
+        .lanthanides-row .element .ai-prompt-btn-arabic, 
+        .actinides-row .element .ai-prompt-btn-arabic {
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6px;
+            color: white;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+            margin-right: 2px;
+        }
+
+        .lanthanides-row .element .ai-prompt-btn::before, 
+        .actinides-row .element .ai-prompt-btn::before {
+            content: '🤖';
+            font-size: 5px;
+        }
+
+        .lanthanides-row .element .ai-prompt-btn-arabic::before, 
+        .actinides-row .element .ai-prompt-btn-arabic::before {
+            content: '🤖';
+            font-size: 5px;
+        }
+
+        /* Success notification for copy */
+        .copy-success {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            z-index: 10000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            max-width: 350px;
+            line-height: 1.4;
+        }
+
+        .copy-success small {
+            display: block;
+            font-size: 0.8em;
+            font-weight: normal;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        .copy-success.show {
+            transform: translateX(0);
+        }
+
         @media (max-width: 768px) {
             .quiz-controls-bottom {
                 flex-direction: column;
@@ -928,6 +1100,50 @@
             .quiz-controls-bottom .control-buttons {
                 justify-content: center;
                 width: 100%;
+            }
+
+            .ai-prompt-btn {
+                width: 10px;
+                height: 10px;
+                font-size: 6px;
+            }
+
+            .ai-prompt-btn::before {
+                font-size: 5px;
+            }
+
+            .ai-prompt-btn-arabic {
+                width: 10px;
+                height: 10px;
+                font-size: 6px;
+            }
+
+            .ai-prompt-btn-arabic::before {
+                font-size: 5px;
+            }
+
+            .lanthanides-row .element .ai-prompt-btn, 
+            .actinides-row .element .ai-prompt-btn {
+                width: 8px;
+                height: 8px;
+                font-size: 5px;
+            }
+
+            .lanthanides-row .element .ai-prompt-btn::before, 
+            .actinides-row .element .ai-prompt-btn::before {
+                font-size: 4px;
+            }
+
+            .lanthanides-row .element .ai-prompt-btn-arabic, 
+            .actinides-row .element .ai-prompt-btn-arabic {
+                width: 8px;
+                height: 8px;
+                font-size: 5px;
+            }
+
+            .lanthanides-row .element .ai-prompt-btn-arabic::before, 
+            .actinides-row .element .ai-prompt-btn-arabic::before {
+                font-size: 4px;
             }
         }
     </style>
@@ -1471,7 +1687,11 @@
                 const elementId = `element-${elementData.atomicNumber}`;
                 
                 elementDiv.innerHTML = `
-                    <div class="atomic-number">${elementData.atomicNumber}</div>
+                    <div class="atomic-number-container">
+                        <button class="ai-prompt-btn-arabic" onclick="handleAIPromptClickArabic(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (Arabic Report)"></button>
+                        <div class="atomic-number">${elementData.atomicNumber}</div>
+                        <button class="ai-prompt-btn" onclick="handleAIPromptClick(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (English Report)"></button>
+                    </div>
                     <input type="text" class="symbol" id="${elementId}-symbol" placeholder="Symbol" 
                            data-answer="${elementData.symbol}" data-field="symbol" data-element="${elementData.atomicNumber}">
                     <input type="text" class="name" id="${elementId}-name" placeholder="Name" 
@@ -1600,7 +1820,11 @@
                 const elementId = `element-${elementData.atomicNumber}`;
                 
                 elementDiv.innerHTML = `
-                    <div class="atomic-number">${elementData.atomicNumber}</div>
+                    <div class="atomic-number-container">
+                        <button class="ai-prompt-btn-arabic" onclick="handleAIPromptClickArabic(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (Arabic Report)"></button>
+                        <div class="atomic-number">${elementData.atomicNumber}</div>
+                        <button class="ai-prompt-btn" onclick="handleAIPromptClick(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (English Report)"></button>
+                    </div>
                     <input type="text" class="symbol" id="${elementId}-symbol" placeholder="Symbol" 
                            data-answer="${elementData.symbol}" data-field="symbol" data-element="${elementData.atomicNumber}">
                     <input type="text" class="name" id="${elementId}-name" placeholder="Name" 
@@ -1870,6 +2094,651 @@
         document.addEventListener('DOMContentLoaded', function() {
             quiz = new PeriodicTableQuiz();
         });
+
+        // AI Prompt Generation and Copy Functions
+        function generateElementPromptArabic(elementData) {
+            const prompt = `Please create a comprehensive, professional, and engaging HTML report about the chemical element ${elementData.name} (${elementData.symbol}). The report should be a single HTML page with embedded CSS that is visually appealing, well-structured, and educational.
+
+**IMPORTANT: The entire report must be written in Arabic language with right-to-left (RTL) text direction.**
+
+**Requirements:**
+- Single HTML page with internal CSS styling
+- Professional, modern, and attractive design
+- Clear typography and good color scheme
+- Responsive layout that works on different screen sizes
+- Use CSS Grid or Flexbox for layout
+- Include smooth animations and transitions where appropriate
+- Use Arabic text and RTL (right-to-left) layout direction
+- Apply dir="rtl" and lang="ar" attributes to HTML elements
+- Use appropriate Arabic fonts (like Noto Sans Arabic, Amiri, or similar)
+
+**Report Structure - Include these sections:**
+
+1. **Element Header & Basic Information**
+   - Element name, symbol, atomic number: ${elementData.atomicNumber}
+   - Atomic mass: ${elementData.atomicMass}
+   - Classification: ${elementData.classification}
+   - Physical state and basic properties
+   - Include an attractive header with the element symbol prominently displayed
+
+2. **Historical Background & Discovery**
+   - Discovery date and circumstances
+   - Scientists involved in discovery
+   - Etymology and name origin
+   - Historical significance and early uses
+   - Include interesting anecdotes about the discovery
+
+3. **Natural Occurrence & Environmental Presence**
+   - Where ${elementData.name} is found in nature
+   - Abundance in Earth's crust, oceans, and atmosphere
+   - Natural compounds and minerals containing this element
+   - Role in biological systems and living organisms
+   - Environmental impact and cycling
+
+4. **Daily Life Applications & Uses**
+   - Common household items containing ${elementData.name}
+   - Food and nutrition connections
+   - Medical and health applications
+   - Consumer products and technology
+   - Personal care and cosmetic uses
+
+5. **Industrial & Manufacturing Applications**
+   - Major industrial uses
+   - Manufacturing processes involving this element
+   - Construction and building materials
+   - Electronics and technology applications
+   - Transportation industry uses
+   - Energy sector applications
+
+6. **Geographic Distribution & Mining**
+   - Major producing countries and regions
+   - Mining techniques and extraction methods
+   - Economic importance and trade
+   - Reserve estimates and sustainability
+   - Processing and refining locations
+
+7. **Importance & Significance**
+   - Critical applications that depend on this element
+   - Economic value and market dynamics
+   - Strategic importance for various industries
+   - Future potential and emerging uses
+   - Substitutes and alternatives
+
+8. **Fascinating Facts & Entertainment**
+   - Amazing properties and characteristics
+   - Record-breaking aspects (hardest, lightest, etc.)
+   - Unusual applications and experiments
+   - Pop culture references and appearances
+   - Surprising connections to everyday life
+   - Interactive elements (if JavaScript is beneficial)
+
+9. **Historical Stories & Anecdotes**
+   - Famous incidents involving this element
+   - Interesting personalities connected to its development
+   - Wars, conflicts, or major events related to the element
+   - Scientific breakthroughs and discoveries
+   - Humorous or surprising historical facts
+
+10. **Professional Chemistry Information**
+    - Electronic configuration and structure
+    - Chemical properties and reactivity
+    - Isotopes and nuclear properties
+    - Laboratory handling and safety
+    - Advanced applications in research
+    - Analytical methods and detection
+
+11. **Future Outlook & Research**
+     - Cutting-edge research involving this element
+     - Emerging applications and technologies
+     - Sustainability and recycling efforts
+     - Potential new discoveries
+     - Challenges and opportunities
+
+12. **Interactive Electron Distribution & Conduction Band Visualization** 
+     **⚡ CRITICAL SECTION FOR ELECTRICAL ENGINEERS - MUST INCLUDE DETAILED DRAWINGS AND VISUALIZATIONS ⚡**
+     
+     **ESSENTIAL DRAWING REQUIREMENTS (DO NOT SKIP):**
+     - Create comprehensive interactive JavaScript animations with detailed electron drawings
+     - Display ALL orbital shells from innermost to outermost (covalent shells) with precise visual representations
+     - Show conduction band and valence shell interactions with clear electron distribution drawings
+     - Animate electron movement and transitions between shells with accurate orbital paths
+     - Demonstrate how electrons move toward conduction bands for electrical conduction with visual trajectories
+     - **MUST INCLUDE DETAILED VISUAL REPRESENTATIONS OF:**
+       * Electron orbital paths and energy levels (1s, 2s, 2p, 3s, 3p, 3d, etc.) - DRAW EACH ORBITAL SHAPE
+       * Valence shell electron behavior and energy states - SHOW ELECTRON DISTRIBUTIONS
+       * Conduction band formation and electron flow mechanisms - ILLUSTRATE ELECTRON MOVEMENT
+       * Covalent bonding mechanisms and shared electron pairs - DRAW ORBITAL OVERLAPS
+       * Electrical conductivity pathways and electron drift - VISUALIZE CURRENT FLOW
+       * Band gap visualization and energy barriers - SHOW ENERGY LEVEL DIAGRAMS
+       * Fermi level and electron distribution at different temperatures - GRAPH DISTRIBUTIONS
+     
+     **TECHNICAL ANIMATION FEATURES (MANDATORY FOR ELECTRICAL ENGINEERS):**
+       * Use Canvas or SVG for smooth orbital drawings with high-resolution electron paths
+       * Implement particle systems for realistic electron movement visualization
+       * Add realistic electron spin and orbital motion with 3D-like orbital shapes
+       * Include comprehensive energy level diagrams with color coding and clear drawings
+       * Show electron-hole pair generation and recombination with visual animations
+       * Animate thermal excitation effects with electron movement between shells
+       * Create detailed drawings of electron cloud distributions and probability densities
+     
+     **INTERACTIVE CONTROLS FOR ELECTRICAL ENGINEERS:**
+       * Play/pause/step-through animation controls with frame-by-frame electron movement
+       * Temperature slider affecting electron behavior with visual distribution changes
+       * Voltage application simulator showing electron drift and current flow
+       * Zoom in/out for detailed orbital inspection with electron path visualization
+       * Speed control for electron movement visualization with adjustable animation rates
+       * Energy level selector and highlighting with detailed shell diagrams
+     
+     **EDUCATIONAL ENHANCEMENTS WITH DRAWINGS:**
+       * Explanatory tooltips with electrical engineering terms and orbital diagrams
+       * Real-time calculations of electrical properties with graphical representations
+       * Comparison mode with other elements showing orbital differences
+       * Measurement units display (eV, Amperes, Volts, etc.) with visual scales
+       * Professional electrical engineering annotations with detailed drawings
+     
+     **DESIGN FROM ELECTRICAL ENGINEER'S PERSPECTIVE (INCLUDE ALL DRAWINGS):**
+       * Show how electron movement relates to current flow with detailed electron paths
+       * Demonstrate Ohm's law applications with electron drift velocity illustrations
+       * Visualize impedance and reactance concepts with electron behavior diagrams
+       * Include electrical circuit analogies with electron flow representations
+       * Show practical applications in electrical components with orbital interactions
+     
+     **THIS SECTION IS ABSOLUTELY CRITICAL FOR ELECTRICAL ENGINEERS AND MUST CONTAIN:**
+     - Detailed electron orbital drawings showing exact shapes and orientations
+     - Accurate electron distribution visualizations in all shells
+     - Clear conduction band and valence shell interaction diagrams
+     - Interactive animations that demonstrate electron movement principles
+     - Professional-quality drawings that electrical engineers can use for reference
+     - Visual representations of all electron behavior phenomena mentioned above
+
+13. **Comprehensive Electrical Properties & Engineering Applications**
+     - Detailed electrical characteristics and behavior of ${elementData.name}
+     - Fundamental electrical properties:
+       * Electrical conductivity (σ) and resistivity (ρ) with temperature dependencies
+       * Conductance and resistance calculations with practical examples
+       * Current density and electric field relationships
+       * Charge carrier types, concentrations, and mobilities
+       * Hall effect measurements and interpretations
+     - Dielectric and capacitive properties:
+       * Relative permittivity (dielectric constant) and frequency dependence
+       * Dielectric loss factor and power factor calculations
+       * Breakdown voltage and dielectric strength testing
+       * Polarization mechanisms and time constants
+       * Capacitance applications and design considerations
+     - Semiconductor characteristics (if applicable):
+       * Band gap energy and temperature coefficients
+       * Intrinsic and extrinsic semiconductor behavior
+       * Doping effects and carrier concentration calculations
+       * p-n junction formation and electrical characteristics
+       * Semiconductor device applications and performance
+     - Advanced electrical properties:
+       * Thermoelectric properties (Seebeck coefficient, Peltier effect)
+       * Piezoelectric and pyroelectric effects
+       * Magnetoresistance and Hall effect phenomena
+       * Superconducting properties and critical parameters
+       * Photoelectric and photovoltaic effects
+     - Frequency-dependent behavior:
+       * AC electrical response and impedance characteristics
+       * Complex permittivity and conductivity
+       * Skin effect and proximity effect calculations
+       * High-frequency applications and limitations
+       * Electromagnetic interference and shielding effectiveness
+     - Temperature effects on electrical properties:
+       * Temperature coefficients of resistance and conductivity
+       * Thermal activation energies and Arrhenius behavior
+       * Thermal expansion effects on electrical connections
+       * Operating temperature ranges and limitations
+       * Thermal management in electrical applications
+     - Electrical applications and engineering uses:
+       * Electronic components (resistors, capacitors, semiconductors)
+       * Power transmission and distribution systems
+       * Electrical contacts, connectors, and switching devices
+       * Insulation materials and electrical protection
+       * Electromagnetic shielding and grounding systems
+       * Electrical heating and cooling applications
+       * Battery and energy storage technologies
+       * Electrical machines and motor applications
+     - Electrical safety and reliability:
+       * Electrical shock and electrocution hazards
+       * Arc flash protection and safety protocols
+       * Electrical fire prevention and suppression
+       * Insulation coordination and clearance requirements
+       * Electrical testing and maintenance procedures
+       * Reliability engineering and failure analysis
+     - Electrical testing and measurement:
+       * Standard test methods and procedures (IEEE, IEC, ASTM)
+       * Electrical measurement instruments and techniques
+       * Calibration and traceability requirements
+       * Statistical analysis of electrical measurements
+       * Quality control and acceptance testing
+     - Electrical design and engineering calculations:
+       * Circuit analysis and design principles
+       * Load calculations and power system studies
+       * Electrical protection system coordination
+       * Grounding and bonding system design
+       * Electrical installation standards and codes
+       * Energy efficiency and power quality considerations
+     - Make this section highly technical and comprehensive for electrical engineers
+     - Include electrical engineering formulas, equations, and calculations
+     - Reference relevant electrical engineering standards (IEEE, IEC, NEC, etc.)
+     - Provide practical design guidelines and best practices
+     - Include numerical examples and case studies where appropriate
+     - Use proper electrical engineering units and terminology
+     - Discuss economic considerations and cost-benefit analysis
+
+**Design Guidelines:**
+- Use a modern color palette that reflects the element's properties
+- Include attractive icons and visual elements
+- Create clear section dividers and headers
+- Use cards or boxes for organizing information
+- Add hover effects and subtle animations
+- Ensure excellent readability and contrast
+- Include a table of contents or navigation
+- Add a professional footer with element summary
+- Apply RTL (right-to-left) layout for Arabic text
+- Use appropriate Arabic typography and fonts
+- **IMPORTANT:** Style the audio buttons elegantly with consistent design throughout the report
+- Audio buttons should be visually appealing and clearly indicate their function
+- Use appropriate icons (🔊, ⏸️, ⏯️) and hover effects for audio controls
+- Position audio buttons prominently at the beginning of each section
+
+**Content Style:**
+- Write in an engaging, accessible tone in Arabic
+- Balance scientific accuracy with readability
+- Include specific examples and concrete details
+- Use storytelling techniques to make it interesting
+- Add humor where appropriate
+- Include surprising facts and connections
+- Make it educational but entertaining
+- Use professional electrical engineering terminology
+- Include practical electrical applications and examples
+- Make the electron animation section visually stunning and interactive
+- Ensure the electrical properties section is comprehensive for engineering professionals
+
+**Technical Requirements:**
+- Valid HTML5 markup with Arabic RTL support
+- Modern CSS3 features and styling
+- Responsive design for all devices
+- Fast loading and optimized performance
+- Cross-browser compatibility
+- Accessible design following WCAG guidelines
+- Advanced JavaScript animations for electron visualization
+- Canvas or SVG-based graphics for orbital representations
+- Interactive controls for educational demonstrations
+- Mathematical calculations for electrical properties
+- Professional electrical engineering terminology and units
+- Proper Arabic text rendering and RTL layout
+
+**MANDATORY AUDIO FEATURE:**
+- Add an elegant audio button at the beginning of EVERY section of the report
+- Each audio button should read ONLY that specific section content using British female voice
+- Use Web Speech API (speechSynthesis) with voice selection for British female voice
+- Audio buttons should be styled elegantly and consistently throughout the report
+- Include play/pause functionality and visual feedback during reading
+- Each section should have its own independent audio control
+- DO NOT create a button that reads the entire report - only individual sections
+- Audio buttons should work for both Arabic and English text content
+- Implement proper error handling for browsers that don't support speech synthesis
+- Add visual indicators showing when audio is playing/paused for each section
+
+Please create a report that would be both informative for chemistry professionals and engaging for students and general readers. Make it visually stunning, highly informative, and genuinely interesting to read!
+
+**Special Focus Areas:**
+- **CRITICAL:** The interactive electron distribution visualization (Section 12) should be a centerpiece with professional-grade JavaScript animations and MUST include detailed electron drawings, orbital shapes, and conduction band visualizations
+- **ESSENTIAL:** All electron drawings must show covalent orbits, conduction shells, and electron distribution patterns - these are absolutely vital for electrical engineers
+- The electrical properties section (Section 13) should serve as a comprehensive reference for electrical engineers and students
+- Both sections should demonstrate practical applications in electrical engineering and technology
+- Include real-world examples and case studies relevant to electrical engineering practice
+- Make sure the content is suitable for both educational and professional engineering environments
+- **REMINDER:** Do not forget to include the electron drawings and orbital visualizations - they are extremely important for electrical engineers to understand electron behavior and conduction mechanisms
+- **IMPORTANT:** All content must be in Arabic with proper RTL layout and Arabic typography
+- **MANDATORY:** Every section must have an elegant audio button with British female voice reading capability - do not skip this feature`;
+
+            return prompt;
+        }
+
+        function generateElementPrompt(elementData) {
+            const prompt = `Please create a comprehensive, professional, and engaging HTML report about the chemical element ${elementData.name} (${elementData.symbol}). The report should be a single HTML page with embedded CSS that is visually appealing, well-structured, and educational.
+
+**IMPORTANT: The entire report must be written in English language.**
+
+**Requirements:**
+- Single HTML page with internal CSS styling
+- Professional, modern, and attractive design
+- Clear typography and good color scheme
+- Responsive layout that works on different screen sizes
+- Use CSS Grid or Flexbox for layout
+- Include smooth animations and transitions where appropriate
+
+**Report Structure - Include these sections:**
+
+1. **Element Header & Basic Information**
+   - Element name, symbol, atomic number: ${elementData.atomicNumber}
+   - Atomic mass: ${elementData.atomicMass}
+   - Classification: ${elementData.classification}
+   - Physical state and basic properties
+   - Include an attractive header with the element symbol prominently displayed
+
+2. **Historical Background & Discovery**
+   - Discovery date and circumstances
+   - Scientists involved in discovery
+   - Etymology and name origin
+   - Historical significance and early uses
+   - Include interesting anecdotes about the discovery
+
+3. **Natural Occurrence & Environmental Presence**
+   - Where ${elementData.name} is found in nature
+   - Abundance in Earth's crust, oceans, and atmosphere
+   - Natural compounds and minerals containing this element
+   - Role in biological systems and living organisms
+   - Environmental impact and cycling
+
+4. **Daily Life Applications & Uses**
+   - Common household items containing ${elementData.name}
+   - Food and nutrition connections
+   - Medical and health applications
+   - Consumer products and technology
+   - Personal care and cosmetic uses
+
+5. **Industrial & Manufacturing Applications**
+   - Major industrial uses
+   - Manufacturing processes involving this element
+   - Construction and building materials
+   - Electronics and technology applications
+   - Transportation industry uses
+   - Energy sector applications
+
+6. **Geographic Distribution & Mining**
+   - Major producing countries and regions
+   - Mining techniques and extraction methods
+   - Economic importance and trade
+   - Reserve estimates and sustainability
+   - Processing and refining locations
+
+7. **Importance & Significance**
+   - Critical applications that depend on this element
+   - Economic value and market dynamics
+   - Strategic importance for various industries
+   - Future potential and emerging uses
+   - Substitutes and alternatives
+
+8. **Fascinating Facts & Entertainment**
+   - Amazing properties and characteristics
+   - Record-breaking aspects (hardest, lightest, etc.)
+   - Unusual applications and experiments
+   - Pop culture references and appearances
+   - Surprising connections to everyday life
+   - Interactive elements (if JavaScript is beneficial)
+
+9. **Historical Stories & Anecdotes**
+   - Famous incidents involving this element
+   - Interesting personalities connected to its development
+   - Wars, conflicts, or major events related to the element
+   - Scientific breakthroughs and discoveries
+   - Humorous or surprising historical facts
+
+10. **Professional Chemistry Information**
+    - Electronic configuration and structure
+    - Chemical properties and reactivity
+    - Isotopes and nuclear properties
+    - Laboratory handling and safety
+    - Advanced applications in research
+    - Analytical methods and detection
+
+11. **Future Outlook & Research**
+     - Cutting-edge research involving this element
+     - Emerging applications and technologies
+     - Sustainability and recycling efforts
+     - Potential new discoveries
+     - Challenges and opportunities
+
+12. **Interactive Electron Distribution & Conduction Band Visualization** 
+     **⚡ CRITICAL SECTION FOR ELECTRICAL ENGINEERS - MUST INCLUDE DETAILED DRAWINGS AND VISUALIZATIONS ⚡**
+     
+     **ESSENTIAL DRAWING REQUIREMENTS (DO NOT SKIP):**
+     - Create comprehensive interactive JavaScript animations with detailed electron drawings
+     - Display ALL orbital shells from innermost to outermost (covalent shells) with precise visual representations
+     - Show conduction band and valence shell interactions with clear electron distribution drawings
+     - Animate electron movement and transitions between shells with accurate orbital paths
+     - Demonstrate how electrons move toward conduction bands for electrical conduction with visual trajectories
+     - **MUST INCLUDE DETAILED VISUAL REPRESENTATIONS OF:**
+       * Electron orbital paths and energy levels (1s, 2s, 2p, 3s, 3p, 3d, etc.) - DRAW EACH ORBITAL SHAPE
+       * Valence shell electron behavior and energy states - SHOW ELECTRON DISTRIBUTIONS
+       * Conduction band formation and electron flow mechanisms - ILLUSTRATE ELECTRON MOVEMENT
+       * Covalent bonding mechanisms and shared electron pairs - DRAW ORBITAL OVERLAPS
+       * Electrical conductivity pathways and electron drift - VISUALIZE CURRENT FLOW
+       * Band gap visualization and energy barriers - SHOW ENERGY LEVEL DIAGRAMS
+       * Fermi level and electron distribution at different temperatures - GRAPH DISTRIBUTIONS
+     
+     **TECHNICAL ANIMATION FEATURES (MANDATORY FOR ELECTRICAL ENGINEERS):**
+       * Use Canvas or SVG for smooth orbital drawings with high-resolution electron paths
+       * Implement particle systems for realistic electron movement visualization
+       * Add realistic electron spin and orbital motion with 3D-like orbital shapes
+       * Include comprehensive energy level diagrams with color coding and clear drawings
+       * Show electron-hole pair generation and recombination with visual animations
+       * Animate thermal excitation effects with electron movement between shells
+       * Create detailed drawings of electron cloud distributions and probability densities
+     
+     **INTERACTIVE CONTROLS FOR ELECTRICAL ENGINEERS:**
+       * Play/pause/step-through animation controls with frame-by-frame electron movement
+       * Temperature slider affecting electron behavior with visual distribution changes
+       * Voltage application simulator showing electron drift and current flow
+       * Zoom in/out for detailed orbital inspection with electron path visualization
+       * Speed control for electron movement visualization with adjustable animation rates
+       * Energy level selector and highlighting with detailed shell diagrams
+     
+     **EDUCATIONAL ENHANCEMENTS WITH DRAWINGS:**
+       * Explanatory tooltips with electrical engineering terms and orbital diagrams
+       * Real-time calculations of electrical properties with graphical representations
+       * Comparison mode with other elements showing orbital differences
+       * Measurement units display (eV, Amperes, Volts, etc.) with visual scales
+       * Professional electrical engineering annotations with detailed drawings
+     
+     **DESIGN FROM ELECTRICAL ENGINEER'S PERSPECTIVE (INCLUDE ALL DRAWINGS):**
+       * Show how electron movement relates to current flow with detailed electron paths
+       * Demonstrate Ohm's law applications with electron drift velocity illustrations
+       * Visualize impedance and reactance concepts with electron behavior diagrams
+       * Include electrical circuit analogies with electron flow representations
+       * Show practical applications in electrical components with orbital interactions
+     
+     **THIS SECTION IS ABSOLUTELY CRITICAL FOR ELECTRICAL ENGINEERS AND MUST CONTAIN:**
+     - Detailed electron orbital drawings showing exact shapes and orientations
+     - Accurate electron distribution visualizations in all shells
+     - Clear conduction band and valence shell interaction diagrams
+     - Interactive animations that demonstrate electron movement principles
+     - Professional-quality drawings that electrical engineers can use for reference
+     - Visual representations of all electron behavior phenomena mentioned above
+
+13. **Comprehensive Electrical Properties & Engineering Applications**
+     - Detailed electrical characteristics and behavior of ${elementData.name}
+     - Fundamental electrical properties:
+       * Electrical conductivity (σ) and resistivity (ρ) with temperature dependencies
+       * Conductance and resistance calculations with practical examples
+       * Current density and electric field relationships
+       * Charge carrier types, concentrations, and mobilities
+       * Hall effect measurements and interpretations
+     - Dielectric and capacitive properties:
+       * Relative permittivity (dielectric constant) and frequency dependence
+       * Dielectric loss factor and power factor calculations
+       * Breakdown voltage and dielectric strength testing
+       * Polarization mechanisms and time constants
+       * Capacitance applications and design considerations
+     - Semiconductor characteristics (if applicable):
+       * Band gap energy and temperature coefficients
+       * Intrinsic and extrinsic semiconductor behavior
+       * Doping effects and carrier concentration calculations
+       * p-n junction formation and electrical characteristics
+       * Semiconductor device applications and performance
+     - Advanced electrical properties:
+       * Thermoelectric properties (Seebeck coefficient, Peltier effect)
+       * Piezoelectric and pyroelectric effects
+       * Magnetoresistance and Hall effect phenomena
+       * Superconducting properties and critical parameters
+       * Photoelectric and photovoltaic effects
+     - Frequency-dependent behavior:
+       * AC electrical response and impedance characteristics
+       * Complex permittivity and conductivity
+       * Skin effect and proximity effect calculations
+       * High-frequency applications and limitations
+       * Electromagnetic interference and shielding effectiveness
+     - Temperature effects on electrical properties:
+       * Temperature coefficients of resistance and conductivity
+       * Thermal activation energies and Arrhenius behavior
+       * Thermal expansion effects on electrical connections
+       * Operating temperature ranges and limitations
+       * Thermal management in electrical applications
+     - Electrical applications and engineering uses:
+       * Electronic components (resistors, capacitors, semiconductors)
+       * Power transmission and distribution systems
+       * Electrical contacts, connectors, and switching devices
+       * Insulation materials and electrical protection
+       * Electromagnetic shielding and grounding systems
+       * Electrical heating and cooling applications
+       * Battery and energy storage technologies
+       * Electrical machines and motor applications
+     - Electrical safety and reliability:
+       * Electrical shock and electrocution hazards
+       * Arc flash protection and safety protocols
+       * Electrical fire prevention and suppression
+       * Insulation coordination and clearance requirements
+       * Electrical testing and maintenance procedures
+       * Reliability engineering and failure analysis
+     - Electrical testing and measurement:
+       * Standard test methods and procedures (IEEE, IEC, ASTM)
+       * Electrical measurement instruments and techniques
+       * Calibration and traceability requirements
+       * Statistical analysis of electrical measurements
+       * Quality control and acceptance testing
+     - Electrical design and engineering calculations:
+       * Circuit analysis and design principles
+       * Load calculations and power system studies
+       * Electrical protection system coordination
+       * Grounding and bonding system design
+       * Electrical installation standards and codes
+       * Energy efficiency and power quality considerations
+     - Make this section highly technical and comprehensive for electrical engineers
+     - Include electrical engineering formulas, equations, and calculations
+     - Reference relevant electrical engineering standards (IEEE, IEC, NEC, etc.)
+     - Provide practical design guidelines and best practices
+     - Include numerical examples and case studies where appropriate
+     - Use proper electrical engineering units and terminology
+     - Discuss economic considerations and cost-benefit analysis
+
+**Design Guidelines:**
+- Use a modern color palette that reflects the element's properties
+- Include attractive icons and visual elements
+- Create clear section dividers and headers
+- Use cards or boxes for organizing information
+- Add hover effects and subtle animations
+- Ensure excellent readability and contrast
+- Include a table of contents or navigation
+- Add a professional footer with element summary
+- **IMPORTANT:** Style the audio buttons elegantly with consistent design throughout the report
+- Audio buttons should be visually appealing and clearly indicate their function
+- Use appropriate icons (🔊, ⏸️, ⏯️) and hover effects for audio controls
+- Position audio buttons prominently at the beginning of each section
+
+**Content Style:**
+- Write in an engaging, accessible tone
+- Balance scientific accuracy with readability
+- Include specific examples and concrete details
+- Use storytelling techniques to make it interesting
+- Add humor where appropriate
+- Include surprising facts and connections
+- Make it educational but entertaining
+- Use professional electrical engineering terminology
+- Include practical electrical applications and examples
+- Make the electron animation section visually stunning and interactive
+- Ensure the electrical properties section is comprehensive for engineering professionals
+
+**Technical Requirements:**
+- Valid HTML5 markup
+- Modern CSS3 features and styling
+- Responsive design for all devices
+- Fast loading and optimized performance
+- Cross-browser compatibility
+- Accessible design following WCAG guidelines
+- Advanced JavaScript animations for electron visualization
+- Canvas or SVG-based graphics for orbital representations
+- Interactive controls for educational demonstrations
+- Mathematical calculations for electrical properties
+- Professional electrical engineering terminology and units
+
+**MANDATORY AUDIO FEATURE:**
+- Add an elegant audio button at the beginning of EVERY section of the report
+- Each audio button should read ONLY that specific section content using British female voice
+- Use Web Speech API (speechSynthesis) with voice selection for British female voice
+- Audio buttons should be styled elegantly and consistently throughout the report
+- Include play/pause functionality and visual feedback during reading
+- Each section should have its own independent audio control
+- DO NOT create a button that reads the entire report - only individual sections
+- Audio buttons should work for both Arabic and English text content
+- Implement proper error handling for browsers that don't support speech synthesis
+- Add visual indicators showing when audio is playing/paused for each section
+
+Please create a report that would be both informative for chemistry professionals and engaging for students and general readers. Make it visually stunning, highly informative, and genuinely interesting to read!
+
+**Special Focus Areas:**
+- **CRITICAL:** The interactive electron distribution visualization (Section 12) should be a centerpiece with professional-grade JavaScript animations and MUST include detailed electron drawings, orbital shapes, and conduction band visualizations
+- **ESSENTIAL:** All electron drawings must show covalent orbits, conduction shells, and electron distribution patterns - these are absolutely vital for electrical engineers
+- The electrical properties section (Section 13) should serve as a comprehensive reference for electrical engineers and students
+- Both sections should demonstrate practical applications in electrical engineering and technology
+- Include real-world examples and case studies relevant to electrical engineering practice
+- Make sure the content is suitable for both educational and professional engineering environments
+- **REMINDER:** Do not forget to include the electron drawings and orbital visualizations - they are extremely important for electrical engineers to understand electron behavior and conduction mechanisms
+- **MANDATORY:** Every section must have an elegant audio button with British female voice reading capability - do not skip this feature`;
+
+            return prompt;
+        }
+
+        function copyToClipboard(text, successMessage) {
+            navigator.clipboard.writeText(text).then(function() {
+                showCopySuccess(successMessage);
+            }).catch(function(err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCopySuccess(successMessage);
+            });
+        }
+
+        function showCopySuccess(message) {
+            // Create or get existing success notification
+            let successDiv = document.querySelector('.copy-success');
+            const defaultMessage = '✅ Enhanced Electrical Engineering Prompt copied to clipboard!<br><small>Includes interactive electron visualization & comprehensive electrical properties</small>';
+            const displayMessage = message || defaultMessage;
+            
+            if (!successDiv) {
+                successDiv = document.createElement('div');
+                successDiv.className = 'copy-success';
+                successDiv.innerHTML = `✅ ${displayMessage}`;
+                document.body.appendChild(successDiv);
+            } else {
+                successDiv.innerHTML = `✅ ${displayMessage}`;
+            }
+            
+            // Show notification
+            successDiv.classList.add('show');
+            
+            // Hide after 4 seconds (longer due to more text)
+            setTimeout(() => {
+                successDiv.classList.remove('show');
+            }, 4000);
+        }
+
+        function handleAIPromptClick(elementData) {
+            const prompt = generateElementPrompt(elementData);
+            copyToClipboard(prompt, 'Enhanced Electrical Engineering Prompt copied to clipboard!\n\nThis prompt includes comprehensive electrical engineering sections with detailed electron drawings and orbital visualizations.');
+        }
+
+        function handleAIPromptClickArabic(elementData) {
+            const prompt = generateElementPromptArabic(elementData);
+            copyToClipboard(prompt, 'Enhanced Electrical Engineering Prompt (Arabic) copied to clipboard!\n\nThis prompt includes comprehensive electrical engineering sections with detailed electron drawings and orbital visualizations - Report will be in Arabic with RTL layout.');
+        }
     </script>
     
     <!-- Dynamic Translation System -->
