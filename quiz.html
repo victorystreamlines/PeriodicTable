@@ -403,6 +403,16 @@
             color: #d32f2f !important;
         }
 
+        .element .state-type-container .magnetic-permeability.correct {
+            background-color: rgba(76, 175, 80, 0.2) !important;
+            color: #2e7d32 !important;
+        }
+
+        .element .state-type-container .magnetic-permeability.incorrect {
+            background-color: rgba(244, 67, 54, 0.2) !important;
+            color: #d32f2f !important;
+        }
+
         /* Lanthanides and Actinides correct/incorrect styling */
         .lanthanides-row .element input.correct, .actinides-row .element input.correct {
             background-color: rgba(76, 175, 80, 0.2) !important;
@@ -451,6 +461,16 @@
         }
 
         .lanthanides-row .element .state-type-container .magnetic-susceptibility.incorrect, .actinides-row .element .state-type-container .magnetic-susceptibility.incorrect {
+            background-color: rgba(244, 67, 54, 0.2) !important;
+            color: #d32f2f !important;
+        }
+
+        .lanthanides-row .element .state-type-container .magnetic-permeability.correct, .actinides-row .element .state-type-container .magnetic-permeability.correct {
+            background-color: rgba(76, 175, 80, 0.2) !important;
+            color: #2e7d32 !important;
+        }
+
+        .lanthanides-row .element .state-type-container .magnetic-permeability.incorrect, .actinides-row .element .state-type-container .magnetic-permeability.incorrect {
             background-color: rgba(244, 67, 54, 0.2) !important;
             color: #d32f2f !important;
         }
@@ -518,8 +538,8 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.2;
-            width: 23% !important;
-            min-width: 18px !important;
+            width: 18% !important;
+            min-width: 15px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -545,8 +565,8 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.2;
-            width: 23% !important;
-            min-width: 18px !important;
+            width: 18% !important;
+            min-width: 15px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -563,8 +583,8 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.2;
-            width: 23% !important;
-            min-width: 18px !important;
+            width: 18% !important;
+            min-width: 15px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -581,8 +601,26 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.2;
-            width: 23% !important;
-            min-width: 18px !important;
+            width: 18% !important;
+            min-width: 15px !important;
+            border: none !important;
+            background: transparent !important;
+            text-align: center !important;
+            color: inherit !important;
+            outline: none !important;
+            padding: 2px 1px !important;
+            margin: 0 !important;
+            min-height: 14px;
+            flex-shrink: 0;
+        }
+
+        .element .magnetic-permeability {
+            font-size: 0.65rem;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.2;
+            width: 18% !important;
+            min-width: 15px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -806,8 +844,8 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.1;
-            width: 23% !important;
-            min-width: 15px !important;
+            width: 18% !important;
+            min-width: 12px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -833,8 +871,8 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.1;
-            width: 23% !important;
-            min-width: 15px !important;
+            width: 18% !important;
+            min-width: 12px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -851,8 +889,8 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.1;
-            width: 23% !important;
-            min-width: 15px !important;
+            width: 18% !important;
+            min-width: 12px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -869,8 +907,26 @@
             font-weight: 500;
             opacity: 0.9;
             line-height: 1.1;
-            width: 23% !important;
-            min-width: 15px !important;
+            width: 18% !important;
+            min-width: 12px !important;
+            border: none !important;
+            background: transparent !important;
+            text-align: center !important;
+            color: inherit !important;
+            outline: none !important;
+            padding: 2px 1px !important;
+            margin: 0 !important;
+            min-height: 12px;
+            flex-shrink: 0;
+        }
+
+        .lanthanides-row .element .magnetic-permeability, .actinides-row .element .magnetic-permeability {
+            font-size: 0.6rem;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.1;
+            width: 18% !important;
+            min-width: 12px !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
@@ -947,7 +1003,7 @@
             .element .symbol {
                 font-size: 1rem;
             }
-            .element .state, .element .metal-type, .element .conductivity, .element .magnetic-susceptibility {
+            .element .state, .element .metal-type, .element .conductivity, .element .magnetic-susceptibility, .element .magnetic-permeability {
                 font-size: 0.55rem;
             }
             .lanthanides-row .element, .actinides-row .element {
@@ -962,7 +1018,8 @@
             .lanthanides-row .element .state, .actinides-row .element .state,
             .lanthanides-row .element .metal-type, .actinides-row .element .metal-type,
             .lanthanides-row .element .conductivity, .actinides-row .element .conductivity,
-            .lanthanides-row .element .magnetic-susceptibility, .actinides-row .element .magnetic-susceptibility {
+            .lanthanides-row .element .magnetic-susceptibility, .actinides-row .element .magnetic-susceptibility,
+            .lanthanides-row .element .magnetic-permeability, .actinides-row .element .magnetic-permeability {
                 font-size: 0.55rem;
             }
         }
@@ -989,7 +1046,7 @@
             .element .symbol {
                 font-size: 0.9rem;
             }
-            .element .state, .element .metal-type, .element .conductivity, .element .magnetic-susceptibility {
+            .element .state, .element .metal-type, .element .conductivity, .element .magnetic-susceptibility, .element .magnetic-permeability {
                 font-size: 0.5rem;
             }
             .lanthanides-row .element, .actinides-row .element {
@@ -1004,7 +1061,8 @@
             .lanthanides-row .element .state, .actinides-row .element .state,
             .lanthanides-row .element .metal-type, .actinides-row .element .metal-type,
             .lanthanides-row .element .conductivity, .actinides-row .element .conductivity,
-            .lanthanides-row .element .magnetic-susceptibility, .actinides-row .element .magnetic-susceptibility {
+            .lanthanides-row .element .magnetic-susceptibility, .actinides-row .element .magnetic-susceptibility,
+            .lanthanides-row .element .magnetic-permeability, .actinides-row .element .magnetic-permeability {
                 font-size: 0.5rem;
             }
             
@@ -1853,10 +1911,35 @@
             }
         }
 
+        // Auto-assign magnetic permeability based on element properties
+        function assignMagneticPermeability(element) {
+            // High permeability (H) - Ferromagnetic elements
+            const highPermeability = [26, 27, 28]; // Fe, Co, Ni
+            
+            // Medium permeability (M) - Some transition metals
+            const mediumPermeability = [24, 25, 41, 42, 43, 44, 45, 46, 72, 73, 74, 75, 76, 77, 78]; // Cr, Mn, Nb, Mo, Tc, Ru, Rh, Pd, Hf, Ta, W, Re, Os, Ir, Pt
+            
+            // Low permeability (L) - Other metals (paramagnetic)
+            const lowPermeability = [3, 11, 12, 13, 19, 20, 21, 22, 23, 29, 30, 31, 37, 38, 39, 40, 47, 48, 49, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 79, 80, 81, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113];
+            
+            if (highPermeability.includes(element.atomicNumber)) {
+                return "H";
+            } else if (mediumPermeability.includes(element.atomicNumber)) {
+                return "M";
+            } else if (lowPermeability.includes(element.atomicNumber)) {
+                return "L";
+            } else {
+                return "N"; // None (non-metals, noble gases, diamagnetic)
+            }
+        }
+
         // Add magnetic susceptibility to all elements
         quizElements.forEach(element => {
             if (!element.magneticSusceptibility) {
                 element.magneticSusceptibility = assignMagneticSusceptibility(element);
+            }
+            if (!element.magneticPermeability) {
+                element.magneticPermeability = assignMagneticPermeability(element);
             }
         });
 
@@ -1940,6 +2023,9 @@
                         <span class="state-type-separator">/</span>
                         <input type="text" class="magnetic-susceptibility" id="${elementId}-magnetic" placeholder="" 
                                data-answer="${elementData.magneticSusceptibility}" data-field="magnetic" data-element="${elementData.atomicNumber}">
+                        <span class="state-type-separator">/</span>
+                        <input type="text" class="magnetic-permeability" id="${elementId}-permeability" placeholder="" 
+                               data-answer="${elementData.magneticPermeability}" data-field="permeability" data-element="${elementData.atomicNumber}">
                     </div>
                 `;
 
@@ -1964,7 +2050,7 @@
                     }
                 });
 
-                quizState.totalQuestions += 7; // symbol, name, mass, state, metaltype, conductivity, magnetic
+                quizState.totalQuestions += 8; // symbol, name, mass, state, metaltype, conductivity, magnetic, permeability
 
                 return elementDiv;
             }
@@ -1973,8 +2059,8 @@
                 const currentElement = currentInput.dataset.element;
                 const currentField = currentInput.dataset.field;
                 
-                // Define field order: symbol -> name -> mass -> state -> metaltype -> conductivity -> magnetic
-                const fieldOrder = ['symbol', 'name', 'mass', 'state', 'metaltype', 'conductivity', 'magnetic'];
+                // Define field order: symbol -> name -> mass -> state -> metaltype -> conductivity -> magnetic -> permeability
+                const fieldOrder = ['symbol', 'name', 'mass', 'state', 'metaltype', 'conductivity', 'magnetic', 'permeability'];
                 const currentFieldIndex = fieldOrder.indexOf(currentField);
                 
                 let nextInput = null;
@@ -1984,9 +2070,9 @@
                     const nextField = fieldOrder[currentFieldIndex + 1];
                     nextInput = document.getElementById(`element-${currentElement}-${nextField}`);
                     
-                    // If moving to magnetic field, scroll it into view
-                    if (nextField === 'magnetic' && nextInput) {
-                        // Scroll the container to show the magnetic field
+                    // If moving to magnetic or permeability field, scroll it into view
+                    if ((nextField === 'magnetic' || nextField === 'permeability') && nextInput) {
+                        // Scroll the container to show the field
                         const container = nextInput.closest('.state-type-container');
                         if (container) {
                             nextInput.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' });
@@ -2088,6 +2174,9 @@
                         <span class="state-type-separator">/</span>
                         <input type="text" class="magnetic-susceptibility" id="${elementId}-magnetic" placeholder="" 
                                data-answer="${elementData.magneticSusceptibility}" data-field="magnetic" data-element="${elementData.atomicNumber}">
+                        <span class="state-type-separator">/</span>
+                        <input type="text" class="magnetic-permeability" id="${elementId}-permeability" placeholder="" 
+                               data-answer="${elementData.magneticPermeability}" data-field="permeability" data-element="${elementData.atomicNumber}">
                     </div>
                 `;
 
@@ -2112,7 +2201,7 @@
                     }
                 });
 
-                quizState.totalQuestions += 7; // symbol, name, mass, state, metaltype, conductivity, magnetic
+                quizState.totalQuestions += 8; // symbol, name, mass, state, metaltype, conductivity, magnetic, permeability
 
                 return elementDiv;
             }
