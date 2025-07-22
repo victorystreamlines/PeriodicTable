@@ -162,7 +162,7 @@
         }
 
         .container-fluid {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
 
@@ -237,8 +237,8 @@
         .column-reset-buttons {
             display: grid;
             grid-template-columns: repeat(18, 1fr);
-            gap: 2px;
-            min-width: 1200px;
+            gap: 6px;
+            min-width: 1500px;
             margin: 0 auto;
             margin-bottom: 5px;
         }
@@ -272,7 +272,7 @@
         .row-reset-buttons {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 6px;
             padding-top: 40px; /* Adjust for column buttons */
         }
 
@@ -303,15 +303,15 @@
         .periodic-table {
             display: grid;
             grid-template-columns: repeat(18, 1fr);
-            gap: 2px;
-            min-width: 1200px;
+            gap: 6px;
+            min-width: 1500px;
             margin: 0 auto;
         }
 
         /* Element Styles */
         .element {
             aspect-ratio: 0.72;
-            min-height: 95px;
+            min-height: 110px;
             border: 2px solid rgba(0,0,0,0.1);
             border-radius: 8px;
             display: flex;
@@ -465,13 +465,15 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin: 0.5px 0;
-            gap: 2px;
+            margin: 1px 0;
+            gap: 1px;
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.3) transparent;
+            min-height: 18px;
+            padding: 2px 1px;
         }
         
         .element .state-type-container::-webkit-scrollbar {
@@ -488,55 +490,59 @@
         }
 
         .element .state {
-            font-size: 0.6rem;
-            font-weight: 400;
-            opacity: 0.8;
-            line-height: 1;
+            font-size: 0.65rem;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.2;
             width: 30% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 1px !important;
+            padding: 2px 1px !important;
             margin: 0 !important;
+            min-height: 14px;
         }
 
         .element .state-type-separator {
-            font-size: 0.6rem;
-            opacity: 0.6;
+            font-size: 0.7rem;
+            opacity: 0.8;
             color: inherit;
             margin: 0 1px;
+            font-weight: bold;
         }
 
         .element .metal-type {
-            font-size: 0.6rem;
-            font-weight: 400;
-            opacity: 0.8;
-            line-height: 1;
+            font-size: 0.65rem;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.2;
             width: 30% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 1px !important;
+            padding: 2px 1px !important;
             margin: 0 !important;
+            min-height: 14px;
         }
 
         .element .conductivity {
-            font-size: 0.6rem;
-            font-weight: 400;
-            opacity: 0.8;
-            line-height: 1;
+            font-size: 0.65rem;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.2;
             width: 30% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 1px !important;
+            padding: 2px 1px !important;
             margin: 0 !important;
+            min-height: 14px;
         }
 
         /* Empty cells */
@@ -650,7 +656,7 @@
 
         .lanthanides-row, .actinides-row {
             display: flex;
-            gap: 2px;
+            gap: 6px;
             margin-bottom: 10px;
             flex-wrap: nowrap;
             justify-content: flex-start;
@@ -660,7 +666,7 @@
 
         .lanthanides-row .element, .actinides-row .element {
             aspect-ratio: 0.85;
-            min-height: 78px;
+            min-height: 88px;
             min-width: 66px;
             max-width: 80px;
             flex-shrink: 0;
@@ -732,65 +738,71 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin: 0.5px 0;
-            gap: 2px;
+            margin: 1px 0;
+            gap: 1px;
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.3) transparent;
+            min-height: 16px;
+            padding: 2px 1px;
         }
 
         .lanthanides-row .element .state, .actinides-row .element .state {
             font-size: 0.6rem;
-            font-weight: 400;
-            opacity: 0.8;
-            line-height: 1;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.1;
             width: 30% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 1px !important;
+            padding: 2px 1px !important;
             margin: 0 !important;
+            min-height: 12px;
         }
 
         .lanthanides-row .element .state-type-separator, .actinides-row .element .state-type-separator {
-            font-size: 0.6rem;
-            opacity: 0.6;
+            font-size: 0.65rem;
+            opacity: 0.8;
             color: inherit;
             margin: 0 1px;
+            font-weight: bold;
         }
 
         .lanthanides-row .element .metal-type, .actinides-row .element .metal-type {
             font-size: 0.6rem;
-            font-weight: 400;
-            opacity: 0.8;
-            line-height: 1;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.1;
             width: 30% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 1px !important;
+            padding: 2px 1px !important;
             margin: 0 !important;
+            min-height: 12px;
         }
 
         .lanthanides-row .element .conductivity, .actinides-row .element .conductivity {
             font-size: 0.6rem;
-            font-weight: 400;
-            opacity: 0.8;
-            line-height: 1;
+            font-weight: 500;
+            opacity: 0.9;
+            line-height: 1.1;
             width: 30% !important;
             border: none !important;
             background: transparent !important;
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 1px !important;
+            padding: 2px 1px !important;
             margin: 0 !important;
+            min-height: 12px;
         }
 
         .actinides-row .element .state-type-container {
@@ -798,13 +810,15 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin: 0.5px 0;
-            gap: 2px;
+            margin: 1px 0;
+            gap: 1px;
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.3) transparent;
+            min-height: 16px;
+            padding: 2px 1px;
         }
 
         .series-label {
@@ -825,20 +839,31 @@
         /* Responsive Design */
         @media (max-width: 1200px) {
             .periodic-table {
-                min-width: 900px;
+                min-width: 1200px;
+                gap: 4px;
+            }
+            .column-reset-buttons {
+                min-width: 1200px;
+                gap: 4px;
+            }
+            .row-reset-buttons {
+                gap: 4px;
+            }
+            .lanthanides-row, .actinides-row {
+                gap: 4px;
             }
             .element {
-                min-height: 82px;
+                min-height: 98px;
                 font-size: 0.7rem;
             }
             .element .symbol {
                 font-size: 1rem;
             }
-            .element .state, .element .metal-type {
-                font-size: 0.5rem;
+            .element .state, .element .metal-type, .element .conductivity {
+                font-size: 0.55rem;
             }
             .lanthanides-row .element, .actinides-row .element {
-                min-height: 75px;
+                min-height: 82px;
                 min-width: 56px;
                 max-width: 68px;
                 font-size: 0.7rem;
@@ -847,27 +872,39 @@
                 font-size: 1rem;
             }
             .lanthanides-row .element .state, .actinides-row .element .state,
-            .lanthanides-row .element .metal-type, .actinides-row .element .metal-type {
-                font-size: 0.5rem;
+            .lanthanides-row .element .metal-type, .actinides-row .element .metal-type,
+            .lanthanides-row .element .conductivity, .actinides-row .element .conductivity {
+                font-size: 0.55rem;
             }
         }
 
         @media (max-width: 768px) {
             .periodic-table {
-                min-width: 700px;
+                min-width: 1000px;
+                gap: 3px;
+            }
+            .column-reset-buttons {
+                min-width: 1000px;
+                gap: 3px;
+            }
+            .row-reset-buttons {
+                gap: 3px;
+            }
+            .lanthanides-row, .actinides-row {
+                gap: 3px;
             }
             .element {
-                min-height: 65px;
+                min-height: 78px;
                 font-size: 0.6rem;
             }
             .element .symbol {
                 font-size: 0.9rem;
             }
-            .element .state, .element .metal-type {
-                font-size: 0.45rem;
+            .element .state, .element .metal-type, .element .conductivity {
+                font-size: 0.5rem;
             }
             .lanthanides-row .element, .actinides-row .element {
-                min-height: 58px;
+                min-height: 68px;
                 min-width: 46px;
                 max-width: 66px;
                 font-size: 0.6rem;
@@ -876,8 +913,9 @@
                 font-size: 0.9rem;
             }
             .lanthanides-row .element .state, .actinides-row .element .state,
-            .lanthanides-row .element .metal-type, .actinides-row .element .metal-type {
-                font-size: 0.45rem;
+            .lanthanides-row .element .metal-type, .actinides-row .element .metal-type,
+            .lanthanides-row .element .conductivity, .actinides-row .element .conductivity {
+                font-size: 0.5rem;
             }
             
             .auth-container {
