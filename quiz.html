@@ -530,14 +530,27 @@
             justify-content: flex-start;
             width: 100%;
             margin: 1px 0;
-            gap: 1px;
+            gap: 2px;
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.3) transparent;
-            min-height: 18px;
-            padding: 2px 1px;
+            min-height: 22px;
+            padding: 3px 2px;
+        }
+
+        /* Enhanced hover area for better tooltip accessibility */
+        .element .state-type-container input {
+            position: relative;
+            cursor: help;
+            border-radius: 2px;
+            transition: background-color 0.2s ease;
+        }
+
+        .element .state-type-container input:hover {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
         }
         
         .element .state-type-container::-webkit-scrollbar {
@@ -565,9 +578,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 14px;
+            padding: 4px 3px !important;
+            margin: 1px !important;
+            min-height: 18px;
             flex-shrink: 0;
         }
 
@@ -592,9 +605,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 14px;
+            padding: 4px 3px !important;
+            margin: 1px !important;
+            min-height: 18px;
             flex-shrink: 0;
         }
 
@@ -610,9 +623,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 14px;
+            padding: 4px 3px !important;
+            margin: 1px !important;
+            min-height: 18px;
             flex-shrink: 0;
         }
 
@@ -628,9 +641,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 14px;
+            padding: 4px 3px !important;
+            margin: 1px !important;
+            min-height: 18px;
             flex-shrink: 0;
         }
 
@@ -646,9 +659,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 14px;
+            padding: 4px 3px !important;
+            margin: 1px !important;
+            min-height: 18px;
             flex-shrink: 0;
         }
 
@@ -664,9 +677,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 14px;
+            padding: 4px 3px !important;
+            margin: 1px !important;
+            min-height: 18px;
             flex-shrink: 0;
         }
 
@@ -867,14 +880,57 @@
             justify-content: flex-start;
             width: 100%;
             margin: 1px 0;
-            gap: 1px;
+            gap: 2px;
             overflow-x: auto;
             overflow-y: hidden;
             white-space: nowrap;
             scrollbar-width: thin;
             scrollbar-color: rgba(255,255,255,0.3) transparent;
-            min-height: 16px;
-            padding: 2px 1px;
+            min-height: 20px;
+            padding: 3px 2px;
+        }
+
+        /* Enhanced hover area for lanthanides/actinides tooltips */
+        .lanthanides-row .element .state-type-container input,
+        .actinides-row .element .state-type-container input {
+            position: relative;
+            cursor: help;
+            border-radius: 2px;
+            transition: background-color 0.2s ease;
+        }
+
+        .lanthanides-row .element .state-type-container input:hover,
+        .actinides-row .element .state-type-container input:hover {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* Tooltip enhancement for better visibility and faster appearance */
+        .element .state-type-container input[title],
+        .lanthanides-row .element .state-type-container input[title],
+        .actinides-row .element .state-type-container input[title] {
+            position: relative;
+        }
+
+        .element .state-type-container input[title]:hover,
+        .lanthanides-row .element .state-type-container input[title]:hover,
+        .actinides-row .element .state-type-container input[title]:hover {
+            z-index: 1000;
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* Make tooltips appear faster and more responsive */
+        .element .state-type-container input[title]:before,
+        .lanthanides-row .element .state-type-container input[title]:before,
+        .actinides-row .element .state-type-container input[title]:before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            z-index: -1;
         }
 
         .lanthanides-row .element .state, .actinides-row .element .state {
@@ -889,9 +945,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 12px;
+            padding: 4px 2px !important;
+            margin: 1px !important;
+            min-height: 16px;
             flex-shrink: 0;
         }
 
@@ -916,9 +972,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 12px;
+            padding: 4px 2px !important;
+            margin: 1px !important;
+            min-height: 16px;
             flex-shrink: 0;
         }
 
@@ -934,9 +990,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 12px;
+            padding: 4px 2px !important;
+            margin: 1px !important;
+            min-height: 16px;
             flex-shrink: 0;
         }
 
@@ -952,9 +1008,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 12px;
+            padding: 4px 2px !important;
+            margin: 1px !important;
+            min-height: 16px;
             flex-shrink: 0;
         }
 
@@ -970,9 +1026,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 12px;
+            padding: 4px 2px !important;
+            margin: 1px !important;
+            min-height: 16px;
             flex-shrink: 0;
         }
 
@@ -988,9 +1044,9 @@
             text-align: center !important;
             color: inherit !important;
             outline: none !important;
-            padding: 2px 1px !important;
-            margin: 0 !important;
-            min-height: 12px;
+            padding: 4px 2px !important;
+            margin: 1px !important;
+            min-height: 16px;
             flex-shrink: 0;
         }
 
