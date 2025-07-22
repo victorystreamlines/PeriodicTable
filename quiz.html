@@ -2254,9 +2254,9 @@
                 
                 elementDiv.innerHTML = `
                     <div class="atomic-number-container">
-                        <button class="ai-prompt-btn-arabic" onclick="handleAIPromptClickArabic(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (Arabic Report)"></button>
+                        <button class="ai-prompt-btn-arabic" tabindex="-1" onclick="handleAIPromptClickArabic(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (Arabic Report)"></button>
                         <div class="atomic-number">${elementData.atomicNumber}</div>
-                        <button class="ai-prompt-btn" onclick="handleAIPromptClick(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (English Report)"></button>
+                        <button class="ai-prompt-btn" tabindex="-1" onclick="handleAIPromptClick(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (English Report)"></button>
                     </div>
                     <input type="text" class="symbol" id="${elementId}-symbol" placeholder="Symbol" 
                            data-answer="${elementData.symbol}" data-field="symbol" data-element="${elementData.atomicNumber}">
@@ -2342,24 +2342,73 @@
                     }
                 } else {
                     // Move to first field of next element
-                    const allElements = quizElements.sort((a, b) => a.atomicNumber - b.atomicNumber);
-                    const currentElementIndex = allElements.findIndex(el => el.atomicNumber == currentElement);
+                    // Get all input elements in the correct order (main table + lanthanides + actinides)
+                    const allInputs = [];
                     
-                    if (currentElementIndex < allElements.length - 1) {
+                    // Collect inputs from main periodic table
+                    const mainTableElements = document.querySelectorAll('.periodic-table .element input[data-field="symbol"]');
+                    mainTableElements.forEach(input => {
+                        if (input.dataset.element) {
+                            allInputs.push(parseInt(input.dataset.element));
+                        }
+                    });
+                    
+                    // Collect inputs from lanthanides and actinides
+                    const lanthanideActinideInputs = document.querySelectorAll('.lanthanides-row .element input[data-field="symbol"], .actinides-row .element input[data-field="symbol"]');
+                    lanthanideActinideInputs.forEach(input => {
+                        if (input.dataset.element) {
+                            allInputs.push(parseInt(input.dataset.element));
+                        }
+                    });
+                    
+                    // Sort elements by atomic number
+                    const sortedElements = [...new Set(allInputs)].sort((a, b) => a - b);
+                    
+                    // Find current element index
+                    const currentElementIndex = sortedElements.findIndex(atomicNumber => atomicNumber == currentElement);
+                    
+                    if (currentElementIndex !== -1 && currentElementIndex < sortedElements.length - 1) {
                         // Next element exists
-                        const nextElement = allElements[currentElementIndex + 1];
-                        nextInput = document.getElementById(`element-${nextElement.atomicNumber}-symbol`);
+                        const nextElementAtomicNumber = sortedElements[currentElementIndex + 1];
+                        nextInput = document.getElementById(`element-${nextElementAtomicNumber}-symbol`);
                     } else {
                         // Last element, wrap to first element
-                        const firstElement = allElements[0];
-                        nextInput = document.getElementById(`element-${firstElement.atomicNumber}-symbol`);
+                        if (sortedElements.length > 0) {
+                            const firstElementAtomicNumber = sortedElements[0];
+                            nextInput = document.getElementById(`element-${firstElementAtomicNumber}-symbol`);
+                        }
+                    }
+                    
+                    // Fallback: if nextInput is still null, try to find any next available input
+                    if (!nextInput) {
+                        const allAvailableInputs = document.querySelectorAll('.element input[data-field="symbol"]');
+                        const currentInputElement = currentInput.closest('.element');
+                        let foundCurrent = false;
+                        
+                        for (let input of allAvailableInputs) {
+                            if (foundCurrent) {
+                                nextInput = input;
+                                break;
+                            }
+                            if (input.closest('.element') === currentInputElement) {
+                                foundCurrent = true;
+                            }
+                        }
+                        
+                        // If still not found, wrap to first
+                        if (!nextInput && allAvailableInputs.length > 0) {
+                            nextInput = allAvailableInputs[0];
+                        }
                     }
                 }
                 
-                // Focus on next input if found
-                if (nextInput) {
+                // Focus on next input if found and ensure it's an input element (not button)
+                if (nextInput && nextInput.tagName === 'INPUT') {
                     nextInput.focus();
                     nextInput.select(); // Select all text for easy replacement
+                    
+                    // Scroll into view if needed
+                    nextInput.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
                 }
             }
 
@@ -2404,9 +2453,9 @@
                 
                 elementDiv.innerHTML = `
                     <div class="atomic-number-container">
-                        <button class="ai-prompt-btn-arabic" onclick="handleAIPromptClickArabic(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (Arabic Report)"></button>
+                        <button class="ai-prompt-btn-arabic" tabindex="-1" onclick="handleAIPromptClickArabic(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (Arabic Report)"></button>
                         <div class="atomic-number">${elementData.atomicNumber}</div>
-                        <button class="ai-prompt-btn" onclick="handleAIPromptClick(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (English Report)"></button>
+                        <button class="ai-prompt-btn" tabindex="-1" onclick="handleAIPromptClick(${JSON.stringify(elementData).replace(/"/g, '&quot;')})" title="Generate enhanced electrical engineering AI prompt for ${elementData.name} (English Report)"></button>
                     </div>
                     <input type="text" class="symbol" id="${elementId}-symbol" placeholder="Symbol" 
                            data-answer="${elementData.symbol}" data-field="symbol" data-element="${elementData.atomicNumber}">
