@@ -2147,8 +2147,8 @@
             // Medium permeability (M) - Some transition metals
             const mediumPermeability = [24, 25, 41, 42, 43, 44, 45, 46, 72, 73, 74, 75, 76, 77, 78]; // Cr, Mn, Nb, Mo, Tc, Ru, Rh, Pd, Hf, Ta, W, Re, Os, Ir, Pt
             
-            // Low permeability (L) - Other metals (paramagnetic)
-            const lowPermeability = [3, 11, 12, 13, 19, 20, 21, 22, 23, 29, 30, 31, 37, 38, 39, 40, 47, 48, 49, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 79, 80, 81, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113];
+            // Low permeability (L) - Other metals and paramagnetic non-metals
+            const lowPermeability = [3, 8, 11, 12, 13, 19, 20, 21, 22, 23, 29, 30, 31, 37, 38, 39, 40, 47, 48, 49, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 79, 80, 81, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113];
             
             if (highPermeability.includes(element.atomicNumber)) {
                 return "H";
