@@ -2091,28 +2091,28 @@
         // Quiz elements data - All 118 elements of the periodic table
         const quizElements = [
             // Period 1
-            { atomicNumber: 1, symbol: "H", name: "Hydrogen", atomicMass: "1.008", classification: "nonmetals", state: "G", metalType: "N", conductivity: "N", magneticSusceptibility: "D", position: {row: 1, col: 1} },
-            { atomicNumber: 2, symbol: "He", name: "Helium", atomicMass: "4.003", classification: "noble-gases", state: "G", metalType: "N", conductivity: "N", magneticSusceptibility: "D", position: {row: 1, col: 18} },
+            { atomicNumber: 1, symbol: "H", name: "Hydrogen", atomicMass: "1.008", classification: "nonmetals", state: "G", metalType: "N", conductivity: "I", magneticSusceptibility: "D", position: {row: 1, col: 1} },
+            { atomicNumber: 2, symbol: "He", name: "Helium", atomicMass: "4.003", classification: "noble-gases", state: "G", metalType: "N", conductivity: "I", magneticSusceptibility: "D", position: {row: 1, col: 18} },
             
             // Period 2
             { atomicNumber: 3, symbol: "Li", name: "Lithium", atomicMass: "6.94", classification: "alkali-metals", state: "S", metalType: "M", conductivity: "C", magneticSusceptibility: "P", position: {row: 2, col: 1} },
             { atomicNumber: 4, symbol: "Be", name: "Beryllium", atomicMass: "9.012", classification: "alkaline-earth-metals", state: "S", metalType: "M", conductivity: "C", magneticSusceptibility: "D", position: {row: 2, col: 2} },
             { atomicNumber: 5, symbol: "B", name: "Boron", atomicMass: "10.81", classification: "metalloids", state: "S", metalType: "T", conductivity: "S", magneticSusceptibility: "D", position: {row: 2, col: 13} },
             { atomicNumber: 6, symbol: "C", name: "Carbon", atomicMass: "12.01", classification: "nonmetals", state: "S", metalType: "N", conductivity: "S", magneticSusceptibility: "D", position: {row: 2, col: 14} },
-            { atomicNumber: 7, symbol: "N", name: "Nitrogen", atomicMass: "14.01", classification: "nonmetals", state: "G", metalType: "N", conductivity: "N", magneticSusceptibility: "D", position: {row: 2, col: 15} },
-            { atomicNumber: 8, symbol: "O", name: "Oxygen", atomicMass: "16.00", classification: "nonmetals", state: "G", metalType: "N", conductivity: "N", magneticSusceptibility: "P", position: {row: 2, col: 16} },
-            { atomicNumber: 9, symbol: "F", name: "Fluorine", atomicMass: "19.00", classification: "halogens", state: "G", metalType: "N", conductivity: "N", magneticSusceptibility: "D", position: {row: 2, col: 17} },
-            { atomicNumber: 10, symbol: "Ne", name: "Neon", atomicMass: "20.18", classification: "noble-gases", state: "G", metalType: "N", conductivity: "N", magneticSusceptibility: "D", position: {row: 2, col: 18} },
+            { atomicNumber: 7, symbol: "N", name: "Nitrogen", atomicMass: "14.01", classification: "nonmetals", state: "G", metalType: "N", conductivity: "I", magneticSusceptibility: "D", position: {row: 2, col: 15} },
+            { atomicNumber: 8, symbol: "O", name: "Oxygen", atomicMass: "16.00", classification: "nonmetals", state: "G", metalType: "N", conductivity: "I", magneticSusceptibility: "P", position: {row: 2, col: 16} },
+            { atomicNumber: 9, symbol: "F", name: "Fluorine", atomicMass: "19.00", classification: "halogens", state: "G", metalType: "N", conductivity: "I", magneticSusceptibility: "D", position: {row: 2, col: 17} },
+            { atomicNumber: 10, symbol: "Ne", name: "Neon", atomicMass: "20.18", classification: "noble-gases", state: "G", metalType: "N", conductivity: "I", magneticSusceptibility: "D", position: {row: 2, col: 18} },
             
             // Period 3
             { atomicNumber: 11, symbol: "Na", name: "Sodium", atomicMass: "22.99", classification: "alkali-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 3, col: 1} },
             { atomicNumber: 12, symbol: "Mg", name: "Magnesium", atomicMass: "24.31", classification: "alkaline-earth-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 3, col: 2} },
             { atomicNumber: 13, symbol: "Al", name: "Aluminum", atomicMass: "26.98", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 3, col: 13} },
             { atomicNumber: 14, symbol: "Si", name: "Silicon", atomicMass: "28.09", classification: "metalloids", state: "S", metalType: "T", conductivity: "S", position: {row: 3, col: 14} },
-            { atomicNumber: 15, symbol: "P", name: "Phosphorus", atomicMass: "30.97", classification: "nonmetals", state: "S", metalType: "N", conductivity: "N", position: {row: 3, col: 15} },
-            { atomicNumber: 16, symbol: "S", name: "Sulfur", atomicMass: "32.07", classification: "nonmetals", state: "S", metalType: "N", conductivity: "N", position: {row: 3, col: 16} },
-            { atomicNumber: 17, symbol: "Cl", name: "Chlorine", atomicMass: "35.45", classification: "halogens", state: "G", metalType: "N", conductivity: "N", position: {row: 3, col: 17} },
-            { atomicNumber: 18, symbol: "Ar", name: "Argon", atomicMass: "39.95", classification: "noble-gases", state: "G", metalType: "N", conductivity: "N", position: {row: 3, col: 18} },
+            { atomicNumber: 15, symbol: "P", name: "Phosphorus", atomicMass: "30.97", classification: "nonmetals", state: "S", metalType: "N", conductivity: "I", position: {row: 3, col: 15} },
+            { atomicNumber: 16, symbol: "S", name: "Sulfur", atomicMass: "32.07", classification: "nonmetals", state: "S", metalType: "N", conductivity: "I", position: {row: 3, col: 16} },
+            { atomicNumber: 17, symbol: "Cl", name: "Chlorine", atomicMass: "35.45", classification: "halogens", state: "G", metalType: "N", conductivity: "I", position: {row: 3, col: 17} },
+            { atomicNumber: 18, symbol: "Ar", name: "Argon", atomicMass: "39.95", classification: "noble-gases", state: "G", metalType: "N", conductivity: "I", position: {row: 3, col: 18} },
             
             // Period 4
             { atomicNumber: 19, symbol: "K", name: "Potassium", atomicMass: "39.10", classification: "alkali-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 4, col: 1} },
@@ -2131,8 +2131,8 @@
             { atomicNumber: 32, symbol: "Ge", name: "Germanium", atomicMass: "72.63", classification: "metalloids", state: "S", metalType: "T", conductivity: "S", position: {row: 4, col: 14} },
             { atomicNumber: 33, symbol: "As", name: "Arsenic", atomicMass: "74.92", classification: "metalloids", state: "S", metalType: "T", conductivity: "S", position: {row: 4, col: 15} },
             { atomicNumber: 34, symbol: "Se", name: "Selenium", atomicMass: "78.97", classification: "nonmetals", state: "S", metalType: "N", conductivity: "S", position: {row: 4, col: 16} },
-            { atomicNumber: 35, symbol: "Br", name: "Bromine", atomicMass: "79.90", classification: "halogens", state: "L", metalType: "N", conductivity: "N", position: {row: 4, col: 17} },
-            { atomicNumber: 36, symbol: "Kr", name: "Krypton", atomicMass: "83.80", classification: "noble-gases", state: "G", metalType: "N", conductivity: "N", position: {row: 4, col: 18} },
+            { atomicNumber: 35, symbol: "Br", name: "Bromine", atomicMass: "79.90", classification: "halogens", state: "L", metalType: "N", conductivity: "I", position: {row: 4, col: 17} },
+            { atomicNumber: 36, symbol: "Kr", name: "Krypton", atomicMass: "83.80", classification: "noble-gases", state: "G", metalType: "N", conductivity: "I", position: {row: 4, col: 18} },
             
             // Period 5
             { atomicNumber: 37, symbol: "Rb", name: "Rubidium", atomicMass: "85.47", classification: "alkali-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 5, col: 1} },
@@ -2151,8 +2151,8 @@
             { atomicNumber: 50, symbol: "Sn", name: "Tin", atomicMass: "118.71", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 5, col: 14} },
             { atomicNumber: 51, symbol: "Sb", name: "Antimony", atomicMass: "121.76", classification: "metalloids", state: "S", metalType: "T", conductivity: "S", position: {row: 5, col: 15} },
             { atomicNumber: 52, symbol: "Te", name: "Tellurium", atomicMass: "127.60", classification: "metalloids", state: "S", metalType: "T", conductivity: "S", position: {row: 5, col: 16} },
-            { atomicNumber: 53, symbol: "I", name: "Iodine", atomicMass: "126.90", classification: "halogens", state: "S", metalType: "N", conductivity: "N", position: {row: 5, col: 17} },
-            { atomicNumber: 54, symbol: "Xe", name: "Xenon", atomicMass: "131.29", classification: "noble-gases", state: "G", metalType: "N", conductivity: "N", position: {row: 5, col: 18} },
+            { atomicNumber: 53, symbol: "I", name: "Iodine", atomicMass: "126.90", classification: "halogens", state: "S", metalType: "N", conductivity: "I", position: {row: 5, col: 17} },
+            { atomicNumber: 54, symbol: "Xe", name: "Xenon", atomicMass: "131.29", classification: "noble-gases", state: "G", metalType: "N", conductivity: "I", position: {row: 5, col: 18} },
             
             // Period 6
             { atomicNumber: 55, symbol: "Cs", name: "Cesium", atomicMass: "132.91", classification: "alkali-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 6, col: 1} },
@@ -2187,8 +2187,8 @@
             { atomicNumber: 82, symbol: "Pb", name: "Lead", atomicMass: "207.2", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 6, col: 14} },
             { atomicNumber: 83, symbol: "Bi", name: "Bismuth", atomicMass: "208.98", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 6, col: 15} },
             { atomicNumber: 84, symbol: "Po", name: "Polonium", atomicMass: "209.00", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "S", position: {row: 6, col: 16} },
-            { atomicNumber: 85, symbol: "At", name: "Astatine", atomicMass: "210.00", classification: "halogens", state: "S", metalType: "N", conductivity: "N", position: {row: 6, col: 17} },
-            { atomicNumber: 86, symbol: "Rn", name: "Radon", atomicMass: "222.00", classification: "noble-gases", state: "G", metalType: "N", conductivity: "N", position: {row: 6, col: 18} },
+            { atomicNumber: 85, symbol: "At", name: "Astatine", atomicMass: "210.00", classification: "halogens", state: "S", metalType: "N", conductivity: "I", position: {row: 6, col: 17} },
+            { atomicNumber: 86, symbol: "Rn", name: "Radon", atomicMass: "222.00", classification: "noble-gases", state: "G", metalType: "N", conductivity: "I", position: {row: 6, col: 18} },
             
             // Period 7
             { atomicNumber: 87, symbol: "Fr", name: "Francium", atomicMass: "223.00", classification: "alkali-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 7, col: 1} },
@@ -2223,8 +2223,8 @@
             { atomicNumber: 114, symbol: "Fl", name: "Flerovium", atomicMass: "289.00", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 7, col: 14} },
             { atomicNumber: 115, symbol: "Mc", name: "Moscovium", atomicMass: "288.00", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 7, col: 15} },
             { atomicNumber: 116, symbol: "Lv", name: "Livermorium", atomicMass: "293.00", classification: "post-transition-metals", state: "S", metalType: "M", conductivity: "C", position: {row: 7, col: 16} },
-            { atomicNumber: 117, symbol: "Ts", name: "Tennessine", atomicMass: "292.00", classification: "halogens", state: "S", metalType: "N", conductivity: "N", position: {row: 7, col: 17} },
-            { atomicNumber: 118, symbol: "Og", name: "Oganesson", atomicMass: "294.00", classification: "noble-gases", state: "S", metalType: "N", conductivity: "N", position: {row: 7, col: 18} }
+            { atomicNumber: 117, symbol: "Ts", name: "Tennessine", atomicMass: "292.00", classification: "halogens", state: "S", metalType: "N", conductivity: "I", position: {row: 7, col: 17} },
+            { atomicNumber: 118, symbol: "Og", name: "Oganesson", atomicMass: "294.00", classification: "noble-gases", state: "S", metalType: "N", conductivity: "I", position: {row: 7, col: 18} }
         ];
 
         // Auto-assign magnetic susceptibility based on element properties
