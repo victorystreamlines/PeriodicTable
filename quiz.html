@@ -2453,13 +2453,18 @@
                             });
                         });
                         input.addEventListener('blur', (e) => {
-                            // Only hide tooltip if we're not just moving to another input in the same container
+                            // Only hide tooltip if we're not just moving to another input in the same element's container
                             setTimeout(() => {
                                 const activeElement = document.activeElement;
+                                const currentElementContainer = e.target.closest('.element');
                                 const isMovingToStateInput = activeElement && activeElement.closest('.state-type-container');
+                                const newElementContainer = activeElement && activeElement.closest('.element');
                                 
-                                // If moving to another state-type input, don't hide - let the new focus event handle it
-                                if (!isMovingToStateInput) {
+                                // Hide tooltip if:
+                                // 1. Moving to a non-state-type input, OR
+                                // 2. Moving to a different element's state-type input
+                                if (!isMovingToStateInput || 
+                                    (currentElementContainer && newElementContainer && currentElementContainer !== newElementContainer)) {
                                     this.hideFocusTooltip();
                                 }
                             }, 10);
@@ -2472,6 +2477,23 @@
                         
                         // Add keyboard navigation support (Tab key) and keep tooltip visible while typing
                         input.addEventListener('keydown', (e) => {
+                            // Special feature: Auto-refresh when pressing Enter in the charge field (7th field)
+                            if (e.key === 'Enter' && input.dataset.field === 'charge') {
+                                e.preventDefault(); // Prevent default Enter behavior
+                                
+                                // Save current position to restore after refresh
+                                const currentElement = parseInt(input.dataset.element);
+                                const nextElement = this.getNextElementInSequence(currentElement);
+                                const nextPosition = {
+                                    element: nextElement,
+                                    field: 'symbol' // Start with symbol field (first row) of next element
+                                };
+                                localStorage.setItem('periodicTableNextPosition', JSON.stringify(nextPosition));
+                                
+                                refreshPage(); // Automatically click the refresh button
+                                return;
+                            }
+                            
                             if (e.key === 'Tab') {
                                 // Don't interfere with default Tab behavior, just ensure tooltip shows
                                 // Try immediately
@@ -2758,13 +2780,18 @@
                             });
                         });
                         input.addEventListener('blur', (e) => {
-                            // Only hide tooltip if we're not just moving to another input in the same container
+                            // Only hide tooltip if we're not just moving to another input in the same element's container
                             setTimeout(() => {
                                 const activeElement = document.activeElement;
+                                const currentElementContainer = e.target.closest('.element');
                                 const isMovingToStateInput = activeElement && activeElement.closest('.state-type-container');
+                                const newElementContainer = activeElement && activeElement.closest('.element');
                                 
-                                // If moving to another state-type input, don't hide - let the new focus event handle it
-                                if (!isMovingToStateInput) {
+                                // Hide tooltip if:
+                                // 1. Moving to a non-state-type input, OR
+                                // 2. Moving to a different element's state-type input
+                                if (!isMovingToStateInput || 
+                                    (currentElementContainer && newElementContainer && currentElementContainer !== newElementContainer)) {
                                     this.hideFocusTooltip();
                                 }
                             }, 10);
@@ -2777,6 +2804,23 @@
                         
                         // Add keyboard navigation support (Tab key) and keep tooltip visible while typing
                         input.addEventListener('keydown', (e) => {
+                            // Special feature: Auto-refresh when pressing Enter in the charge field (7th field)
+                            if (e.key === 'Enter' && input.dataset.field === 'charge') {
+                                e.preventDefault(); // Prevent default Enter behavior
+                                
+                                // Save current position to restore after refresh
+                                const currentElement = parseInt(input.dataset.element);
+                                const nextElement = this.getNextElementInSequence(currentElement);
+                                const nextPosition = {
+                                    element: nextElement,
+                                    field: 'symbol' // Start with symbol field (first row) of next element
+                                };
+                                localStorage.setItem('periodicTableNextPosition', JSON.stringify(nextPosition));
+                                
+                                refreshPage(); // Automatically click the refresh button
+                                return;
+                            }
+                            
                             if (e.key === 'Tab') {
                                 // Don't interfere with default Tab behavior, just ensure tooltip shows
                                 // Try immediately
@@ -2907,6 +2951,9 @@
                     this.hideTooltipTimeout = null;
                 }
                 
+                // Store which element this tooltip belongs to
+                this.currentTooltipElement = input.closest('.element');
+                
                 // Get the field type and create appropriate tooltip content
                 const field = input.dataset.field;
                 let tooltipContent = this.getTooltipContent(field);
@@ -2951,12 +2998,15 @@
             hideFocusTooltip() {
                 // Add a small delay to prevent flickering when moving between fields
                 this.hideTooltipTimeout = setTimeout(() => {
-                    // Only hide tooltip if focus has moved away from all state-type-container inputs
                     const activeElement = document.activeElement;
                     const isInStateContainer = activeElement && activeElement.closest('.state-type-container');
+                    const newElementContainer = activeElement && activeElement.closest('.element');
                     
-                    // If user is still in a state-type-container input, don't hide the tooltip
-                    if (!isInStateContainer) {
+                    // Hide tooltip if:
+                    // 1. Focus moved away from all state-type-container inputs, OR
+                    // 2. Focus moved to a different element's state-type-container
+                    if (!isInStateContainer || 
+                        (this.currentTooltipElement && newElementContainer && this.currentTooltipElement !== newElementContainer)) {
                         this.hideFocusTooltipImmediate();
                     }
                 }, 50);
@@ -2970,6 +3020,7 @@
                             this.currentTooltip.parentNode.removeChild(this.currentTooltip);
                         }
                         this.currentTooltip = null;
+                        this.currentTooltipElement = null; // Clear element tracking too
                     }, 300);
                 }
             }
@@ -3013,6 +3064,53 @@
                     <span class="tooltip-title">${config.title}</span>
                     <div class="tooltip-options">${config.options}</div>
                 `;
+            }
+
+            getNextElementInSequence(currentElement) {
+                // Define the normal sequence order for all elements 1-118
+                const elementSequence = [];
+                for (let i = 1; i <= 118; i++) {
+                    elementSequence.push(i);
+                }
+                
+                const currentIndex = elementSequence.indexOf(currentElement);
+                
+                // If current element is found and not the last one, return next element
+                if (currentIndex !== -1 && currentIndex < elementSequence.length - 1) {
+                    return elementSequence[currentIndex + 1];
+                }
+                
+                // If it's the last element (118) or not found, wrap around to element 1
+                return 1;
+            }
+
+            restorePositionAfterRefresh(elementNumber, fieldName) {
+                // Find the target input field
+                const targetInput = document.querySelector(`input[data-element="${elementNumber}"][data-field="${fieldName}"]`);
+                
+                if (targetInput) {
+                    // Focus on the target input
+                    targetInput.focus();
+                    targetInput.select(); // Select all text for easy replacement
+                    
+                    // Scroll the element into view
+                    targetInput.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center', 
+                        inline: 'nearest' 
+                    });
+                    
+                    // Show tooltip immediately
+                    if (targetInput.closest('.state-type-container')) {
+                        setTimeout(() => {
+                            this.showFocusTooltip(targetInput);
+                        }, 100);
+                    }
+                    
+                    console.log(`Restored position to Element ${elementNumber}, Field ${fieldName}`);
+                } else {
+                    console.warn(`Could not find input for Element ${elementNumber}, Field ${fieldName}`);
+                }
             }
         }
 
@@ -3181,16 +3279,60 @@
         document.addEventListener('DOMContentLoaded', function() {
             quiz = new PeriodicTableQuiz();
             
+            // Restore position after refresh if saved
+            setTimeout(() => {
+                const savedPosition = localStorage.getItem('periodicTableNextPosition');
+                if (savedPosition) {
+                    try {
+                        const position = JSON.parse(savedPosition);
+                        quiz.restorePositionAfterRefresh(position.element, position.field);
+                        // Clear the saved position after using it
+                        localStorage.removeItem('periodicTableNextPosition');
+                    } catch (error) {
+                        console.error('Error restoring position:', error);
+                        localStorage.removeItem('periodicTableNextPosition');
+                    }
+                }
+            }, 500); // Small delay to ensure all elements are fully rendered
+            
             // Add a periodic check to ensure focused inputs always have tooltips when they should
             setInterval(() => {
                 const activeElement = document.activeElement;
+                const activeElementContainer = activeElement && activeElement.closest('.element');
+                
                 if (activeElement && 
                     activeElement.tagName === 'INPUT' && 
-                    activeElement.closest('.state-type-container') && 
-                    !quiz.currentTooltip) {
-                    quiz.showFocusTooltip(activeElement);
+                    activeElement.closest('.state-type-container')) {
+                    
+                    // If no tooltip exists, show one
+                    if (!quiz.currentTooltip) {
+                        quiz.showFocusTooltip(activeElement);
+                    }
+                    // If tooltip exists but belongs to a different element, hide it and show new one
+                    else if (quiz.currentTooltipElement && activeElementContainer && 
+                             quiz.currentTooltipElement !== activeElementContainer) {
+                        quiz.hideFocusTooltipImmediate();
+                        quiz.showFocusTooltip(activeElement);
+                    }
+                } else {
+                    // If not in a state-type-container, hide any existing tooltip
+                    if (quiz.currentTooltip) {
+                        quiz.hideFocusTooltipImmediate();
+                    }
                 }
             }, 100); // Check every 100ms
+            
+            // Add global click listener to close tooltips when clicking outside state-type containers
+            document.addEventListener('click', (e) => {
+                const clickedElement = e.target;
+                const isInStateContainer = clickedElement.closest('.state-type-container');
+                const isTooltip = clickedElement.closest('.focus-tooltip');
+                
+                // If clicking outside state-type containers and not on the tooltip itself, hide tooltip
+                if (!isInStateContainer && !isTooltip && quiz.currentTooltip) {
+                    quiz.hideFocusTooltipImmediate();
+                }
+            });
         });
 
         // AI Prompt Generation and Copy Functions
