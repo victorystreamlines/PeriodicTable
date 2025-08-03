@@ -3642,8 +3642,27 @@ Please create a report that would be both informative for chemistry professional
 - **IMPORTANT:** All content must be in Arabic with proper RTL layout and Arabic typography
 - **VERY IMPORTANT:** Don't forget to add the report to the homepage menu array and make sure that it appears in the home menu item list-Also add a back home button for every report. 
 - **BACK TO QUIZ BUTTON:** Add a prominent "العودة للاختبار" (Back to Quiz) button at the top of the report that links to "index.html" - this button should be styled elegantly and be easily visible
-- **ELEMENT-SPECIFIC QUIZ INTEGRATION:** Create a button within the quiz interface (in the element container or nearby compatible location) that allows users to navigate directly to this specific element's report while taking the quiz. The button should be labeled "تقرير العنصر" (Element Report) in Arabic and should link to the generated report file for this specific element (${elementData.name}). This button should be integrated seamlessly into the quiz flow so users can access the detailed report for the element they are currently studying or filling blanks for. **IMPORTANT BUTTON BEHAVIOR:** The button should only appear when the user lands on or focuses on this specific element, and should disappear when navigating to another element. **LANGUAGE DETECTION:** The AI should detect the current language context and show the appropriate report button - if the interface is in Arabic, show the Arabic report button; if in English, show the English report button. There will be separate buttons for Arabic and English reports, so implement proper language detection to display the correct one.
-- **CLARIFICATION POP-UP INTEGRATION:** **CRITICAL REQUIREMENT:** When implementing the quiz interface, add element report buttons ABOVE the clarification pop-up container that appears when users click on any blank question field within the element. **BUTTON PLACEMENT SPECIFICATIONS:** Position the report buttons vertically stacked (one above the other) in the same column as the pop-up container, directly above it and perfectly aligned. **DESIGN REQUIREMENTS:** The buttons should be the same width as the pop-up container, visually compatible, attractive, cool, and neat in design. **FUNCTIONALITY:** These buttons should allow users to navigate directly to the specific element's detailed report from within the quiz interface. **VISUAL INTEGRATION:** Ensure the buttons blend seamlessly with the pop-up design and maintain consistent styling with the overall quiz interface. **RESPONSIVE BEHAVIOR:** The buttons should appear and disappear along with the clarification pop-up, maintaining perfect vertical alignment and visual harmony.
+
+**🔄 CRITICAL LANGUAGE SWITCHING FEATURE (ARABIC REPORT ONLY):**
+- **LANGUAGE TOGGLE FUNCTIONALITY:** This Arabic report must include a prominent language switching button that allows users to toggle between the Arabic and English versions of the same element report
+- **ENGLISH REPORT DETECTION:** The system should automatically detect and link to the existing English report file for this element (${elementData.name}.html) which is already available in the same directory/route
+- **BIDIRECTIONAL SWITCHING:** 
+  * In this Arabic report: Add a "Switch to English / التبديل للإنجليزية" button that navigates to the English version
+  * The English report (which already exists) should have a corresponding "Switch to Arabic / التبديل للعربية" button that navigates to this Arabic version
+- **BUTTON DESIGN SPECIFICATIONS:**
+  * Position the language toggle button prominently near the top of the report (alongside or near the "Back to Quiz" button)
+  * Style it elegantly with appropriate icons (🌐 or 🔄) and clear bilingual text
+  * Make it visually distinct but harmonious with the overall report design
+  * Ensure it's easily accessible and clearly indicates its switching function
+- **TECHNICAL IMPLEMENTATION:**
+  * The button should link directly to the English report file: "${elementData.name}.html" (the default English version)
+  * Use JavaScript to detect the current language and show appropriate switching options
+  * Maintain all user context and element-specific information during the switch
+  * Ensure smooth navigation between language versions without losing the user's place
+- **SEAMLESS INTEGRATION:** The language switching should feel natural and intuitive, allowing users to easily compare information between Arabic and English versions of the same element report
+- **NO SEPARATE ARABIC BUTTON NEEDED:** Do not create additional buttons in the quiz interface for the Arabic report - the switching happens within the reports themselves
+
+**IMPORTANT NOTE:** This language switching feature should ONLY be implemented in the Arabic report generation. The English report already exists and will have its own corresponding switch button added separately.
 - **MANDATORY:** Every section must have an elegant audio button with British female voice reading capability - do not skip this feature`;
             return prompt;
         }
