@@ -3633,8 +3633,10 @@ Please create a report that would be both informative for chemistry professional
 - **REMINDER:** Do not forget to include the electron drawings and orbital visualizations - they are extremely important for electrical engineers to understand electron behavior and conduction mechanisms
 - **IMPORTANT:** All content must be in Arabic with proper RTL layout and Arabic typography
 - **VERY IMPORTANT:** Don't forget to add the report to the homepage menu array and make sure that it appears in the home menu item list-Also add a back home button for every report. 
+- **BACK TO QUIZ BUTTON:** Add a prominent "العودة للاختبار" (Back to Quiz) button at the top of the report that links to "index.html" - this button should be styled elegantly and be easily visible
+- **ELEMENT-SPECIFIC QUIZ INTEGRATION:** Create a button within the quiz interface (in the element container or nearby compatible location) that allows users to navigate directly to this specific element's report while taking the quiz. The button should be labeled "تقرير العنصر" (Element Report) in Arabic and should link to the generated report file for this specific element (${elementData.name}). This button should be integrated seamlessly into the quiz flow so users can access the detailed report for the element they are currently studying or filling blanks for. **IMPORTANT BUTTON BEHAVIOR:** The button should only appear when the user lands on or focuses on this specific element, and should disappear when navigating to another element. **LANGUAGE DETECTION:** The AI should detect the current language context and show the appropriate report button - if the interface is in Arabic, show the Arabic report button; if in English, show the English report button. There will be separate buttons for Arabic and English reports, so implement proper language detection to display the correct one.
+- **CLARIFICATION POP-UP INTEGRATION:** **CRITICAL REQUIREMENT:** When implementing the quiz interface, add element report buttons ABOVE the clarification pop-up container that appears when users click on any blank question field within the element. **BUTTON PLACEMENT SPECIFICATIONS:** Position the report buttons vertically stacked (one above the other) in the same column as the pop-up container, directly above it and perfectly aligned. **DESIGN REQUIREMENTS:** The buttons should be the same width as the pop-up container, visually compatible, attractive, cool, and neat in design. **FUNCTIONALITY:** These buttons should allow users to navigate directly to the specific element's detailed report from within the quiz interface. **VISUAL INTEGRATION:** Ensure the buttons blend seamlessly with the pop-up design and maintain consistent styling with the overall quiz interface. **RESPONSIVE BEHAVIOR:** The buttons should appear and disappear along with the clarification pop-up, maintaining perfect vertical alignment and visual harmony.
 - **MANDATORY:** Every section must have an elegant audio button with British female voice reading capability - do not skip this feature`;
-
             return prompt;
         }
 
@@ -3732,6 +3734,64 @@ Please create a report that would be both informative for chemistry professional
      - Sustainability and recycling efforts
      - Potential new discoveries
      - Challenges and opportunities
+
+12. **Physical State Analysis (الحالة الفيزيائية)**
+     - **Normal Conditions**: Detailed explanation of the element's physical state at room temperature and standard pressure (solid, liquid, or gas)
+     - **Environmental Variations**: How the physical state changes under different temperature and pressure conditions
+     - **Phase Transitions**: Melting point, boiling point, and sublimation characteristics
+     - **Crystal Structure**: If solid, describe the crystal lattice structure and its implications
+     - **Density and Volume**: Physical density characteristics and how they affect applications
+     - **Stability Factors**: What makes this element stable in its natural physical state
+
+13. **Heat Conductance Properties (التوصيل الحراري)**
+     - **High Heat Conductance (Excellent Thermal Conductor)**: If applicable, explain why this element excels at conducting heat, molecular mechanisms, and practical applications
+     - **Medium Heat Conductance (Good Thermal Conductor)**: Moderate thermal conductivity characteristics and typical uses
+     - **Low Heat Conductance (Poor Thermal Conductor)**: Limited thermal conductivity and why this occurs at the atomic level
+     - **Thermal Insulator (No/Very Low Heat Conductance)**: Complete explanation of insulating properties and applications
+     - **Temperature Dependencies**: How thermal conductivity changes with temperature
+     - **Practical Applications**: Real-world uses based on thermal properties
+
+14. **Electrical Conductivity Classification (التوصيلية الكهربائية)**
+     - **Conductor**: If applicable, detailed explanation of why electrons move freely through this element, band theory, and electron sea model
+     - **Semiconductor**: If applicable, explain the band gap, how doping affects conductivity, and temperature dependencies
+     - **Insulator**: If applicable, explain why electrons are tightly bound, large band gaps, and insulating mechanisms
+     - **Electron Behavior**: Detailed analysis of electron movement, energy levels, and what makes this element special in its conductivity class
+     - **Atomic Structure Impact**: How the element's atomic structure directly influences its electrical properties
+     - **Engineering Applications**: Practical uses based on electrical conductivity classification
+
+15. **Magnetic Susceptibility Analysis (الحساسية المغناطيسية)**
+     - **Ferromagnetic (F - Strongly Attracted)**: If applicable, explain unpaired electrons, magnetic domains, and strong magnetic attraction mechanisms
+     - **Paramagnetic (P - Weakly Attracted)**: If applicable, describe unpaired electrons, weak magnetic attraction, and temperature effects
+     - **Diamagnetic (D - Weakly Repelled)**: If applicable, explain paired electrons, induced magnetic fields, and weak repulsion
+     - **Electron Configuration Impact**: How the element's electron configuration determines its magnetic behavior
+     - **Practical Implications**: Applications and uses based on magnetic properties
+     - **Temperature Effects**: How magnetic susceptibility changes with temperature
+
+16. **Magnetic Permeability Properties (النفاذية المغناطيسية)**
+     - **High Permeability**: If applicable, explain enhanced magnetic field penetration, applications in transformers and magnetic cores
+     - **Medium Permeability**: Moderate magnetic field interaction and typical applications
+     - **Low Permeability**: Limited magnetic field interaction and specialized uses
+     - **Normal Permeability**: Standard magnetic field behavior and general applications
+     - **Frequency Dependencies**: How permeability changes with electromagnetic frequency
+     - **Engineering Significance**: Why permeability matters in electrical and magnetic applications
+
+17. **Joule Heating Efficiency (كفاءة التسخين الجولي)**
+     - **High Heating Efficiency**: If applicable, explain excellent electrical-to-heat conversion, high resistance characteristics, and energy dissipation mechanisms
+     - **Medium Heating Efficiency**: Moderate electrical-to-heat conversion and typical energy dissipation
+     - **Low Heating Efficiency**: Limited electrical-to-heat conversion and minimal energy dissipation
+     - **No Significant Heating**: Minimal electrical-to-heat conversion and why this occurs
+     - **Energy Dissipation Mechanisms**: Detailed explanation of how electrical current converts to heat energy and gets dissipated
+     - **Power Consumption**: How much energy this element consumes when electrical current passes through it
+     - **Practical Applications**: Uses in heating elements, resistors, and energy dissipation systems
+
+18. **Charge Storage Capacity (سعة تخزين الشحنة)**
+     - **High Storage Capacity**: If applicable, explain excellent charge accumulation, capacitive properties, and energy storage mechanisms
+     - **Medium Storage Capacity**: Moderate charge storage capabilities and typical applications
+     - **Low Storage Capacity**: Limited charge storage and specialized uses
+     - **No Storage Capacity**: Inability to store electrical charge and why this occurs
+     - **Capacitive Behavior**: How the element acts as a natural capacitor and stores electrical energy
+     - **Dielectric Properties**: Relationship between charge storage and dielectric characteristics
+     - **Energy Storage Applications**: Practical uses in batteries, capacitors, and energy storage systems
 
 12. **Interactive Electron Distribution & Conduction Band Visualization** 
      **⚡ CRITICAL SECTION FOR ELECTRICAL ENGINEERS - MUST INCLUDE DETAILED DRAWINGS AND VISUALIZATIONS ⚡**
@@ -3928,6 +3988,9 @@ Please create a report that would be both informative for chemistry professional
 - Make sure the content is suitable for both educational and professional engineering environments
 - **REMINDER:** Do not forget to include the electron drawings and orbital visualizations - they are extremely important for electrical engineers to understand electron behavior and conduction mechanisms
 - **VERY IMPORTANT:** Don't forget to add the report to the homepage menu array and make sure that it appears in the home menu item list. add a back home button for the report.
+- **BACK TO QUIZ BUTTON:** Add a prominent "Back to Quiz" button at the top of the report that links to "index.html" - this button should be styled elegantly and be easily visible
+- **ELEMENT-SPECIFIC QUIZ INTEGRATION:** Create a button within the quiz interface (in the element container or nearby compatible location) that allows users to navigate directly to this specific element's report while taking the quiz. The button should be labeled "Element Report" in English and should link to the generated report file for this specific element (${elementData.name}). This button should be integrated seamlessly into the quiz flow so users can access the detailed report for the element they are currently studying or filling blanks for. **IMPORTANT BUTTON BEHAVIOR:** The button should only appear when the user lands on or focuses on this specific element, and should disappear when navigating to another element. **LANGUAGE DETECTION:** The AI should detect the current language context and show the appropriate report button - if the interface is in Arabic, show the Arabic report button; if in English, show the English report button. There will be separate buttons for Arabic and English reports, so implement proper language detection to display the correct one.
+- **CLARIFICATION POP-UP INTEGRATION:** **CRITICAL REQUIREMENT:** When implementing the quiz interface, add element report buttons ABOVE the clarification pop-up container that appears when users click on any blank question field within the element. **BUTTON PLACEMENT SPECIFICATIONS:** Position the report buttons vertically stacked (one above the other) in the same column as the pop-up container, directly above it and perfectly aligned. **DESIGN REQUIREMENTS:** The buttons should be the same width as the pop-up container, visually compatible, attractive, cool, and neat in design. **FUNCTIONALITY:** These buttons should allow users to navigate directly to the specific element's detailed report from within the quiz interface. **VISUAL INTEGRATION:** Ensure the buttons blend seamlessly with the pop-up design and maintain consistent styling with the overall quiz interface. **RESPONSIVE BEHAVIOR:** The buttons should appear and disappear along with the clarification pop-up, maintaining perfect vertical alignment and visual harmony.
 - **VERY VERY IMPORTANT:Yet extremely important :** Make sure and check before you finish that the page is added into the home page catalog.Check it yourself before the user checks. Because every time you forget.   
 - **VERY VERY VERY CRAZELY IMPORTANT--  IMPORTANT:Yet extremely important :** Make sure and check before you finish that the page is added into the home page catalog.Check it yourself before the user checks. Because every time you forget.Also check it before you render it. Check it yourself. Make sure it's showing and appearing in the catalog homepage item list menu.    
 - **MANDATORY:** Every section must have an elegant audio button with British female voice reading capability - do not skip this feature`;
